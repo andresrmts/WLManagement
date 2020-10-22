@@ -11,7 +11,8 @@ class App extends Component {
     super();
     this.state = {
       route: 'signin',
-      isSignedIn: false
+      isSignedIn: false,
+      searchBox: ''
     }
   }
 
@@ -24,6 +25,11 @@ class App extends Component {
     this.setState({route: route});
   }
 
+  onSearchChange = (e) => {
+    this.setState({searchBox: e.target.value})
+    console.log(this.state.searchBox);
+  }
+
   render() {
     const { route, isSignedIn } = this.state;
     return (
@@ -31,10 +37,10 @@ class App extends Component {
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
         { route === 'competitionselection'
           ?
-          <CompetitionSelection />
+          <CompetitionSelection onRouteChange={this.onRouteChange} onSearchChange={this.onSearchChange} />
           :
           (
-            route === 'competitionreation'
+            route === 'competitioncreation'
             ?
             <CompetitionCreation />
             :

@@ -25,9 +25,8 @@ const CompetitionCreation = () => {
 			      </div>
 			      <div className="mv3">
 			        <label 
-			        	className="db fw6 lh-copy f6" 
-			        	for="password">
-			        		Password
+			        	className="db fw6 lh-copy f6">
+			        		Date
 			        	</label>
 			        <input 
 			        	className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 

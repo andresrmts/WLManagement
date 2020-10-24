@@ -42,7 +42,7 @@ class App extends Component {
           (
             route === 'competitioncreation'
             ?
-            <CompetitionCreation />
+            <CompetitionCreation onRouteChange={this.onRouteChange} />
             :
             (
               route === 'signin'

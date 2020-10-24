@@ -19,13 +19,9 @@ const CompetitionSelection = ({ onRouteChange, onSearchChange }) => {
 				</div>
 				<div className="fl w-100 w-50-ns pa2 tc">
 					<h1>
-						Joined Competitions
+						Your Competitions
 					</h1>
-					<div style={{ overflow: 'hidden'}}>
-						<CompetitionList />
-						<CompetitionList />
-						<CompetitionList />
-						<CompetitionList />
+					<div>
 						<CompetitionList />
 					</div>
 				</div>
@@ -34,11 +30,6 @@ const CompetitionSelection = ({ onRouteChange, onSearchChange }) => {
 				<h1>
 					Available Competitions
 				</h1>
-				<CompetitionList />
-				<CompetitionList />
-				<CompetitionList />
-				<CompetitionList />
-				<CompetitionList />
 				<CompetitionList />
 			</div>
 		</div>

@@ -30,29 +30,25 @@ class App extends Component {
     console.log(this.state.searchBox);
   }
 
+  renderRoute = (route) => {
+    switch(route) {
+      case 'competitionselection':
+        return <CompetitionSelection onRouteChange={this.onRouteChange} onSearchChange={this.onSearchChange} />
+      case 'competitioncreation':
+        return <CompetitionCreation onRouteChange={this.onRouteChange} />
+      case 'signin':
+        return <SignIn onRouteChange={this.onRouteChange} />
+      case 'register':
+        return <Register onRouteChange={this.onRouteChange} />
+    }
+  }
+
   render() {
     const { route, isSignedIn } = this.state;
     return (
       <div>
         <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
-        { route === 'competitionselection'
-          ?
-          <CompetitionSelection onRouteChange={this.onRouteChange} onSearchChange={this.onSearchChange} />
-          :
-          (
-            route === 'competitioncreation'
-            ?
-            <CompetitionCreation onRouteChange={this.onRouteChange} />
-            :
-            (
-              route === 'signin'
-              ?
-              <SignIn onRouteChange={this.onRouteChange} />
-              :
-              <Register onRouteChange={this.onRouteChange} />
-            )
-          )
-        }
+        { this.renderRoute(route) }
       </div>
     )
   }

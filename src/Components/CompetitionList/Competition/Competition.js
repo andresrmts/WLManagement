@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Competition = () => {
+const Competition = ({onRouteChange}) => {
 	return (
 		<article className="mw5 tc dib bg-white br3 pa3 ma3 ba b--black-10">
 		  <div className="tc">
@@ -9,7 +9,11 @@ const Competition = () => {
 		    <h3 className="tc f6">Date</h3>
 		    <hr className="mw3 bb bw1 b--black-10" />
 		    <div style={{ display: 'flex', justifyContent: 'center'}}>
-				<a className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray" href="#0">Join</a>
+				<a 
+				className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray"
+				onClick={() => onRouteChange('competition')}
+				>
+				Join</a>
 			</div>
 		  </div>
 		</article>

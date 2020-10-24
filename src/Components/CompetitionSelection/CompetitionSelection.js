@@ -1,11 +1,11 @@
 import React from 'react';
-import CompetitionList from './CompetitionList';
+import CompetitionList from '../CompetitionList/CompetitionList';
 
-const CompetitionSelection = ({ onRouteChange, onSearchChange }) => {
+const CompetitionSelection = ({ name, onRouteChange, onSearchChange }) => {
 	return (
 		<div>
 			<p className="pa4 tc" style={{ display: 'flex', justifyContent: 'center'}}>
-				You are signed in as NAME. Please Create a new Competition or join an existing competition.
+				You are signed in as {name}. Please Create a new Competition or join an existing competition.
 			</p>
 			<div>
 				<div className="fl w-100 w-50-ns pa2 tc" style={{ display: 'flex', justifyContent: 'center'}}>
@@ -22,7 +22,7 @@ const CompetitionSelection = ({ onRouteChange, onSearchChange }) => {
 						Your Competitions
 					</h1>
 					<div>
-						<CompetitionList />
+						<CompetitionList onRouteChange={onRouteChange}/>
 					</div>
 				</div>
 			</div>
@@ -30,7 +30,7 @@ const CompetitionSelection = ({ onRouteChange, onSearchChange }) => {
 				<h1>
 					Available Competitions
 				</h1>
-				<CompetitionList />
+				<CompetitionList onRouteChange={onRouteChange}/>
 			</div>
 		</div>
 	)

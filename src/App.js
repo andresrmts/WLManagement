@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import Navigation from './Components/Navigation';
-import CompetitionSelection from './Components/CompetitionSelection';
-import Register from './Components/Register';
-import SignIn from './Components/SignIn';
-import CompetitionCreation from './Components/CompetitionCreation';
+import Navigation from './Components/Navigation/Navigation';
+import CompetitionSelection from './Components/CompetitionSelection/CompetitionSelection';
+import Register from './Components/Register/Register';
+import SignIn from './Components/SignIn/SignIn';
+import CompetitionCreation from './Components/CompetitionCreation/CompetitionCreation';
+import HandleCompetition from './Components/HandleCompetition/HandleCompetition';
 import './App.css';
 
 class App extends Component {
@@ -12,7 +13,12 @@ class App extends Component {
     this.state = {
       route: 'signin',
       isSignedIn: false,
-      searchBox: ''
+      searchBox: '',
+      admin: false,
+      user: {
+        id: '',
+        name: 'Andres',
+      }
     }
   }
 
@@ -25,6 +31,11 @@ class App extends Component {
     this.setState({route: route});
   }
 
+  adminToggle = (admin) => {
+    this.setState({admin: admin})
+    console.log(this.state.admin)
+  }
+
   onSearchChange = (e) => {
     this.setState({searchBox: e.target.value})
     console.log(this.state.searchBox);
@@ -33,13 +44,17 @@ class App extends Component {
   renderRoute = (route) => {
     switch(route) {
       case 'competitionselection':
-        return <CompetitionSelection onRouteChange={this.onRouteChange} onSearchChange={this.onSearchChange} />
+        return <CompetitionSelection name={this.state.user.name} onRouteChange={this.onRouteChange} onSearchChange={this.onSearchChange} />
       case 'competitioncreation':
-        return <CompetitionCreation onRouteChange={this.onRouteChange} />
+        return <CompetitionCreation adminToggle={this.adminToggle} onRouteChange={this.onRouteChange} />
       case 'signin':
         return <SignIn onRouteChange={this.onRouteChange} />
       case 'register':
         return <Register onRouteChange={this.onRouteChange} />
+      case 'competition':
+        return <HandleCompetition isAdmin={this.state.admin} />
+      default:
+        return <h1>Oops, something went wrong....</h1>
     }
   }
 
@@ -47,7 +62,7 @@ class App extends Component {
     const { route, isSignedIn } = this.state;
     return (
       <div>
-        <Navigation isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+        <Navigation adminToggle={this.adminToggle} isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
         { this.renderRoute(route) }
       </div>
     )

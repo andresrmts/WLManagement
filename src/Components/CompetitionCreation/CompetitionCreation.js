@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CompetitionCreation = ({ onRouteChange }) => {
+const CompetitionCreation = ({ adminToggle, onRouteChange }) => {
 	return (
 		<article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
 			<main className="pa4 black-80">
@@ -37,7 +37,11 @@ const CompetitionCreation = ({ onRouteChange }) => {
 			    </fieldset>
 			   </div>
 			    <div className="measure center">
-			      <input 
+			      <input
+			      	onClick={() => {
+			      		onRouteChange('competition')
+			      		adminToggle(true)
+			      	}} 
 			      	className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
 			      	type="submit" 
 			      	value="Create" />

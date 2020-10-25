@@ -18,6 +18,7 @@ class App extends Component {
       user: {
         id: '',
         name: 'Andres',
+        email: 'andres@gmail.com'
       }
     }
   }
@@ -33,15 +34,14 @@ class App extends Component {
 
   adminToggle = (admin) => {
     this.setState({admin: admin})
-    console.log(this.state.admin)
   }
 
   onSearchChange = (e) => {
     this.setState({searchBox: e.target.value})
-    console.log(this.state.searchBox);
   }
 
   renderRoute = (route) => {
+    const { admin } = this.state;
     switch(route) {
       case 'competitionselection':
         return <CompetitionSelection name={this.state.user.name} onRouteChange={this.onRouteChange} onSearchChange={this.onSearchChange} />
@@ -52,7 +52,7 @@ class App extends Component {
       case 'register':
         return <Register onRouteChange={this.onRouteChange} />
       case 'competition':
-        return <HandleCompetition isAdmin={this.state.admin} />
+        return <HandleCompetition isAdmin={admin} />
       default:
         return <h1>Oops, something went wrong....</h1>
     }

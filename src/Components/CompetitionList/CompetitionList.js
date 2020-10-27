@@ -1,7 +1,7 @@
 import React from 'react';
 import Competition from './Competition/Competition';
 
-const CompetitionList = ({ useremail, yourComps, onRouteChange, competitions }) => {
+const CompetitionList = ({ adminToggle, useremail, yourComps, onRouteChange, competitions }) => {
 	if (yourComps) {
 		return (
 			<div>
@@ -16,6 +16,7 @@ const CompetitionList = ({ useremail, yourComps, onRouteChange, competitions }) 
 								date={yourComps[i].id}
 								onRouteChange={onRouteChange}
 								useremail={useremail}
+								adminToggle={adminToggle}
 							/>
 						)
 					})

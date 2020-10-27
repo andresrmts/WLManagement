@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Competition = ({ email, useremail, name, location, date, onRouteChange }) => {
+const Competition = ({ adminToggle, email, useremail, name, location, date, onRouteChange }) => {
 	if (useremail && useremail === email) {
 		return (
 			<article className="mw5 tc dib bg-white br3 pa3 ma3 ba b--black-10">
@@ -11,8 +11,11 @@ const Competition = ({ email, useremail, name, location, date, onRouteChange }) 
 			    <hr className="mw3 bb bw1 b--black-10" />
 			    <div style={{ display: 'flex', justifyContent: 'center'}}>
 					<a 
-					className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray"
-					onClick={() => onRouteChange('competition')}
+					className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer"
+					onClick={() => {
+						onRouteChange('competition')
+						adminToggle(true)
+					}}
 					>
 					Admin</a>
 				</div>
@@ -29,7 +32,7 @@ const Competition = ({ email, useremail, name, location, date, onRouteChange }) 
 			    <hr className="mw3 bb bw1 b--black-10" />
 			    <div style={{ display: 'flex', justifyContent: 'center'}}>
 					<a 
-					className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray"
+					className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer"
 					onClick={() => onRouteChange('competition')}
 					>
 					Join</a>

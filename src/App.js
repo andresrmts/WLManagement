@@ -44,7 +44,7 @@ class App extends Component {
     const { admin } = this.state;
     switch(route) {
       case 'competitionselection':
-        return <CompetitionSelection useremail={this.state.user.email} name={this.state.user.name} onRouteChange={this.onRouteChange} onSearchChange={this.onSearchChange} />
+        return <CompetitionSelection adminToggle={this.adminToggle} useremail={this.state.user.email} name={this.state.user.name} onRouteChange={this.onRouteChange} onSearchChange={this.onSearchChange} />
       case 'competitioncreation':
         return <CompetitionCreation adminToggle={this.adminToggle} onRouteChange={this.onRouteChange} />
       case 'signin':
@@ -52,7 +52,7 @@ class App extends Component {
       case 'register':
         return <Register onRouteChange={this.onRouteChange} />
       case 'competition':
-        return <HandleCompetition isAdmin={admin} />
+        return <HandleCompetition adminToggle={this.adminToggle} onRouteChange={this.onRouteChange} isAdmin={admin} />
       default:
         return <h1>Oops, something went wrong....</h1>
     }

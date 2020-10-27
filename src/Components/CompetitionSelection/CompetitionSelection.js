@@ -17,8 +17,12 @@ class CompetitionSelection extends React.Component {
     });
   }
 
+  
+
 	render() {
-		const { onRouteChange, onSearchChange, name } = this.props;
+		const { onRouteChange, onSearchChange, name, useremail } = this.props;
+		const yourComps = this.state.competitions.filter(competition => competition.id < 4);
+		const availableComps = this.state.competitions.filter(competition => !yourComps.some(comp => competition.name === comp.name))
 		return (
 			<div>
 				<p className="pa4 tc" style={{ display: 'flex', justifyContent: 'center'}}>
@@ -39,7 +43,7 @@ class CompetitionSelection extends React.Component {
 							Your Competitions
 						</h1>
 						<div>
-							<CompetitionList competitions={this.state.competitions} onRouteChange={onRouteChange}/>
+							<CompetitionList useremail={useremail} yourComps={yourComps} onRouteChange={onRouteChange}/>
 						</div>
 					</div>
 				</div>
@@ -47,7 +51,7 @@ class CompetitionSelection extends React.Component {
 					<h1>
 						Available Competitions
 					</h1>
-					<CompetitionList competitions={this.state.competitions} onRouteChange={onRouteChange}/>
+					<CompetitionList competitions={availableComps} onRouteChange={onRouteChange}/>
 				</div>
 			</div>
 		)

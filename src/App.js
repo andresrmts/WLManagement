@@ -18,7 +18,7 @@ class App extends Component {
       user: {
         id: '',
         name: 'Andres',
-        email: 'andres@gmail.com'
+        email: 'Shanna@melissa.tv'
       }
     }
   }
@@ -44,7 +44,7 @@ class App extends Component {
     const { admin } = this.state;
     switch(route) {
       case 'competitionselection':
-        return <CompetitionSelection name={this.state.user.name} onRouteChange={this.onRouteChange} onSearchChange={this.onSearchChange} />
+        return <CompetitionSelection useremail={this.state.user.email} name={this.state.user.name} onRouteChange={this.onRouteChange} onSearchChange={this.onSearchChange} />
       case 'competitioncreation':
         return <CompetitionCreation adminToggle={this.adminToggle} onRouteChange={this.onRouteChange} />
       case 'signin':

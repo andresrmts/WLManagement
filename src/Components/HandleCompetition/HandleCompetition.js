@@ -2,6 +2,8 @@ import React from 'react';
 import AdminNav from './AdminNav/AdminNav';
 import Registrations from './Registrations/Registrations';
 import AthleteList from './AthleteList/AthleteList';
+import CoachNav from './CoachNav/CoachNav';
+import MyAthletes from './MyAthletes/MyAthletes';
 
 class HandleCompetition extends React.Component {
 	constructor(props) {
@@ -18,13 +20,19 @@ class HandleCompetition extends React.Component {
 	renderAdminRoutes = (route) => {
 		switch(route) {
 			case 'home':
-				return <Registrations />
+				if (this.props.isAdmin) {
+					return <Registrations />
+				} else {
+					return <MyAthletes />
+				}
 			case 'athletelist':
 				return <AthleteList />
 			default:
 				return <h1>Something went wrong...</h1>
 		}
 	}
+
+	
 
 	render() {
 		const { onRouteChange, adminToggle, isAdmin} = this.props;
@@ -39,7 +47,10 @@ class HandleCompetition extends React.Component {
 			)
 		} else {
 			return (
-				<h1>Ma olen keegi muu</h1>
+				<div>
+					<h1>You are currently coach NAME</h1>
+					<CoachNav onRouteChange={onRouteChange}/>
+				</div>
 			)
 		}
 	}

@@ -4,12 +4,24 @@ import Registrations from './Registrations/Registrations';
 import AthleteList from './AthleteList/AthleteList';
 import CoachNav from './CoachNav/CoachNav';
 import MyAthletes from './MyAthletes/MyAthletes';
+import RegisteredOfficials from './RegisteredOfficials/RegisteredOfficials';
 
 class HandleCompetition extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			comproute: 'home'
+			comproute: 'home',
+			acceptedRegistrations: [],
+			registrations: [
+				{
+					name: 'Andres Riimets',
+					role: 'coach'
+				},
+				{
+					name: 'Piibe Pullerits',
+					role: 'judge'
+				}
+			]
 		}
 	}
 
@@ -21,10 +33,12 @@ class HandleCompetition extends React.Component {
 		switch(route) {
 			case 'home':
 				if (this.props.isAdmin) {
-					return <Registrations />
+					return <Registrations registrations={this.state.registrations} acceptedRegistrations={this.state.acceptedRegistrations} />
 				} else {
 					return <MyAthletes />
 				}
+			case 'registered':
+				return <RegisteredOfficials acceptedRegistrations={this.state.acceptedRegistrations} />
 			case 'athletelist':
 				return <AthleteList />
 			default:
@@ -32,10 +46,10 @@ class HandleCompetition extends React.Component {
 		}
 	}
 
-	
+
 
 	render() {
-		const { onRouteChange, adminToggle, isAdmin} = this.props;
+		const { onRouteChange, adminToggle, isAdmin } = this.props;
 		const { comproute } = this.state;
 		if (isAdmin) {
 			return (

@@ -2,25 +2,21 @@ import React from 'react';
 import PendingRegistrationsList from './PendingRegistrationsList/PendingRegistrationsList';
 
 class Registrations extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
-			registrations: [
-				{
-					name: 'Andres Riimets',
-					role: 'coach'
-				},
-				{
-					name: 'Piibe Pullerits',
-					role: 'judge'
-				}
-			]
+			
 		}
 	}
 
 	approveRemove = (decision, name) => {
-		const {registrations} = this.state;
+		let splicedArray;
+		const {registrations} = this.props;
 		if (decision === 'yes') {
+			splicedArray = registrations.splice(registrations.findIndex(participant => participant.name === name), 1);
+			this.props.acceptedRegistrations.push(splicedArray[0]);
+			this.setState({registrations: registrations});
+		} else {
 			registrations.splice(registrations.findIndex(participant => participant.name === name), 1);
 			this.setState({registrations: registrations});
 		}
@@ -40,7 +36,7 @@ class Registrations extends React.Component {
 						<p>Approve</p>
 					</div>
 				</div>
-				<PendingRegistrationsList approveRemove={this.approveRemove} registrations={this.state.registrations} />
+				<PendingRegistrationsList approveRemove={this.approveRemove} registrations={this.props.registrations} />
 			</div>
 		)
 	}

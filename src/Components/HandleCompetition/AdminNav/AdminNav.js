@@ -5,16 +5,19 @@ const AdminNav = ({compRoute, adminToggle, onRouteChange}) => {
 		<nav style={{display: 'flex', justifyContent: 'center'}}>
 			<p 
 			onClick={() => compRoute('home')}
-			className="f3 pa3 underline pointer">Registrations</p>
+			className="f5 pa3 underline pointer">Pending registrations</p>
+			<p 
+			onClick={() => compRoute('registered')}
+			className="f5 pa3 underline pointer">Accepted Registrations</p>
 			<p 
 			onClick={() => compRoute('athletelist')}
-			className="f3 pa3 underline pointer">Competitor List</p>
+			className="f5 pa3 underline pointer">Competitor List</p>
 			<p 
 				onClick={() => {
 					onRouteChange('competitionselection')
 					adminToggle(false)
 				}} 
-				className="f3 pa3 underline pointer">Exit</p>
+				className="f5 pa3 underline pointer">Exit</p>
 		</nav>
 	)
 }

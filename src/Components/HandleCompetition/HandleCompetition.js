@@ -5,6 +5,7 @@ import AthleteList from './AthleteList/AthleteList';
 import CoachNav from './CoachNav/CoachNav';
 import MyAthletes from './MyAthletes/MyAthletes';
 import RegisteredOfficials from './RegisteredOfficials/RegisteredOfficials';
+import AthleteRegistration from './AthleteRegistration/AthleteRegistration';
 
 class HandleCompetition extends React.Component {
 	constructor(props) {
@@ -21,6 +22,15 @@ class HandleCompetition extends React.Component {
 					name: 'Piibe Pullerits',
 					role: 'judge'
 				}
+			],
+			registeredAthletes: [
+				{
+					name: 'Loll',
+					age: 27,
+					snatch: 22,
+					cnj: 23,
+					coachname: 'Coach'
+				}
 			]
 		}
 	}
@@ -29,24 +39,37 @@ class HandleCompetition extends React.Component {
 		this.setState({comproute: route})
 	}
 
+	addAthlete = (name, age, snatch, cnj) => {
+			this.state.registeredAthletes.push(
+				{
+					name,
+					age,
+					snatch,
+					cnj,
+					coachname: this.props.name
+				}
+			)
+			console.log(this.state.registeredAthletes)
+		}
+
 	renderAdminRoutes = (route) => {
 		switch(route) {
 			case 'home':
 				if (this.props.isAdmin) {
 					return <Registrations registrations={this.state.registrations} acceptedRegistrations={this.state.acceptedRegistrations} />
 				} else {
-					return <MyAthletes />
+					return <MyAthletes registeredAthletes={this.state.registeredAthletes} />
 				}
 			case 'registered':
 				return <RegisteredOfficials acceptedRegistrations={this.state.acceptedRegistrations} />
 			case 'athletelist':
-				return <AthleteList />
+				return <AthleteList registeredAthletes={this.state.registeredAthletes} />
+			case 'athleteregistration':
+				return <AthleteRegistration addAthlete={this.addAthlete} />
 			default:
 				return <h1>Something went wrong...</h1>
 		}
 	}
-
-
 
 	render() {
 		const { onRouteChange, adminToggle, isAdmin } = this.props;
@@ -62,8 +85,9 @@ class HandleCompetition extends React.Component {
 		} else {
 			return (
 				<div>
-					<h1>You are currently coach NAME</h1>
-					<CoachNav onRouteChange={onRouteChange}/>
+					<h1>You are currently coach {this.props.name}</h1>
+					<CoachNav compRoute={this.changeCompRoute} onRouteChange={onRouteChange}/>
+					{this.renderAdminRoutes(comproute)}
 				</div>
 			)
 		}

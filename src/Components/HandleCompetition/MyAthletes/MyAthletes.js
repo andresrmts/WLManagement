@@ -1,8 +1,9 @@
 import React from 'react';
+import AthleteList from '../AthleteList/AthleteList';
 
-const MyAthletes = () => {
+const MyAthletes = ({ registeredAthletes }) => {
 	return (
-		<h1>There will be a list of Coach's athlete's here</h1>
+		<AthleteList registeredAthletes={registeredAthletes} />
 	)
 }
 

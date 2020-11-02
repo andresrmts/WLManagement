@@ -2,33 +2,27 @@ import React from 'react';
 import Athlete from './Athlete/Athlete';
 
 class AthleteList extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
 		this.state = {
-			athletes: []
+
 		}
 	}
 
-	componentDidMount() {
-	 fetch('https://jsonplaceholder.typicode.com/users')
-	 	.then(response => response.json())
-	   .then(athletes => {
-	    	this.setState({ athletes: athletes })
-	  });
-	}
-
 	render() {
-		const { athletes } = this.state;
+		const { registeredAthletes } = this.props;
 		return (
 			<div>
 				{
-					athletes.map((athlete, i) => {
+					registeredAthletes.map((athlete, i) => {
 						return (
 							<Athlete 
 								key={i}
-								name={athletes[i].name}
-								snatch={athletes[i].address.geo.lat}
-								cnj={athletes[i].address.geo.lng}
+								name={registeredAthletes[i].name}
+								age={registeredAthletes[i].age}
+								snatch={registeredAthletes[i].snatch}
+								cnj={registeredAthletes[i].cnj}
+								coachName={registeredAthletes[i].coachname}
 							/>
 						)
 					})

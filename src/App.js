@@ -52,7 +52,7 @@ class App extends Component {
       case 'register':
         return <Register onRouteChange={this.onRouteChange} />
       case 'competition':
-        return <HandleCompetition adminToggle={this.adminToggle} onRouteChange={this.onRouteChange} isAdmin={admin} />
+        return <HandleCompetition name={this.state.user.name} adminToggle={this.adminToggle} onRouteChange={this.onRouteChange} isAdmin={admin} />
       default:
         return <h1>Oops, something went wrong....</h1>
     }

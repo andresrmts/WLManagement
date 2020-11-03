@@ -2,7 +2,7 @@ import React from 'react';
 
 const Athlete = ({name, snatch, cnj, age, coachName}) => {
 	return (
-		<div className="pa3 tc" style={{display: 'flex'}}>
+		<div className="pa1 tc" style={{display: 'flex'}}>
 			<div class="fl w-80 w-third-ns pa2">
 				<h4>{name}</h4>
 			</div>

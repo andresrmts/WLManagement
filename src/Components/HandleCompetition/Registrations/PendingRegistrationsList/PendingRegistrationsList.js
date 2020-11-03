@@ -10,8 +10,8 @@ const PendingRegistrationList = ({acceptedRegistrations, approveRemove, registra
 						return (
 							<Registration 
 								key={i}
-								name={registrations[i].name}
-								role={registrations[i].role}
+								name={reg.name}
+								role={reg.role}
 								approveRemove={approveRemove}
 							/>
 						)
@@ -27,8 +27,8 @@ const PendingRegistrationList = ({acceptedRegistrations, approveRemove, registra
 						return (
 							<Registration 
 								key={i}
-								name={acceptedRegistrations[i].name}
-								role={acceptedRegistrations[i].role}
+								name={reg.name}
+								role={reg.role}
 							/>
 						)
 					})

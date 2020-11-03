@@ -18,11 +18,11 @@ class AthleteList extends React.Component {
 						return (
 							<Athlete 
 								key={i}
-								name={registeredAthletes[i].name}
-								age={registeredAthletes[i].age}
-								snatch={registeredAthletes[i].snatch}
-								cnj={registeredAthletes[i].cnj}
-								coachName={registeredAthletes[i].coachname}
+								name={athlete.name}
+								age={athlete.age}
+								snatch={athlete.snatch}
+								cnj={athlete.cnj}
+								coachName={athlete.coachname}
 							/>
 						)
 					})

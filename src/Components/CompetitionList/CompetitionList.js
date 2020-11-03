@@ -10,10 +10,10 @@ const CompetitionList = ({ adminToggle, useremail, yourComps, onRouteChange, com
 						return (
 							<Competition 
 								key={i}
-								name={yourComps[i].name}
-								email={yourComps[i].email}
-								location={yourComps[i].address.city}
-								date={yourComps[i].id}
+								name={comp.name}
+								email={comp.email}
+								location={comp.address.city}
+								date={comp.id}
 								onRouteChange={onRouteChange}
 								useremail={useremail}
 								adminToggle={adminToggle}
@@ -31,9 +31,9 @@ const CompetitionList = ({ adminToggle, useremail, yourComps, onRouteChange, com
 						return (
 							<Competition 
 								key={i}
-								name={competitions[i].name}
-								location={competitions[i].address.city}
-								date={competitions[i].id}
+								name={comp.name}
+								location={comp.address.city}
+								date={comp.id}
 								onRouteChange={onRouteChange}
 							/>
 						)

@@ -6,12 +6,15 @@ import CoachNav from './CoachNav/CoachNav';
 import MyAthletes from './MyAthletes/MyAthletes';
 import RegisteredOfficials from './RegisteredOfficials/RegisteredOfficials';
 import AthleteRegistration from './AthleteRegistration/AthleteRegistration';
+import Judge from './Judge/Judge';
+import Result from './Result/Result';
 
 class HandleCompetition extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			comproute: 'home',
+			started: false,
 			acceptedRegistrations: [],
 			registrations: [
 				{
@@ -31,7 +34,8 @@ class HandleCompetition extends React.Component {
 					cnj: 23,
 					coachname: 'Coach'
 				}
-			]
+			],
+			result: 0
 		}
 	}
 
@@ -40,6 +44,9 @@ class HandleCompetition extends React.Component {
 	}
 
 	addAthlete = (name, age, snatch, cnj) => {
+		if (age < 1 || age > 99 || snatch < 10 || snatch > 230 || cnj < 10 || cnj > 300) {
+			alert('Please enter valid info!')
+		} else {
 			this.state.registeredAthletes.push(
 				{
 					name,
@@ -49,21 +56,41 @@ class HandleCompetition extends React.Component {
 					coachname: this.props.name
 				}
 			)
-			console.log(this.state.registeredAthletes)
+			document.getElementById('name').value=''; 
+         document.getElementById('age').value=''; 
+         document.getElementById('snatch').value='';
+         document.getElementById('cnj').value='';
 		}
+	}
+
+	castVote = (decision) => {
+		if (decision === 'yes') {
+			let voteCount = this.state.result;
+			voteCount++;
+			this.setState({result: voteCount})
+		} else {
+			let voteCount = this.state.result;
+			voteCount--;
+			this.setState({result: voteCount})
+		}
+	}
 
 	renderAdminRoutes = (route) => {
+		const { registrations, started, registeredAthletes, acceptedRegistrations } = this.state;
+		const filteredName = registrations.filter(reg => reg.name === this.props.name)
 		switch(route) {
 			case 'home':
 				if (this.props.isAdmin) {
-					return <Registrations registrations={this.state.registrations} acceptedRegistrations={this.state.acceptedRegistrations} />
+					return <Registrations registrations={registrations} acceptedRegistrations={acceptedRegistrations} />
+				} else if (filteredName[0].role === 'coach') {
+					return <MyAthletes registeredAthletes={registeredAthletes} />
 				} else {
-					return <MyAthletes registeredAthletes={this.state.registeredAthletes} />
+					return <Judge castVote={this.castVote} started={started} />
 				}
 			case 'registered':
-				return <RegisteredOfficials acceptedRegistrations={this.state.acceptedRegistrations} />
+				return <RegisteredOfficials acceptedRegistrations={acceptedRegistrations} />
 			case 'athletelist':
-				return <AthleteList registeredAthletes={this.state.registeredAthletes} />
+				return <AthleteList registeredAthletes={registeredAthletes} />
 			case 'athleteregistration':
 				return <AthleteRegistration addAthlete={this.addAthlete} />
 			default:
@@ -72,25 +99,19 @@ class HandleCompetition extends React.Component {
 	}
 
 	render() {
-		const { onRouteChange, adminToggle, isAdmin } = this.props;
-		const { comproute } = this.state;
-		if (isAdmin) {
-			return (
-				<div>
-					<h1>You are currently working on COMPETITIONNAME</h1>
-					<AdminNav compRoute={this.changeCompRoute} adminToggle={adminToggle} onRouteChange={onRouteChange} />
-					{this.renderAdminRoutes(comproute)}
-				</div>
-			)
-		} else {
-			return (
-				<div>
-					<h1>You are currently coach {this.props.name}</h1>
-					<CoachNav compRoute={this.changeCompRoute} onRouteChange={onRouteChange}/>
-					{this.renderAdminRoutes(comproute)}
-				</div>
-			)
-		}
+		const { onRouteChange, adminToggle, isAdmin, name } = this.props;
+		const { comproute, started, result } = this.state;
+		return(
+			<div>
+				{isAdmin
+					? <AdminNav compRoute={this.changeCompRoute} adminToggle={adminToggle} onRouteChange={onRouteChange} />
+					: (started === true 
+						? <Result result={result} />
+						: <CoachNav name={name} compRoute={this.changeCompRoute} onRouteChange={onRouteChange}/>)
+				}
+				{this.renderAdminRoutes(comproute)}
+			</div>
+		)
 	}
 }
 

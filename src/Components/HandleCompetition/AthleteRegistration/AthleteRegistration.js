@@ -20,11 +20,11 @@ class AthleteRegistration extends React.Component {
 	}
 
 	setAthleteSnatch = (e) => {
-		this.setState({snatch: e.target.value})
+		this.setState({snatch: Number(e.target.value)})
 	}
 
 	setAthleteCnj = (e) => {
-		this.setState({cnj: e.target.value})
+		this.setState({cnj: Number(e.target.value)})
 	}
 
 

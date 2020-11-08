@@ -5,6 +5,7 @@ import Register from './Components/Register/Register';
 import SignIn from './Components/SignIn/SignIn';
 import CompetitionCreation from './Components/CompetitionCreation/CompetitionCreation';
 import HandleCompetition from './Components/HandleCompetition/HandleCompetition';
+import RoleSelection from './Components/RoleSelection/RoleSelection';
 import './App.css';
 
 class App extends Component {
@@ -17,7 +18,7 @@ class App extends Component {
       admin: false,
       user: {
         id: '',
-        name: 'Andres',
+        name: 'Piibe Pullerits',
         email: 'Shanna@melissa.tv'
       }
     }
@@ -53,6 +54,8 @@ class App extends Component {
         return <Register onRouteChange={this.onRouteChange} />
       case 'competition':
         return <HandleCompetition name={this.state.user.name} adminToggle={this.adminToggle} onRouteChange={this.onRouteChange} isAdmin={admin} />
+      case 'roleselection':
+        return <RoleSelection onRouteChange={this.onRouteChange} />
       default:
         return <h1>Oops, something went wrong....</h1>
     }

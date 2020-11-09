@@ -9,12 +9,20 @@ class Registrations extends React.Component {
 		}
 	}
 
-	approveRemove = (decision, name) => {
+	approveRemove = (decision, name, role) => {
 		let splicedArray;
-		const {registrations} = this.props;
-		if (decision === 'yes') {
+		const {registrations, acceptedRegistrations} = this.props;
+		if (decision === 'yes' && role === 'judge') {
+			if (acceptedRegistrations.filter(judge => judge.role === 'judge').length < 3) {
+				splicedArray = registrations.splice(registrations.findIndex(participant => participant.name === name), 1);
+				acceptedRegistrations.push(splicedArray[0]);
+				this.setState({registrations: registrations});
+			} else {
+				alert('There already are 3 judges in the competition')
+			}
+		} else if (decision === 'yes') {
 			splicedArray = registrations.splice(registrations.findIndex(participant => participant.name === name), 1);
-			this.props.acceptedRegistrations.push(splicedArray[0]);
+			acceptedRegistrations.push(splicedArray[0]);
 			this.setState({registrations: registrations});
 		} else {
 			registrations.splice(registrations.findIndex(participant => participant.name === name), 1);

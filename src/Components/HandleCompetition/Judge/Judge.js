@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Judge = ({ started, castVote }) => {
-	if (started === false) {
+const Judge = ({ status, castVote }) => {
+	if (status === 'notstarted') {
 		return (
 			<h1>The competition hasnt started yet. It will start in TIMER</h1>
 		)
-	} else {
+	} else if (status === 'started') {
 		return (
 			<div className="flex center pa2">
 				<p
@@ -14,6 +14,13 @@ const Judge = ({ started, castVote }) => {
 				<p 
 					onClick={() => castVote('no')}
 					className="pointer flex flex-column center pa2 ma2 vh-50 w-40 outline-m tc bg-red ba b--red">NO</p>
+			</div>
+		)
+	} else {
+		return (
+			<div className="flex center pa2">
+				<p className="pointer flex flex-column center pa2 ma2 vh-50 w-40 ba b--black tc">PAUSE</p>
+				<p className="pointer flex flex-column center pa2 ma2 vh-50 w-40 outline-m tc bg-red ba b--red">PAUSE</p>
 			</div>
 		)
 	}

@@ -11,8 +11,8 @@ const Registration = ({approveRemove, name, role}) => {
 					<p>{role}</p>
 				</div>
 				<div className="fl w-100 w-third-ns pa2 tc bb flex justify-around">
-					<p className="pointer" onClick={() => approveRemove('yes', name)}>Yes</p>
-					<p className="pointer" onClick={() => approveRemove('no', name)} >No</p>
+					<p className="pointer" onClick={() => approveRemove('yes', name, role)}>Yes</p>
+					<p className="pointer" onClick={() => approveRemove('no', name, role)} >No</p>
 				</div>
 			</div>
 		)

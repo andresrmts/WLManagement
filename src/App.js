@@ -5,7 +5,6 @@ import Register from './Components/Register/Register';
 import SignIn from './Components/SignIn/SignIn';
 import CompetitionCreation from './Components/CompetitionCreation/CompetitionCreation';
 import HandleCompetition from './Components/HandleCompetition/HandleCompetition';
-import RoleSelection from './Components/RoleSelection/RoleSelection';
 import './App.css';
 
 class App extends Component {
@@ -18,7 +17,7 @@ class App extends Component {
       admin: false,
       user: {
         id: '',
-        name: 'Piibe Pullerits',
+        name: 'Piibe Pullerits2',
         email: 'Shanna@melissa.tv'
       }
     }
@@ -45,17 +44,26 @@ class App extends Component {
     const { admin } = this.state;
     switch(route) {
       case 'competitionselection':
-        return <CompetitionSelection adminToggle={this.adminToggle} useremail={this.state.user.email} name={this.state.user.name} onRouteChange={this.onRouteChange} onSearchChange={this.onSearchChange} />
+        return <CompetitionSelection 
+          adminToggle={this.adminToggle} 
+          useremail={this.state.user.email} 
+          name={this.state.user.name} 
+          onRouteChange={this.onRouteChange} 
+          onSearchChange={this.onSearchChange} />
       case 'competitioncreation':
-        return <CompetitionCreation adminToggle={this.adminToggle} onRouteChange={this.onRouteChange} />
+        return <CompetitionCreation 
+          adminToggle={this.adminToggle} 
+          onRouteChange={this.onRouteChange} />
       case 'signin':
         return <SignIn onRouteChange={this.onRouteChange} />
       case 'register':
         return <Register onRouteChange={this.onRouteChange} />
       case 'competition':
-        return <HandleCompetition name={this.state.user.name} adminToggle={this.adminToggle} onRouteChange={this.onRouteChange} isAdmin={admin} />
-      case 'roleselection':
-        return <RoleSelection onRouteChange={this.onRouteChange} />
+        return <HandleCompetition 
+          name={this.state.user.name} 
+          adminToggle={this.adminToggle} 
+          onRouteChange={this.onRouteChange} 
+          isAdmin={admin} />
       default:
         return <h1>Oops, something went wrong....</h1>
     }

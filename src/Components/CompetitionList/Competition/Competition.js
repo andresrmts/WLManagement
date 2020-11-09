@@ -51,7 +51,7 @@ const Competition = ({ adminToggle, email, useremail, name, location, date, onRo
 			    <div style={{ display: 'flex', justifyContent: 'center'}}>
 					<button 
 					className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer"
-					onClick={() => onRouteChange('roleselection')}
+					onClick={() => onRouteChange('competition')}
 					>
 					Select Role</button>
 				</div>

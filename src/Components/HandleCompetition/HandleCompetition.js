@@ -8,13 +8,15 @@ import RegisteredOfficials from './RegisteredOfficials/RegisteredOfficials';
 import AthleteRegistration from './AthleteRegistration/AthleteRegistration';
 import Judge from './Judge/Judge';
 import Result from './Result/Result';
+import ChangeTable from './ChangeTable/ChangeTable';
+import RoleSelection from '../RoleSelection/RoleSelection';
 
 class HandleCompetition extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			comproute: 'home',
-			started: false,
+			status: 'notstarted',
 			acceptedRegistrations: [],
 			registrations: [
 				{
@@ -23,7 +25,7 @@ class HandleCompetition extends React.Component {
 				},
 				{
 					name: 'Piibe Pullerits',
-					role: 'judge'
+					role: 'changetable'
 				}
 			],
 			registeredAthletes: [
@@ -33,10 +35,21 @@ class HandleCompetition extends React.Component {
 					snatch: 22,
 					cnj: 23,
 					coachname: 'Coach'
+				},
+				{
+					name: 'Lollim',
+					age: 27,
+					snatch: 22,
+					cnj: 23,
+					coachname: 'Andres Riimets'
 				}
 			],
 			result: 0
 		}
+	}
+
+	toggleStatus = (status) => {
+		this.setState({status: status})
 	}
 
 	changeCompRoute = (route) => {
@@ -75,17 +88,27 @@ class HandleCompetition extends React.Component {
 		}
 	}
 
+	joinComp = (name, role) => {
+		this.state.registrations.push({name: name, role: role});
+		console.log(this.state.registrations);
+	}
+
 	renderAdminRoutes = (route) => {
-		const { registrations, started, registeredAthletes, acceptedRegistrations } = this.state;
-		const filteredName = registrations.filter(reg => reg.name === this.props.name)
+		const { name } = this.props;
+		const { registrations, status, registeredAthletes, acceptedRegistrations } = this.state;
+		const filteredName = registrations.filter(reg => reg.name === name);
 		switch(route) {
 			case 'home':
 				if (this.props.isAdmin) {
 					return <Registrations registrations={registrations} acceptedRegistrations={acceptedRegistrations} />
-				} else if (filteredName[0].role === 'coach') {
-					return <MyAthletes registeredAthletes={registeredAthletes} />
+				} else if (filteredName.length > 0 && filteredName[0].role === 'coach') {
+					return <MyAthletes coachName={this.props.name} registeredAthletes={registeredAthletes} />
+				} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {
+					return <Judge castVote={this.castVote} status={status} />
+				} else if (filteredName.length > 0 && filteredName[0].role === 'changetable') {
+					return <ChangeTable />
 				} else {
-					return <Judge castVote={this.castVote} started={started} />
+					return <RoleSelection changeCompRoute={this.changeCompRoute} joinComp={this.joinComp} name={name} />
 				}
 			case 'registered':
 				return <RegisteredOfficials acceptedRegistrations={acceptedRegistrations} />
@@ -100,12 +123,12 @@ class HandleCompetition extends React.Component {
 
 	render() {
 		const { onRouteChange, adminToggle, isAdmin, name } = this.props;
-		const { comproute, started, result } = this.state;
-		return(
+		const { comproute, status, result } = this.state;
+		return (
 			<div>
 				{isAdmin
-					? <AdminNav compRoute={this.changeCompRoute} adminToggle={adminToggle} onRouteChange={onRouteChange} />
-					: (started === true 
+					? <AdminNav status={status} toggleStatus={this.toggleStatus} compRoute={this.changeCompRoute} adminToggle={adminToggle} onRouteChange={onRouteChange} />
+					: (status !== 'notstarted' 
 						? <Result result={result} />
 						: <CoachNav name={name} compRoute={this.changeCompRoute} onRouteChange={onRouteChange}/>)
 				}

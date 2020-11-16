@@ -17,8 +17,8 @@ class App extends Component {
       admin: false,
       user: {
         id: '',
-        name: 'Piibe Pullerits2',
-        email: 'Shanna@melissa.tv'
+        name: 'Külli',
+        email: ''
       }
     }
   }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import AdminNav from './AdminNav/AdminNav';
 import Registrations from './Registrations/Registrations';
 import AthleteList from './AthleteList/AthleteList';
@@ -11,13 +11,23 @@ import Result from './Result/Result';
 import ChangeTable from './ChangeTable/ChangeTable';
 import RoleSelection from '../RoleSelection/RoleSelection';
 
-class HandleCompetition extends React.Component {
+class HandleCompetition extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			comproute: 'home',
-			status: 'notstarted',
-			acceptedRegistrations: [],
+			status: 'started',
+			acceptedRegistrations: [
+				{
+					name: 'Külli',
+					role: 'judge'
+				},
+				{
+					name: 'Andres Riimets',
+					role: 'coach'
+				}
+
+			],
 			registrations: [
 				{
 					name: 'Andres Riimets',
@@ -26,6 +36,10 @@ class HandleCompetition extends React.Component {
 				{
 					name: 'Piibe Pullerits',
 					role: 'changetable'
+				},
+				{
+					name: 'Külli',
+					role: 'judge'
 				}
 			],
 			registeredAthletes: [
@@ -44,7 +58,10 @@ class HandleCompetition extends React.Component {
 					coachname: 'Andres Riimets'
 				}
 			],
-			result: 0
+			verdict: {
+				result: 0,
+				votes: 0
+			}
 		}
 	}
 
@@ -76,37 +93,50 @@ class HandleCompetition extends React.Component {
 		}
 	}
 
+	seeState = () => {
+		console.log(this.state)
+	}
+
 	castVote = (decision) => {
 		if (decision === 'yes') {
-			let voteCount = this.state.result;
-			voteCount++;
-			this.setState({result: voteCount})
+			this.setState(prevState => ({
+				verdict: {
+					result: prevState.verdict.result + 1,
+					votes: prevState.verdict.votes + 3
+				}
+			}))
 		} else {
-			let voteCount = this.state.result;
-			voteCount--;
-			this.setState({result: voteCount})
+			this.setState(prevState => ({
+				verdict: {
+					result: prevState.verdict.result - 1,
+					votes: prevState.verdict.votes + 3
+				}
+			}))
 		}
 	}
 
 	joinComp = (name, role) => {
 		this.state.registrations.push({name: name, role: role});
+		this.setState({role: role})
 		console.log(this.state.registrations);
 	}
 
-	renderAdminRoutes = (route) => {
-		const { name } = this.props;
+	renderCompRoutes = (route) => {
+		const { name, isAdmin } = this.props;
 		const { registrations, status, registeredAthletes, acceptedRegistrations } = this.state;
-		const filteredName = registrations.filter(reg => reg.name === name);
+		const filteredName = acceptedRegistrations.filter(reg => reg.name === name);
 		switch(route) {
 			case 'home':
-				if (this.props.isAdmin) {
+				if (isAdmin) {
 					return <Registrations registrations={registrations} acceptedRegistrations={acceptedRegistrations} />
 				} else if (filteredName.length > 0 && filteredName[0].role === 'coach') {
-					return <MyAthletes coachName={this.props.name} registeredAthletes={registeredAthletes} />
+					return <MyAthletes coachName={name} registeredAthletes={registeredAthletes} />
 				} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {
 					return <Judge castVote={this.castVote} status={status} />
 				} else if (filteredName.length > 0 && filteredName[0].role === 'changetable') {
 					return <ChangeTable />
+				} else if (registrations.find(reg => reg.name === name) !== undefined) {
+					return <h1>Your registration hasn't been accepted yet by the admin!</h1>
 				} else {
 					return <RoleSelection changeCompRoute={this.changeCompRoute} joinComp={this.joinComp} name={name} />
 				}
@@ -123,16 +153,27 @@ class HandleCompetition extends React.Component {
 
 	render() {
 		const { onRouteChange, adminToggle, isAdmin, name } = this.props;
-		const { comproute, status, result } = this.state;
+		const { comproute, status } = this.state;
 		return (
 			<div>
 				{isAdmin
-					? <AdminNav status={status} toggleStatus={this.toggleStatus} compRoute={this.changeCompRoute} adminToggle={adminToggle} onRouteChange={onRouteChange} />
+					? <AdminNav 
+						status={status} 
+						toggleStatus={this.toggleStatus} 
+						compRoute={this.changeCompRoute} 
+						adminToggle={adminToggle} 
+						onRouteChange={onRouteChange} />
 					: (status !== 'notstarted' 
-						? <Result result={result} />
-						: <CoachNav name={name} compRoute={this.changeCompRoute} onRouteChange={onRouteChange}/>)
+						? <Result seeState={this.seeState} result={this.state.verdict.result} votes={this.state.verdict.votes} />
+						: (this.state.acceptedRegistrations.find(reg => reg.name === name && reg.role === 'coach')
+								? <CoachNav 
+									name={name} 
+									compRoute={this.changeCompRoute} 
+									onRouteChange={onRouteChange} />
+								: 	<p onClick={() => onRouteChange('competitionselection')} className="f6 tc underline pointer">Exit</p>)
+						)
 				}
-				{this.renderAdminRoutes(comproute)}
+				{this.renderCompRoutes(comproute)}
 			</div>
 		)
 	}

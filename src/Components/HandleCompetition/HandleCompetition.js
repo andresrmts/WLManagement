@@ -10,6 +10,8 @@ import Judge from './Judge/Judge';
 import Result from './Result/Result';
 import ChangeTable from './ChangeTable/ChangeTable';
 import RoleSelection from '../RoleSelection/RoleSelection';
+import CoachInCompetition from './CoachInCompetition/CoachInCompetition';
+import CompetitionAdmin from './CompetitionAdmin/CompetitionAdmin';
 
 class HandleCompetition extends Component {
 	constructor(props) {
@@ -38,7 +40,7 @@ class HandleCompetition extends Component {
 					role: 'changetable'
 				},
 				{
-					name: 'Külli',
+					name: 'Priit',
 					role: 'judge'
 				}
 			],
@@ -127,19 +129,32 @@ class HandleCompetition extends Component {
 		const filteredName = acceptedRegistrations.filter(reg => reg.name === name);
 		switch(route) {
 			case 'home':
-				if (isAdmin) {
-					return <Registrations registrations={registrations} acceptedRegistrations={acceptedRegistrations} />
-				} else if (filteredName.length > 0 && filteredName[0].role === 'coach') {
-					return <MyAthletes coachName={name} registeredAthletes={registeredAthletes} />
-				} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {
-					return <Judge castVote={this.castVote} status={status} />
-				} else if (filteredName.length > 0 && filteredName[0].role === 'changetable') {
-					return <ChangeTable />
-				} else if (registrations.find(reg => reg.name === name) !== undefined) {
-					return <h1>Your registration hasn't been accepted yet by the admin!</h1>
+				if (status === 'notstarted') {
+					if (isAdmin) {
+						return <Registrations registrations={registrations} acceptedRegistrations={acceptedRegistrations} />
+					} else if (filteredName.length > 0 && filteredName[0].role === 'coach') {
+						return <MyAthletes coachName={name} registeredAthletes={registeredAthletes} />
+					} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {
+						return <Judge castVote={this.castVote} status={status} />
+					} else if (filteredName.length > 0 && filteredName[0].role === 'changetable') {
+						return <ChangeTable />
+					} else if (registrations.find(reg => reg.name === name) !== undefined) {
+						return <h1>Your registration hasn't been accepted yet by the admin!</h1>
+					} else {
+						return <RoleSelection changeCompRoute={this.changeCompRoute} joinComp={this.joinComp} name={name} />
+					}
 				} else {
-					return <RoleSelection changeCompRoute={this.changeCompRoute} joinComp={this.joinComp} name={name} />
+					if (filteredName.length > 0 && filteredName[0].role === 'coach') {
+						return <CoachInCompetition />
+					} else if (isAdmin) {
+						return <CompetitionAdmin />
+					} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {
+						return <Judge castVote={this.castVote} status={status} />
+					} else if (filteredName.length > 0 && filteredName[0].role === 'changetable') {
+						return <ChangeTable />
+					}
 				}
+				break;
 			case 'registered':
 				return <RegisteredOfficials acceptedRegistrations={acceptedRegistrations} />
 			case 'athletelist':

@@ -1,7 +1,7 @@
 import React from 'react';
 import Competition from './Competition/Competition';
 
-const CompetitionList = ({ adminToggle, useremail, yourComps, onRouteChange, competitions }) => {
+const CompetitionList = ({ adminToggle, useremail, yourComps, onRouteChange, competitions, myAthletes, changeWeight }) => {
 	if (yourComps) {
 		return (
 			<div>
@@ -23,7 +23,7 @@ const CompetitionList = ({ adminToggle, useremail, yourComps, onRouteChange, com
 				}
 			</div>
 		)
-	} else {
+	} else if (competitions) {
 		return (
 			<div>
 				{
@@ -35,6 +35,25 @@ const CompetitionList = ({ adminToggle, useremail, yourComps, onRouteChange, com
 								location={comp.address.city}
 								date={comp.id}
 								onRouteChange={onRouteChange}
+							/>
+						)
+					})
+				}
+			</div>
+		)
+	} else {
+		return (
+			<div>
+				{
+					myAthletes.map((athlete, i) => {
+						return (
+							<Competition 
+								key={i}
+								name={athlete.name}
+								attempt={athlete.attempt}
+								snatch={athlete.snatch}
+								cnj={athlete.cnj}
+								changeWeight={changeWeight}
 							/>
 						)
 					})

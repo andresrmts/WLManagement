@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Competition = ({ adminToggle, email, useremail, name, location, date, onRouteChange }) => {
+const Competition = ({ adminToggle, email, useremail, name, location, date, onRouteChange, attempt, cnj, snatch, changeWeight }) => {
 	if (useremail && useremail === email) {
 		return (
 			<article className="mw5 tc dib bg-white br3 pa3 ma3 ba b--black-10">
@@ -37,6 +37,17 @@ const Competition = ({ adminToggle, email, useremail, name, location, date, onRo
 					>
 					Handle</button>
 				</div>
+			  </div>
+			</article>
+		)
+	} else if (snatch) {
+		return (
+			<article className="mw5 tc dib bg-white br3 pa3 ma3 ba b--black-10">
+			  <div className="tc">
+			    <h1 className="tc f4 flex flex-wrap">{name}</h1>
+			    <h2 className="tc f5">Attempt: {attempt + 1}</h2>
+			    <h3 className="tc f6">Next weight: {cnj} <p className="pointer" onClick={() => changeWeight({name}, cnj)}>+</p></h3>
+			    <hr className="mw3 bb bw1 b--black-10" />
 			  </div>
 			</article>
 		)

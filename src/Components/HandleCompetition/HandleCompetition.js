@@ -19,6 +19,7 @@ class HandleCompetition extends Component {
 		this.state = {
 			comproute: 'home',
 			status: 'started',
+			lift: 'cnj',
 			acceptedRegistrations: [
 				{
 					name: 'Külli',
@@ -46,17 +47,30 @@ class HandleCompetition extends Component {
 			],
 			registeredAthletes: [
 				{
-					name: 'Loll',
+					name: 'Poobe Pullertis',
+					attempt: 1,
+					weight: 51,
 					age: 27,
-					snatch: 22,
+					snatch: 26,
 					cnj: 23,
 					coachname: 'Coach'
 				},
 				{
-					name: 'Lollim',
+					name: 'Saskia Kissitamine',
+					attempt: 0,
+					weight: 50,
 					age: 27,
-					snatch: 22,
+					snatch: 27,
 					cnj: 23,
+					coachname: 'Andres Riimets'
+				},
+				{
+					name: 'Kraadiklaasi Kadri',
+					attempt: 0,
+					weight: 53,
+					age: 27,
+					snatch: 25,
+					cnj: 40,
 					coachname: 'Andres Riimets'
 				}
 			],
@@ -82,6 +96,8 @@ class HandleCompetition extends Component {
 			this.state.registeredAthletes.push(
 				{
 					name,
+					attempt: 1,
+					weight: '',
 					age,
 					snatch,
 					cnj,
@@ -123,17 +139,27 @@ class HandleCompetition extends Component {
 		console.log(this.state.registrations);
 	}
 
+	changeWeight = (athlete, weight) => {
+		const { lift } = this.state;
+		const index = this.state.registeredAthletes.findIndex(athletex => athletex.name === athlete.name);
+		this.setState(prevState => ({
+			registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete.name ? Object.assign(el, {[lift]: weight++}) : el)
+		}))
+		console.log(this.state.registeredAthletes[index][lift])
+	}
+
 	renderCompRoutes = (route) => {
 		const { name, isAdmin } = this.props;
-		const { registrations, status, registeredAthletes, acceptedRegistrations } = this.state;
+		const { lift, registrations, status, registeredAthletes, acceptedRegistrations } = this.state;
 		const filteredName = acceptedRegistrations.filter(reg => reg.name === name);
+		const onlyCoachAthletes = registeredAthletes.filter(athlete => athlete.coachname === name)
 		switch(route) {
 			case 'home':
 				if (status === 'notstarted') {
 					if (isAdmin) {
 						return <Registrations registrations={registrations} acceptedRegistrations={acceptedRegistrations} />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'coach') {
-						return <MyAthletes coachName={name} registeredAthletes={registeredAthletes} />
+						return <MyAthletes coachName={name} coachAthletes={onlyCoachAthletes} />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {
 						return <Judge castVote={this.castVote} status={status} />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'changetable') {
@@ -145,7 +171,7 @@ class HandleCompetition extends Component {
 					}
 				} else {
 					if (filteredName.length > 0 && filteredName[0].role === 'coach') {
-						return <CoachInCompetition />
+						return <CoachInCompetition changeWeight={this.changeWeight} name={name} lift={lift} athletes={registeredAthletes} />
 					} else if (isAdmin) {
 						return <CompetitionAdmin />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {

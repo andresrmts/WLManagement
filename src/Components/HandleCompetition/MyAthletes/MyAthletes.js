@@ -1,10 +1,9 @@
 import React from 'react';
 import AthleteList from '../AthleteList/AthleteList';
 
-const MyAthletes = ({ registeredAthletes, coachName }) => {
-	const onlyCoachAthletes = registeredAthletes.filter(athlete => athlete.coachname === coachName)
+const MyAthletes = ({ coachAthletes, coachName }) => {
 	return (
-		<AthleteList registeredAthletes={onlyCoachAthletes} />
+		<AthleteList registeredAthletes={coachAthletes} />
 	)
 }
 

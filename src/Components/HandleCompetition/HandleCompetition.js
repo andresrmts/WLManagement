@@ -19,7 +19,7 @@ class HandleCompetition extends Component {
 		this.state = {
 			comproute: 'home',
 			status: 'started',
-			lift: 'snatch',
+			lift: 'cnj',
 			acceptedRegistrations: [
 				{
 					name: 'Külli',
@@ -48,7 +48,7 @@ class HandleCompetition extends Component {
 			registeredAthletes: [
 				{
 					name: 'Poobe Pullertis',
-					attempt: 1,
+					attempt: 0,
 					weight: 51,
 					age: 27,
 					snatch: 26,
@@ -85,7 +85,7 @@ class HandleCompetition extends Component {
 					attempt: 0,
 					weight: 53,
 					age: 27,
-					snatch: 25,
+					snatch: 28,
 					cnj: 40,
 					coachname: 'Andres Riimets',
 					result: {
@@ -120,7 +120,7 @@ class HandleCompetition extends Component {
 			this.state.registeredAthletes.push(
 				{
 					name,
-					attempt: 1,
+					attempt: 0,
 					weight: '',
 					age,
 					snatch,
@@ -147,21 +147,37 @@ class HandleCompetition extends Component {
 		console.log(this.state)
 	}
 
-	castVote = (decision) => {
+	goToNextAttempt = (athlete, weight, attempt) => {
+		console.log(this.state.verdict)
+		if (this.state.verdict.result > 0 && this.state.verdict.votes === 3) {
+			this.setState(prevState => ({
+				registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete ? Object.assign(el, {[this.state.lift]: weight++}) : el),
+				registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete ? Object.assign(el, {attempt: attempt++}) : el)
+			}))
+		} else {
+			this.setState(prevState => ({
+				registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete ? Object.assign(el, {attempt: attempt++}) : el)
+			}))
+		}
+	}
+
+	castVote = (decision, athlete, weight, attempt) => {
 		if (decision === 'yes') {
 			this.setState(prevState => ({
 				verdict: {
 					result: prevState.verdict.result + 1,
 					votes: prevState.verdict.votes + 3
 				}
-			}))
+			}
+			), () => this.goToNextAttempt(athlete, weight, attempt))
 		} else {
 			this.setState(prevState => ({
 				verdict: {
 					result: prevState.verdict.result - 1,
 					votes: prevState.verdict.votes + 3
 				}
-			}))
+			}
+			), () => this.goToNextAttempt(athlete, weight, attempt))
 		}
 	}
 
@@ -172,11 +188,9 @@ class HandleCompetition extends Component {
 
 	changeWeight = (athlete, weight) => {
 		const { lift } = this.state;
-		const index = this.state.registeredAthletes.findIndex(athletex => athletex.name === athlete.name);
 		this.setState(prevState => ({
 			registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete.name ? Object.assign(el, {[lift]: weight++}) : el)
 		}))
-		console.log(this.state.registeredAthletes[index][lift])
 	}
 
 	renderCompRoutes = (route) => {
@@ -206,7 +220,7 @@ class HandleCompetition extends Component {
 					} else if (isAdmin) {
 						return <CompetitionAdmin />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {
-						return <Judge castVote={this.castVote} status={status} />
+						return <Judge goToNextAttempt={this.goToNextAttempt} lift={lift} athletes={registeredAthletes} castVote={this.castVote} status={status} />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'changetable') {
 						return <ChangeTable />
 					}

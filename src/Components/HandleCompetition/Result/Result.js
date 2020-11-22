@@ -9,13 +9,13 @@ const Result = ({ result, votes, seeState }) => {
 		)
 	} else if (result > 0 && votes === 3) {
 		return (
-			<div className="flex flex-column center tc bg-green vh-25">
+			<div onClick={() => seeState()} className="flex flex-column center tc bg-green vh-25">
 				GOOD LIFT
 			</div>
 		)
 	} else {
 		return (
-			<div className="flex flex-column center tc bg-black vh-25">
+			<div onClick={() => seeState()} className="flex flex-column center tc bg-black vh-25">
 			</div>
 		)
 	}

@@ -18,7 +18,7 @@ class CoachInCompetition extends Component {
 			    <div class="fl w-100 w-60-ns pa2">
 			      <div class="tc outline bg-white pv4">
 			      	Your boiiis
-			      	<CompetitionList changeWeight={changeWeight} myAthletes={myAthletes} />
+			      	<CompetitionList lift={lift} changeWeight={changeWeight} myAthletes={myAthletes} />
 			      </div>
 			    </div>
 			    <div class="fl w-100 w-40-ns pa2">

@@ -1,7 +1,5 @@
 import React from 'react';
 
-// className={`pa1 tc ${registeredName === coachName ? "red" : ""} `}
-
 const Athlete = ({name, snatch, cnj, age, coachName, weight, attempt, lift, registeredName}) => {
 	if (lift === 'snatch') {
 		return (

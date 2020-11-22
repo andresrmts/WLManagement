@@ -19,7 +19,7 @@ class HandleCompetition extends Component {
 		this.state = {
 			comproute: 'home',
 			status: 'started',
-			lift: 'cnj',
+			lift: 'snatch',
 			acceptedRegistrations: [
 				{
 					name: 'Külli',
@@ -53,7 +53,15 @@ class HandleCompetition extends Component {
 					age: 27,
 					snatch: 26,
 					cnj: 23,
-					coachname: 'Coach'
+					coachname: 'Coach',
+					result: {
+						snatch: [
+
+						],
+						cnj: [
+
+						]
+					}
 				},
 				{
 					name: 'Saskia Kissitamine',
@@ -62,7 +70,15 @@ class HandleCompetition extends Component {
 					age: 27,
 					snatch: 27,
 					cnj: 23,
-					coachname: 'Andres Riimets'
+					coachname: 'Andres Riimets',
+					result: {
+						snatch: [
+
+						],
+						cnj: [
+
+						]
+					}
 				},
 				{
 					name: 'Kraadiklaasi Kadri',
@@ -71,7 +87,15 @@ class HandleCompetition extends Component {
 					age: 27,
 					snatch: 25,
 					cnj: 40,
-					coachname: 'Andres Riimets'
+					coachname: 'Andres Riimets',
+					result: {
+						snatch: [
+
+						],
+						cnj: [
+
+						]
+					}
 				}
 			],
 			verdict: {
@@ -101,7 +125,15 @@ class HandleCompetition extends Component {
 					age,
 					snatch,
 					cnj,
-					coachname: this.props.name
+					coachname: this.props.name,
+					result: {
+						snatch: [
+
+						],
+						cnj: [
+
+						]
+					}
 				}
 			)
 			document.getElementById('name').value=''; 
@@ -135,7 +167,6 @@ class HandleCompetition extends Component {
 
 	joinComp = (name, role) => {
 		this.state.registrations.push({name: name, role: role});
-		this.setState({role: role})
 		console.log(this.state.registrations);
 	}
 
@@ -161,7 +192,7 @@ class HandleCompetition extends Component {
 					} else if (filteredName.length > 0 && filteredName[0].role === 'coach') {
 						return <MyAthletes coachName={name} coachAthletes={onlyCoachAthletes} />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {
-						return <Judge castVote={this.castVote} status={status} />
+						return <Judge status={status} />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'changetable') {
 						return <ChangeTable />
 					} else if (registrations.find(reg => reg.name === name) !== undefined) {

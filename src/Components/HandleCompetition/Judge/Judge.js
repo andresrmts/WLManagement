@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import AthleteList from '../AthleteList/AthleteList'
 
-const Judge = ({ status, castVote }) => {
+const Judge = ({ status, castVote, athletes, lift }) => {
 	const [voted, setVoted] = useState(false);
 	
 

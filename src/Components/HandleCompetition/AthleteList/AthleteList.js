@@ -42,18 +42,20 @@ class AthleteList extends React.Component {
 								return a[lift] - b[lift]
 							} 
 						}).map((athlete, i) => {
-							return (
-								<Athlete 
-									key={i}
-									name={athlete.name}
-									attempt={athlete.attempt}
-									snatch={athlete.snatch}
-									cnj={athlete.cnj}
-									lift={lift}
-									coachName={athlete.coachname}
-									registeredName={name}
-								/>
-							)
+							if (athlete.attempt < 3) {
+									return (
+										<Athlete 
+											key={i}
+											name={athlete.name}
+											attempt={athlete.attempt}
+											snatch={athlete.snatch}
+											cnj={athlete.cnj}
+											lift={lift}
+											coachName={athlete.coachname}
+											registeredName={name}
+										/>
+								)
+							}
 						})
 					}
 				</div>

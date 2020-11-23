@@ -19,7 +19,7 @@ class HandleCompetition extends Component {
 		this.state = {
 			comproute: 'home',
 			status: 'started',
-			lift: 'cnj',
+			lift: 'snatch',
 			acceptedRegistrations: [
 				{
 					name: 'Külli',
@@ -55,12 +55,8 @@ class HandleCompetition extends Component {
 					cnj: 23,
 					coachname: 'Coach',
 					result: {
-						snatch: [
-
-						],
-						cnj: [
-
-						]
+						snatch: [],
+						cnj: []
 					}
 				},
 				{
@@ -72,12 +68,8 @@ class HandleCompetition extends Component {
 					cnj: 23,
 					coachname: 'Andres Riimets',
 					result: {
-						snatch: [
-
-						],
-						cnj: [
-
-						]
+						snatch: [],
+						cnj: []
 					}
 				},
 				{
@@ -89,12 +81,8 @@ class HandleCompetition extends Component {
 					cnj: 40,
 					coachname: 'Andres Riimets',
 					result: {
-						snatch: [
-
-						],
-						cnj: [
-
-						]
+						snatch: [],
+						cnj: []
 					}
 				}
 			],
@@ -148,15 +136,25 @@ class HandleCompetition extends Component {
 	}
 
 	goToNextAttempt = (athlete, weight, attempt) => {
-		console.log(this.state.verdict)
-		if (this.state.verdict.result > 0 && this.state.verdict.votes === 3) {
+		const index = this.state.registeredAthletes.findIndex(registration => registration.name === athlete);
+		const { lift } = this.state;
+		if (this.state.verdict.result > 0 && this.state.verdict.votes === 3 && this.state.registeredAthletes[index].attempt < 3) {
+			this.state.registeredAthletes[index].result[lift].push(weight);
 			this.setState(prevState => ({
-				registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete ? Object.assign(el, {[this.state.lift]: weight++}) : el),
-				registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete ? Object.assign(el, {attempt: attempt++}) : el)
+				registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete ? Object.assign(el, {[lift]: weight++, attempt: attempt++}) : el),
+				verdict: {
+					result: 0,
+					votes: 0
+				}
 			}))
-		} else {
+		} else if (this.state.verdict.result < 0 && this.state.verdict.votes === 3 && this.state.registeredAthletes[index].attempt < 3) {
+			this.state.registeredAthletes[index].result[lift].push(0);
 			this.setState(prevState => ({
-				registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete ? Object.assign(el, {attempt: attempt++}) : el)
+				registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete ? Object.assign(el, {attempt: attempt++}) : el),
+				verdict: {
+					result: 0,
+					votes: 0
+				}
 			}))
 		}
 	}
@@ -183,7 +181,6 @@ class HandleCompetition extends Component {
 
 	joinComp = (name, role) => {
 		this.state.registrations.push({name: name, role: role});
-		console.log(this.state.registrations);
 	}
 
 	changeWeight = (athlete, weight) => {

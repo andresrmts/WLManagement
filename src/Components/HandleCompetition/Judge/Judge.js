@@ -8,7 +8,7 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt }) => {
 	const [attempt, setAttempt] = useState(1);
 
 	useEffect(() => {
-		setTimeout(setVoted(false), 2000)
+		setTimeout(() => setVoted(false), 2000)
 	}, [voted])
 
 	if (status === 'notstarted') {
@@ -40,10 +40,10 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt }) => {
 				</div>
 			</div>
 		)
-	// } else if ({voted}) {
-	// 	return (
-	// 		<h1>You voted already</h1>
-	// 	)
+	} else if ({voted}) {
+		return (
+			<h1>You voted already</h1>
+		)
 	} else {
 		return (
 			<div>

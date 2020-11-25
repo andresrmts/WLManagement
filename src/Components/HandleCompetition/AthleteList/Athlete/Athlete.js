@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Athlete = ({name, snatch, cnj, age, coachName, weight, attempt, lift, registeredName}) => {
-	if (lift === 'snatch') {
+	if (lift) {
 		return (
 			<div className={`pa1 tc ${registeredName === coachName ? "red" : ""}`} style={{display: 'flex'}}>
 				<div className="fl w-80 w-third-ns pa2">
@@ -11,21 +11,7 @@ const Athlete = ({name, snatch, cnj, age, coachName, weight, attempt, lift, regi
 					<h4>{attempt + 1}</h4>
 				</div>
 				<div className="fl w-80 w-third-ns pa2">
-					<h4>{snatch}</h4>
-				</div>
-			</div>
-		)
-	} else if (lift === 'cnj') {
-		return (
-			<div className={`pa1 tc ${registeredName === coachName ? "red" : ""}`} style={{display: 'flex'}}>
-				<div className="fl w-80 w-third-ns pa2">
-					<h4>{name}</h4>
-				</div>
-				<div className="fl w-80 w-third-ns pa2">
-					<h4>{attempt + 1}</h4>
-				</div>
-				<div className="fl w-80 w-third-ns pa2">
-					<h4>{cnj}</h4>
+					<h4>{lift === 'snatch' ? snatch : cnj}</h4>
 				</div>
 			</div>
 		)

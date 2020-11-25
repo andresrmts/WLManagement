@@ -14,15 +14,15 @@ class CoachInCompetition extends Component {
 		const { athletes, lift, name, changeWeight } = this.props;
 		const myAthletes = athletes.filter(athlete => athlete.coachname === name)
 		return (
-			  <div class="cf ph2-ns">
-			    <div class="fl w-100 w-60-ns pa2">
-			      <div class="tc outline bg-white pv4">
+			  <div className="cf ph2-ns">
+			    <div className="fl w-100 w-60-ns pa2">
+			      <div className="tc outline bg-white pv4">
 			      	Your boiiis
 			      	<CompetitionList lift={lift} changeWeight={changeWeight} myAthletes={myAthletes} />
 			      </div>
 			    </div>
-			    <div class="fl w-100 w-40-ns pa2">
-			      <div class="tc outline bg-white pv4">
+			    <div className="fl w-100 w-40-ns pa2">
+			      <div className="tc outline bg-white pv4">
 			      	Next Up
 			      	<div className="pa1 tc" style={{display: 'flex'}}>
 							<div className="fl w-80 w-third-ns pa2">

@@ -46,7 +46,7 @@ const Competition = ({ adminToggle, email, useremail, name, location, date, onRo
 			  <div className="tc">
 			    <h1 className="tc f4 flex flex-wrap">{name}</h1>
 			    <h2 className="tc f5">Attempt: {attempt + 1}</h2>
-			    <h3 className="tc f6">Next weight: {lift === 'snatch' ? snatch : cnj} <p className="pointer" onClick={() => changeWeight({name}, cnj)}>+</p></h3>
+			    <h3 className="tc f6">Next weight: {lift === 'snatch' ? snatch : cnj} <p className="pointer" onClick={() => changeWeight({name}, lift === 'snatch' ? snatch : cnj)}>+</p></h3>
 			    <hr className="mw3 bb bw1 b--black-10" />
 			  </div>
 			</article>

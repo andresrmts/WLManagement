@@ -19,7 +19,7 @@ class HandleCompetition extends Component {
 		this.state = {
 			comproute: 'home',
 			status: 'started',
-			lift: 'snatch',
+			lift: 'cnj',
 			acceptedRegistrations: [
 				{
 					name: 'Külli',
@@ -167,7 +167,7 @@ class HandleCompetition extends Component {
 					votes: prevState.verdict.votes + 3
 				}
 			}
-			), () => this.goToNextAttempt(athlete, weight, attempt))
+			), () => setTimeout(() => this.goToNextAttempt(athlete, weight, attempt), 2000))
 		} else {
 			this.setState(prevState => ({
 				verdict: {
@@ -175,7 +175,7 @@ class HandleCompetition extends Component {
 					votes: prevState.verdict.votes + 3
 				}
 			}
-			), () => this.goToNextAttempt(athlete, weight, attempt))
+			), () => setTimeout(() => this.goToNextAttempt(athlete, weight, attempt), 2000))
 		}
 	}
 

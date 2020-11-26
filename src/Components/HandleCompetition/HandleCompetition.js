@@ -167,7 +167,7 @@ class HandleCompetition extends Component {
 					votes: prevState.verdict.votes + 3
 				}
 			}
-			), () => setTimeout(() => this.goToNextAttempt(athlete, weight, attempt), 2000))
+			), () => setTimeout(() => this.goToNextAttempt(athlete, weight, attempt), 3000))
 		} else {
 			this.setState(prevState => ({
 				verdict: {
@@ -175,7 +175,7 @@ class HandleCompetition extends Component {
 					votes: prevState.verdict.votes + 3
 				}
 			}
-			), () => setTimeout(() => this.goToNextAttempt(athlete, weight, attempt), 2000))
+			), () => setTimeout(() => this.goToNextAttempt(athlete, weight, attempt), 3000))
 		}
 	}
 
@@ -186,7 +186,7 @@ class HandleCompetition extends Component {
 	changeWeight = (athlete, weight) => {
 		const { lift } = this.state;
 		this.setState(prevState => ({
-			registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete.name ? Object.assign(el, {[lift]: weight++}) : el)
+			registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete.name ? Object.assign(el, {[lift]: weight}) : el)
 		}))
 	}
 

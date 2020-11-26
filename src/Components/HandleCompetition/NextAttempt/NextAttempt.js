@@ -10,9 +10,11 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt}) => {
 	})
 
 	useEffect(() => {
-		setAthlete(next.length > 0 ? next[0].name : '');
-		setWeight(next.length > 0 ? next[0][lift] : '');
-		setAttempt(next.length > 0 ? next[0].attempt : '')
+		if (setAthlete) {
+			setAthlete(next.length > 0 ? next[0].name : '');
+			setWeight(next.length > 0 ? next[0][lift] : '');
+			setAttempt(next.length > 0 ? next[0].attempt : '');
+		}
 	})
 
 	if (next.length > 0) {

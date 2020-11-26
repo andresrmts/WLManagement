@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const Competition = ({ adminToggle, email, useremail, name, location, date, onRouteChange, attempt, cnj, snatch, changeWeight, lift }) => {
+	const [weight, setWeight] = useState(lift === 'snatch' ? snatch : cnj);
 	if (useremail && useremail === email) {
 		return (
 			<article className="mw5 tc dib bg-white br3 pa3 ma3 ba b--black-10">
@@ -46,7 +47,10 @@ const Competition = ({ adminToggle, email, useremail, name, location, date, onRo
 			  <div className="tc">
 			    <h1 className="tc f4 flex flex-wrap">{name}</h1>
 			    <h2 className="tc f5">Attempt: {attempt + 1}</h2>
-			    <h3 className="tc f6">Next weight: {lift === 'snatch' ? snatch : cnj} <p className="pointer" onClick={() => changeWeight({name}, lift === 'snatch' ? snatch : cnj)}>+</p></h3>
+			    <h3 className="tc f6">Next weight: {weight} 
+			    	<p className="pointer ba w-25 flex center pa1" onClick={() => setWeight(weight + 1)}>+</p>
+			    	<p className="pointer ba pa2 w-50 flex center" onClick={() => changeWeight({name}, weight)}>Approve</p>
+			    </h3>
 			    <hr className="mw3 bb bw1 b--black-10" />
 			  </div>
 			</article>

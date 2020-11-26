@@ -5,10 +5,10 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt }) => {
 	const [voted, setVoted] = useState(false);
 	const [athlete, setAthlete] = useState('');
 	const [weight, setWeight] = useState('');
-	const [attempt, setAttempt] = useState(1);
+	const [attempt, setAttempt] = useState(0);
 
 	useEffect(() => {
-		setTimeout(() => setVoted(false), 2000)
+		setTimeout(() => setVoted(false), 5000)
 	}, [voted])
 
 	if (status === 'notstarted') {

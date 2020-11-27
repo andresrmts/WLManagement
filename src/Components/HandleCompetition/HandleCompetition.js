@@ -19,7 +19,7 @@ class HandleCompetition extends Component {
 		this.state = {
 			comproute: 'home',
 			status: 'started',
-			lift: 'cnj',
+			lift: 'snatch',
 			acceptedRegistrations: [
 				{
 					name: 'Külli',
@@ -215,7 +215,7 @@ class HandleCompetition extends Component {
 					if (filteredName.length > 0 && filteredName[0].role === 'coach') {
 						return <CoachInCompetition changeWeight={this.changeWeight} name={name} lift={lift} athletes={registeredAthletes} />
 					} else if (isAdmin) {
-						return <CompetitionAdmin />
+						return <CompetitionAdmin lift={lift} athletes={registeredAthletes} />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {
 						return <Judge goToNextAttempt={this.goToNextAttempt} lift={lift} athletes={registeredAthletes} castVote={this.castVote} status={status} />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'changetable') {

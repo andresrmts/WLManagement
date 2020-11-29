@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import NextAttempt from '../NextAttempt/NextAttempt';
 
 const Judge = ({ status, castVote, athletes, lift, goToNextAttempt }) => {
@@ -6,10 +6,36 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt }) => {
 	const [athlete, setAthlete] = useState('');
 	const [weight, setWeight] = useState('');
 	const [attempt, setAttempt] = useState(0);
+	const [timedOut, setTimedOut] = useState(false)
+	const [initialMinutes, setInitialMinutes] = useState(2);
+	const [initialSeconds, setInitialSeconds] = useState(0 + '0')
+	
+
+	const usePrevious = (value) => {
+		const ref = useRef();
+		useEffect(() => {
+			ref.current = value;
+		});
+		return ref.current;
+	}
+
+	const prevAthlete = usePrevious(athlete);
 
 	useEffect(() => {
-		setTimeout(() => setVoted(false), 5000)
+		setTimeout(() => setVoted(false), 5000);
 	}, [voted])
+
+	useEffect(() => {
+		if (timedOut === true) {
+			castVote('no', athlete, weight, attempt);
+			setTimedOut(false);
+			setVoted(true);
+		}
+	}, [timedOut])
+
+	useEffect(() => {
+		setInitialMinutes(1);
+	}, [athlete])
 
 	if (status === 'notstarted') {
 		return (
@@ -19,14 +45,26 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt }) => {
 		return (
 			<div className="w-100">
 				<div className="flex center pa2">
-					<NextAttempt setAttempt={setAttempt} setWeight={setWeight} setAthlete={setAthlete} athletes={athletes} lift={lift} />
+					<NextAttempt 
+						initialSeconds={initialSeconds}
+						initialMinutes={initialMinutes}
+						setTimedOut={setTimedOut} 
+						setVoted={setVoted} 
+						castVote={castVote} 
+						setAttempt={setAttempt} 
+						setWeight={setWeight} 
+						setAthlete={setAthlete} 
+						athletes={athletes} 
+						lift={lift} />
 				</div>
 				<div className="flex center pa2">
+					{prevAthlete}
 					<p
 						id="yes"
 						onClick={ () => {
 							castVote('yes', athlete, weight, attempt);
 							setVoted(true);
+							console.log(prevAthlete)
 					}} 
 						className="btn pointer flex flex-column center pa2 ma2 vh-50 w-40 ba b--black tc">YES</p>
 					<p 
@@ -34,7 +72,6 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt }) => {
 						onClick={ () => {
 							castVote('no', athlete, weight, attempt);
 							setVoted(true);
-
 					}}
 						className="btn pointer flex flex-column center pa2 ma2 vh-50 w-40 outline-m tc bg-red ba b--red">NO</p>
 				</div>

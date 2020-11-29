@@ -148,7 +148,7 @@ class HandleCompetition extends Component {
 				}
 			}))
 		} else if (this.state.verdict.result < 0 && this.state.verdict.votes === 3 && this.state.registeredAthletes[index].attempt < 3) {
-			this.state.registeredAthletes[index].result[lift].push(0);
+			this.state.registeredAthletes[index].result[lift].push(weight + 'x');
 			this.setState(prevState => ({
 				registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete ? Object.assign(el, {attempt: attempt++}) : el),
 				verdict: {

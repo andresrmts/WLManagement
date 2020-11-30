@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AthleteList from '../AthleteList/AthleteList';
 import NextAttempt from '../NextAttempt/NextAttempt';
 
 
 const CompetitionAdmin = ({ athletes, lift }) => {
+
 	return (
 		<div className="cf ph2-ns">
+			<div className="ba tc w-20 center">
+				Siin sees pole midagi
+			</div>
 			<div className="fl w-100 w-60-ns pa2 tc">
 				Next Attempt
 				<NextAttempt lift={lift} athletes={athletes} />

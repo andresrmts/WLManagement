@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Timer from '../Timer/Timer';
 
-const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTimedOut, initialMinutes, initialSeconds }) => {
+const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTimedOut, initialMinutes, initialSeconds, prevAthlete }) => {
 	const [seconds, setSeconds] = useState(initialSeconds);
 	const [minutes, setMinutes] = useState(initialMinutes);
 	const [timerStart, setTimerStart] = useState(true);
@@ -50,6 +50,14 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 
 		return cleanUp;
 	}, [seconds, timerStart])
+
+	useEffect(() => {
+		if (prevAthlete === next[0].name) {
+			setMinutes(2);
+		} else {
+			setMinutes(1)
+		}
+	}, [])
 
 	if (next.length > 0) {
 		return (

@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
 import NextAttempt from '../NextAttempt/NextAttempt';
 
+	const usePrevious = (value) => {
+		const ref = useRef(null);
+		useEffect(() => {
+			ref.current = value;
+		}, [value]);
+		return ref.current;
+	}
+
 const Judge = ({ status, castVote, athletes, lift, goToNextAttempt }) => {
 	const [voted, setVoted] = useState(false);
 	const [athlete, setAthlete] = useState('');
 	const [weight, setWeight] = useState('');
 	const [attempt, setAttempt] = useState(0);
 	const [timedOut, setTimedOut] = useState(false)
-	const [initialMinutes, setInitialMinutes] = useState(2);
+	const [initialMinutes, setInitialMinutes] = useState(1);
 	const [initialSeconds, setInitialSeconds] = useState(0 + '0')
-	
-
-	const usePrevious = (value) => {
-		const ref = useRef();
-		useEffect(() => {
-			ref.current = value;
-		});
-		return ref.current;
-	}
+	// const prevAthlete = useRef(athlete).current;
 
 	const prevAthlete = usePrevious(athlete);
 
@@ -33,10 +33,6 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt }) => {
 		}
 	}, [timedOut])
 
-	useEffect(() => {
-		setInitialMinutes(1);
-	}, [athlete])
-
 	if (status === 'notstarted') {
 		return (
 			<h1>The competition hasnt started yet. It will start in TIMER</h1>
@@ -48,6 +44,7 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt }) => {
 					<NextAttempt 
 						initialSeconds={initialSeconds}
 						initialMinutes={initialMinutes}
+						prevAthlete={prevAthlete}
 						setTimedOut={setTimedOut} 
 						setVoted={setVoted} 
 						castVote={castVote} 
@@ -64,7 +61,6 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt }) => {
 						onClick={ () => {
 							castVote('yes', athlete, weight, attempt);
 							setVoted(true);
-							console.log(prevAthlete)
 					}} 
 						className="btn pointer flex flex-column center pa2 ma2 vh-50 w-40 ba b--black tc">YES</p>
 					<p 

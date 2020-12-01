@@ -9,15 +9,12 @@ import NextAttempt from '../NextAttempt/NextAttempt';
 		return ref.current;
 	}
 
-const Judge = ({ status, castVote, athletes, lift, goToNextAttempt }) => {
+const Judge = ({ status, castVote, athletes, lift, goToNextAttempt, timer }) => {
 	const [voted, setVoted] = useState(false);
 	const [athlete, setAthlete] = useState('');
 	const [weight, setWeight] = useState('');
 	const [attempt, setAttempt] = useState(0);
-	const [timedOut, setTimedOut] = useState(false)
-	const [initialMinutes, setInitialMinutes] = useState(1);
-	const [initialSeconds, setInitialSeconds] = useState(0 + '0')
-	// const prevAthlete = useRef(athlete).current;
+	const [timedOut, setTimedOut] = useState(false);
 
 	const prevAthlete = usePrevious(athlete);
 
@@ -42,8 +39,7 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt }) => {
 			<div className="w-100">
 				<div className="flex center pa2">
 					<NextAttempt 
-						initialSeconds={initialSeconds}
-						initialMinutes={initialMinutes}
+						timer={timer}
 						prevAthlete={prevAthlete}
 						setTimedOut={setTimedOut} 
 						setVoted={setVoted} 
@@ -55,7 +51,6 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt }) => {
 						lift={lift} />
 				</div>
 				<div className="flex center pa2">
-					{prevAthlete}
 					<p
 						id="yes"
 						onClick={ () => {

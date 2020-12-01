@@ -3,16 +3,17 @@ import AthleteList from '../AthleteList/AthleteList';
 import NextAttempt from '../NextAttempt/NextAttempt';
 
 
-const CompetitionAdmin = ({ athletes, lift }) => {
+const CompetitionAdmin = ({ athletes, lift, timer, toggleTimer }) => {
+	
 
 	return (
 		<div className="cf ph2-ns">
-			<div className="ba tc w-20 center">
-				Siin sees pole midagi
+			<div onClick={() => toggleTimer()} className="ba tc w-20 center">
+				{timer === true ? 'true' : 'false'}
 			</div>
 			<div className="fl w-100 w-60-ns pa2 tc">
 				Next Attempt
-				<NextAttempt lift={lift} athletes={athletes} />
+				<NextAttempt timer={timer} lift={lift} athletes={athletes} />
 			</div>
 			<div className="fl w-100 w-40-ns pa2">
 				<div className="tc outline bg-white pv4">

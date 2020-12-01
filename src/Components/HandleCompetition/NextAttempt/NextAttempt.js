@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Timer from '../Timer/Timer';
 
-const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTimedOut, initialMinutes, initialSeconds, prevAthlete }) => {
-	const [seconds, setSeconds] = useState(initialSeconds);
-	const [minutes, setMinutes] = useState(initialMinutes);
+const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTimedOut, initialMinutes, initialSeconds, prevAthlete, timerState, timer }) => {
+	const [seconds, setSeconds] = useState(0 + '0');
+	const [minutes, setMinutes] = useState(1);
 	const [timerStart, setTimerStart] = useState(true);
 
 	const updateTime = () => {
@@ -59,6 +59,14 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 		}
 	}, [])
 
+	useEffect(() => {
+		timer === true
+		?
+		setTimerStart(true)
+		:
+		setTimerStart(false)
+	}, [timer])
+
 	if (next.length > 0) {
 		return (
 			<article className="br2 ba dark-gray b--black-10 mv4 w-80 center">
@@ -66,7 +74,7 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 			    <div className="mt1">
 			      <div className="flex flex-column justify-around">
 			      <Timer seconds={seconds} minutes={minutes} />
-			        <h1 className="f2 pa2">{next[0].name}</h1>
+			        <h1 onClick={() => console.log(timer)} className="f2 pa2">{next[0].name}</h1>
 			        <h1 className="f2 pa2">Attempt: {next[0].attempt + 1}</h1>
 			      </div>
 			      <div className="flex justify-around">

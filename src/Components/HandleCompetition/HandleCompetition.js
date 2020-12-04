@@ -18,7 +18,7 @@ class HandleCompetition extends Component {
 		super(props);
 		this.state = {
 			comproute: 'home',
-			status: 'started',
+			status: 'notstarted',
 			timer: true,
 			lift: 'snatch',
 			acceptedRegistrations: [
@@ -50,7 +50,7 @@ class HandleCompetition extends Component {
 				{
 					name: 'Poobe Pullertis',
 					attempt: 0,
-					weight: 51,
+					weight: "-",
 					age: 27,
 					snatch: 26,
 					cnj: 23,
@@ -63,7 +63,7 @@ class HandleCompetition extends Component {
 				{
 					name: 'Saskia Kissitamine',
 					attempt: 0,
-					weight: 50,
+					weight: "-",
 					age: 27,
 					snatch: 27,
 					cnj: 23,
@@ -76,7 +76,7 @@ class HandleCompetition extends Component {
 				{
 					name: 'Kraadiklaasi Kadri',
 					attempt: 0,
-					weight: 53,
+					weight: "-",
 					age: 27,
 					snatch: 28,
 					cnj: 40,
@@ -185,13 +185,16 @@ class HandleCompetition extends Component {
 	}
 
 	changeWeight = (athlete, weight) => {
-		const { lift } = this.state;
-		this.setState(prevState => ({
-			registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete.name ? Object.assign(el, {[lift]: weight}) : el)
-		}))
+		const { lift, registeredAthletes } = this.state;
+		console.log(athlete.name)
+		this.setState({registeredAthletes: registeredAthletes.map(el => el.name === athlete.name ? Object.assign(el, {[lift]: weight}) : el)})
 	}
 
-	toggleTimer = () => {
+	changeAlert = () => {
+
+	}
+
+	toggleTimer = (coach) => {
 		this.setState(prevState => ({
 			timer: !prevState.timer
 		}))

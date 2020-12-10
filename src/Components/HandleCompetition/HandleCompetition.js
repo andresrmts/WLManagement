@@ -18,8 +18,9 @@ class HandleCompetition extends Component {
 		super(props);
 		this.state = {
 			comproute: 'home',
-			status: 'notstarted',
+			status: 'started',
 			timer: true,
+			time: {minutes: 1, seconds: 0 + '0'},
 			lift: 'snatch',
 			acceptedRegistrations: [
 				{
@@ -92,6 +93,10 @@ class HandleCompetition extends Component {
 				votes: 0
 			}
 		}
+	}
+
+	setTime = (minutes) => {
+		this.setState({time: {minutes: minutes, seconds: 0 + '0'}})
 	}
 
 	toggleStatus = (status) => {
@@ -202,7 +207,7 @@ class HandleCompetition extends Component {
 
 	renderCompRoutes = (route) => {
 		const { name, isAdmin } = this.props;
-		const { lift, registrations, status, registeredAthletes, acceptedRegistrations, timer } = this.state;
+		const { lift, registrations, status, registeredAthletes, acceptedRegistrations, timer, time } = this.state;
 		const filteredName = acceptedRegistrations.filter(reg => reg.name === name);
 		const onlyCoachAthletes = registeredAthletes.filter(athlete => athlete.coachname === name)
 		switch(route) {
@@ -225,9 +230,9 @@ class HandleCompetition extends Component {
 					if (filteredName.length > 0 && filteredName[0].role === 'coach') {
 						return <CoachInCompetition changeWeight={this.changeWeight} name={name} lift={lift} athletes={registeredAthletes} />
 					} else if (isAdmin) {
-						return <CompetitionAdmin toggleTimer={this.toggleTimer} timer={timer} lift={lift} athletes={registeredAthletes} />
+						return <CompetitionAdmin time={time} toggleTimer={this.toggleTimer} timer={timer} lift={lift} athletes={registeredAthletes} />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {
-						return <Judge timer={timer} goToNextAttempt={this.goToNextAttempt} lift={lift} athletes={registeredAthletes} castVote={this.castVote} status={status} />
+						return <Judge setTime={this.setTime} time={time} timer={timer} goToNextAttempt={this.goToNextAttempt} lift={lift} athletes={registeredAthletes} castVote={this.castVote} status={status} />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'changetable') {
 						return <ChangeTable />
 					}

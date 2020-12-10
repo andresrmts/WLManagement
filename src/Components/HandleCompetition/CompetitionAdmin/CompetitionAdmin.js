@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
+import React, {useState } from 'react';
 import AthleteList from '../AthleteList/AthleteList';
 import NextAttempt from '../NextAttempt/NextAttempt';
 
-
-const CompetitionAdmin = ({ athletes, lift, timer, toggleTimer }) => {
-	
-
+const CompetitionAdmin = ({ athletes, lift, timer, toggleTimer, time }) => {
 	return (
 		<div className="cf ph2-ns">
 			<div onClick={() => toggleTimer()} className="ba tc w-20 center">
@@ -13,7 +10,7 @@ const CompetitionAdmin = ({ athletes, lift, timer, toggleTimer }) => {
 			</div>
 			<div className="fl w-100 w-60-ns pa2 tc">
 				Next Attempt
-				<NextAttempt timer={timer} lift={lift} athletes={athletes} />
+				<NextAttempt time={time} timer={timer} lift={lift} athletes={athletes} />
 			</div>
 			<div className="fl w-100 w-40-ns pa2">
 				<div className="tc outline bg-white pv4">

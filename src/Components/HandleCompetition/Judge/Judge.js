@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import NextAttempt from '../NextAttempt/NextAttempt';
 
-	const usePrevious = (value) => {
-		const ref = useRef(null);
-		useEffect(() => {
-			ref.current = value;
-		}, [value]);
-		return ref.current;
-	}
+const usePrevious = (value) => {
+	const ref = useRef(null);
+	useEffect(() => {
+		ref.current = value;
+	}, [value]);
+	return ref.current;
+}
 
-const Judge = ({ status, castVote, athletes, lift, goToNextAttempt, timer }) => {
+const Judge = ({ status, castVote, athletes, lift, goToNextAttempt, timer, time, setTime }) => {
 	const [voted, setVoted] = useState(false);
 	const [athlete, setAthlete] = useState('');
 	const [weight, setWeight] = useState('');
@@ -38,7 +38,8 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt, timer }) => 
 		return (
 			<div className="w-100">
 				<div className="flex center pa2">
-					<NextAttempt 
+					<NextAttempt
+						setTime={setTime} 
 						timer={timer}
 						prevAthlete={prevAthlete}
 						setTimedOut={setTimedOut} 
@@ -48,7 +49,8 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt, timer }) => 
 						setWeight={setWeight} 
 						setAthlete={setAthlete} 
 						athletes={athletes} 
-						lift={lift} />
+						lift={lift}
+						time={time} />
 				</div>
 				<div className="flex center pa2">
 					<p

@@ -39,6 +39,7 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt, timer, time,
 			<div className="w-100">
 				<div className="flex center pa2">
 					<NextAttempt
+						athlete={athlete}
 						setTime={setTime} 
 						timer={timer}
 						prevAthlete={prevAthlete}

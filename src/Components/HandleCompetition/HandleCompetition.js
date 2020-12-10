@@ -96,7 +96,8 @@ class HandleCompetition extends Component {
 	}
 
 	setTime = (minutes) => {
-		this.setState({time: {minutes: minutes, seconds: 0 + '0'}})
+		this.setState({time: {minutes, seconds: 0 + '0'}});
+		console.log(this.state.time)
 	}
 
 	toggleStatus = (status) => {

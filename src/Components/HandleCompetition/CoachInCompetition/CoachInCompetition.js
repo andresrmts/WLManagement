@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import CompetitionList from '../../CompetitionList/CompetitionList';
 import AthleteList from '../AthleteList/AthleteList';
+import NextAttempt from '../NextAttempt/NextAttempt';
 
-const CoachInCompetition = ({ athletes, lift, name, changeWeight }) => {
-	const [myAthletes, setMyAthletes] = useState(athletes.filter(athlete => athlete.coachname === name))
+const CoachInCompetition = ({ athletes, lift, name, changeWeight, time, timer }) => {
+	const [myAthletes] = useState(athletes.filter(athlete => athlete.coachname === name));
+	const [onTheClock] = useState(athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}));
+	const [coachTimer, setCoachTimer] = useState({minutes: time.minutes, seconds: time.seconds})
 
 	return (
 		<div className="cf ph2-ns">
 			<div className="fl w-100 w-60-ns pa2">
+				<NextAttempt timer={timer} athletes={athletes} lift={lift} time={time} setCoachTimer={setCoachTimer} />
 			   <div className="tc outline bg-white pv4">
 			      Your boiiis
 			      <CompetitionList lift={lift} changeWeight={changeWeight} myAthletes={myAthletes} />
@@ -27,7 +31,7 @@ const CoachInCompetition = ({ athletes, lift, name, changeWeight }) => {
 							<h4>{lift}</h4>
 						</div>
 					</div>
-			      <AthleteList name={name} lift={lift} inCompetitionAthletes={athletes} />
+			      <AthleteList onTheClock={onTheClock[0]} name={name} lift={lift} inCompetitionAthletes={athletes} />
 			   </div>
 			</div>
 		</div>

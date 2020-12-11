@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Timer from '../Timer/Timer';
 
-const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTimedOut, prevAthlete, timer, time, setTime }) => {
+const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTimedOut, prevAthlete, timer, time, setTime, setCoachTimer }) => {
 	const [seconds, setSeconds] = useState(time.seconds);
 	const [minutes, setMinutes] = useState(time.minutes);
 	const [timerStart, setTimerStart] = useState(true);
@@ -73,13 +73,18 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 		setTimerStart(false)
 	}, [timer])
 
+	useEffect(() => {
+		if (setCoachTimer) {
+			setCoachTimer({minutes, seconds})
+		}
+	}, [seconds])
+
 	if (next.length > 0) {
 		return (
 			<article className="br2 ba dark-gray b--black-10 mv4 w-80 center">
 			  <div className="pa2 ph3-ns pb3-ns">
 			    <div className="mt1">
 			      <div className="flex flex-column justify-around">
-			      1: {prevAthlete} 2: {next[0].name}
 			      <Timer seconds={seconds} minutes={minutes} />
 			        <h1 onClick={() => console.log(timer)} className="f2 pa2">{next[0].name}</h1>
 			        <h1 className="f2 pa2">Attempt: {next[0].attempt + 1}</h1>

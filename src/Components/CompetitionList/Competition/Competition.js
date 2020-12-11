@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Competition = ({ adminToggle, email, useremail, name, location, date, onRouteChange, attempt, cnj, snatch, changeWeight, lift }) => {
+const Competition = ({ adminToggle, email, useremail, name, location, date, onRouteChange, attempt, cnj, snatch, changeWeight, lift, onTheClock }) => {
 	const [weight, setWeight] = useState(lift === 'snatch' ? snatch : cnj);
 	if (useremail && useremail === email) {
 		return (

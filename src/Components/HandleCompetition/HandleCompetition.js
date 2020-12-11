@@ -53,7 +53,7 @@ class HandleCompetition extends Component {
 					attempt: 0,
 					weight: "-",
 					age: 27,
-					snatch: 26,
+					snatch: 27,
 					cnj: 23,
 					coachname: 'Coach',
 					result: {
@@ -66,7 +66,7 @@ class HandleCompetition extends Component {
 					attempt: 0,
 					weight: "-",
 					age: 27,
-					snatch: 27,
+					snatch: 28,
 					cnj: 23,
 					coachname: 'Andres Riimets',
 					result: {
@@ -79,7 +79,7 @@ class HandleCompetition extends Component {
 					attempt: 0,
 					weight: "-",
 					age: 27,
-					snatch: 28,
+					snatch: 30,
 					cnj: 40,
 					coachname: 'Andres Riimets',
 					result: {
@@ -229,7 +229,7 @@ class HandleCompetition extends Component {
 					}
 				} else {
 					if (filteredName.length > 0 && filteredName[0].role === 'coach') {
-						return <CoachInCompetition changeWeight={this.changeWeight} name={name} lift={lift} athletes={registeredAthletes} />
+						return <CoachInCompetition timer={timer} time={time} changeWeight={this.changeWeight} name={name} lift={lift} athletes={registeredAthletes} />
 					} else if (isAdmin) {
 						return <CompetitionAdmin time={time} toggleTimer={this.toggleTimer} timer={timer} lift={lift} athletes={registeredAthletes} />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {

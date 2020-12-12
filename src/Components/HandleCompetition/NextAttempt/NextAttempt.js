@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Timer from '../Timer/Timer';
 
 const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTimedOut, prevAthlete, timer, time, setTime, setCoachTimer }) => {
+	const [next, setNext] = useState(athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}));
 	const [seconds, setSeconds] = useState(time.seconds);
 	const [minutes, setMinutes] = useState(time.minutes);
 	const [timerStart, setTimerStart] = useState(true);
@@ -28,13 +29,13 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 		}
 	}
 
-	const next = athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {
-		if (a[lift] === b[lift]) {
-			return a.attempt - b.attempt
-		} else {
-			return a[lift] - b[lift]
-		}
-	})
+	// const next = athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {
+	// 	if (a[lift] === b[lift]) {
+	// 		return a.attempt - b.attempt
+	// 	} else {
+	// 		return a[lift] - b[lift]
+	// 	}
+	// })
 
 	useEffect(() => {
 		if (setAthlete) {
@@ -52,7 +53,7 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 	}, [seconds, timerStart])
 
 	useEffect(() => {
-		if (setTime) {
+		if (setTime && next.length > 0) {
 			if (prevAthlete === next[0].name) {
 				setTime(2)
 			} else {
@@ -62,8 +63,9 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 	}, [])
 
 	useEffect(() => {
-		setMinutes(time.minutes)
-	}, [time])
+		setMinutes(time.minutes);
+		setSeconds(time.seconds)
+	}, [time, athletes])
 
 	useEffect(() => {
 		timer === true
@@ -78,6 +80,10 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 			setCoachTimer({minutes, seconds})
 		}
 	}, [seconds])
+
+	useEffect(() => {
+		setNext(athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}))
+	}, [athletes])
 
 	if (next.length > 0) {
 		return (

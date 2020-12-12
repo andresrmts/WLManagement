@@ -71,7 +71,7 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt, timer, time,
 				</div>
 			</div>
 		)
-	} else if ({voted}) {
+	} else if (voted) {
 		return (
 			<h1>You voted already</h1>
 		)

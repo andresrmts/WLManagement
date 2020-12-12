@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Timer from '../Timer/Timer';
 
-const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTimedOut, prevAthlete, timer, time, setTime }) => {
+const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTimedOut, prevAthlete, timer, time, setTime, setCoachTimer }) => {
+	const [next, setNext] = useState(athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}));
 	const [seconds, setSeconds] = useState(time.seconds);
 	const [minutes, setMinutes] = useState(time.minutes);
 	const [timerStart, setTimerStart] = useState(true);
@@ -28,13 +29,13 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 		}
 	}
 
-	const next = athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {
-		if (a[lift] === b[lift]) {
-			return a.attempt - b.attempt
-		} else {
-			return a[lift] - b[lift]
-		}
-	})
+	// const next = athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {
+	// 	if (a[lift] === b[lift]) {
+	// 		return a.attempt - b.attempt
+	// 	} else {
+	// 		return a[lift] - b[lift]
+	// 	}
+	// })
 
 	useEffect(() => {
 		if (setAthlete) {
@@ -52,7 +53,7 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 	}, [seconds, timerStart])
 
 	useEffect(() => {
-		if (setTime) {
+		if (setTime && next.length > 0) {
 			if (prevAthlete === next[0].name) {
 				setTime(2)
 			} else {
@@ -62,8 +63,9 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 	}, [])
 
 	useEffect(() => {
-		setMinutes(time.minutes)
-	}, [time])
+		setMinutes(time.minutes);
+		setSeconds(time.seconds)
+	}, [time, athletes])
 
 	useEffect(() => {
 		timer === true
@@ -73,13 +75,22 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 		setTimerStart(false)
 	}, [timer])
 
+	useEffect(() => {
+		if (setCoachTimer) {
+			setCoachTimer({minutes, seconds})
+		}
+	}, [seconds])
+
+	useEffect(() => {
+		setNext(athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}))
+	}, [athletes])
+
 	if (next.length > 0) {
 		return (
 			<article className="br2 ba dark-gray b--black-10 mv4 w-80 center">
 			  <div className="pa2 ph3-ns pb3-ns">
 			    <div className="mt1">
 			      <div className="flex flex-column justify-around">
-			      1: {prevAthlete} 2: {next[0].name}
 			      <Timer seconds={seconds} minutes={minutes} />
 			        <h1 onClick={() => console.log(timer)} className="f2 pa2">{next[0].name}</h1>
 			        <h1 className="f2 pa2">Attempt: {next[0].attempt + 1}</h1>

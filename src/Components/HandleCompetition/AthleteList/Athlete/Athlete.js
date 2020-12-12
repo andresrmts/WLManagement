@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Athlete = ({name, snatch, cnj, age, coachName, weight, attempt, lift, registeredName}) => {
+const Athlete = ({name, snatch, cnj, age, coachName, weight, attempt, lift, registeredName, editAthleteWeight}) => {
+
 	if (lift) {
 		return (
 			<div className={`pa1 tc flex ${registeredName === coachName ? "red" : ""}`}>
@@ -24,7 +25,7 @@ const Athlete = ({name, snatch, cnj, age, coachName, weight, attempt, lift, regi
 				<div className="fl w-80 w-third-ns pa2 bl">
 					<h4>{age}</h4>
 				</div>
-				<div className="fl w-80 w-third-ns pa2 bl">
+				<div onClick={() => editAthleteWeight(name)} className="fl w-80 w-third-ns pa2 bl">
 					<h4>{weight}</h4>
 				</div>
 				<div className="fl w-80 w-third-ns pa2 bl">

@@ -53,7 +53,7 @@ class HandleCompetition extends Component {
 					attempt: 0,
 					weight: "-",
 					age: 27,
-					snatch: 26,
+					snatch: 27,
 					cnj: 23,
 					coachname: 'Coach',
 					result: {
@@ -66,7 +66,7 @@ class HandleCompetition extends Component {
 					attempt: 0,
 					weight: "-",
 					age: 27,
-					snatch: 27,
+					snatch: 26,
 					cnj: 23,
 					coachname: 'Andres Riimets',
 					result: {
@@ -79,7 +79,7 @@ class HandleCompetition extends Component {
 					attempt: 0,
 					weight: "-",
 					age: 27,
-					snatch: 28,
+					snatch: 30,
 					cnj: 40,
 					coachname: 'Andres Riimets',
 					result: {
@@ -95,9 +95,24 @@ class HandleCompetition extends Component {
 		}
 	}
 
+	editAthleteWeight = (athleteName) => {
+		const weight = prompt('Enter athlete weight:')
+		this.setState({
+			registeredAthletes: this.state.registeredAthletes.map(athlete => athleteName === athlete.name ? Object.assign(athlete, {weight: weight}) : athlete)
+		})
+	}
+
+	nextLift = () => {
+		this.setState({
+			lift: 'cnj',
+			registeredAthletes: this.state.registeredAthletes.map(athlete => Object.assign(athlete, {attempt: 0})),
+			time: {minutes: 1, seconds: 0 + '0'},
+			timer: false
+		}, () => this.setTime(1))
+	}
+
 	setTime = (minutes) => {
 		this.setState({time: {minutes, seconds: 0 + '0'}});
-		console.log(this.state.time)
 	}
 
 	toggleStatus = (status) => {
@@ -200,7 +215,7 @@ class HandleCompetition extends Component {
 
 	}
 
-	toggleTimer = (coach) => {
+	toggleTimer = () => {
 		this.setState(prevState => ({
 			timer: !prevState.timer
 		}))
@@ -229,11 +244,11 @@ class HandleCompetition extends Component {
 					}
 				} else {
 					if (filteredName.length > 0 && filteredName[0].role === 'coach') {
-						return <CoachInCompetition changeWeight={this.changeWeight} name={name} lift={lift} athletes={registeredAthletes} />
+						return <CoachInCompetition toggleTimer={this.toggleTimer} timer={timer} time={time} changeWeight={this.changeWeight} name={name} lift={lift} athletes={registeredAthletes} />
 					} else if (isAdmin) {
-						return <CompetitionAdmin time={time} toggleTimer={this.toggleTimer} timer={timer} lift={lift} athletes={registeredAthletes} />
+						return <CompetitionAdmin nextLift={this.nextLift} time={time} toggleTimer={this.toggleTimer} timer={timer} lift={lift} athletes={registeredAthletes} />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {
-						return <Judge setTime={this.setTime} time={time} timer={timer} goToNextAttempt={this.goToNextAttempt} lift={lift} athletes={registeredAthletes} castVote={this.castVote} status={status} />
+						return <Judge changeLift={this.changeLift} setTime={this.setTime} time={time} timer={timer} goToNextAttempt={this.goToNextAttempt} lift={lift} athletes={registeredAthletes} castVote={this.castVote} status={status} />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'changetable') {
 						return <ChangeTable />
 					}
@@ -242,7 +257,7 @@ class HandleCompetition extends Component {
 			case 'registered':
 				return <RegisteredOfficials acceptedRegistrations={acceptedRegistrations} />
 			case 'athletelist':
-				return <AthleteList registeredAthletes={registeredAthletes} />
+				return <AthleteList editAthleteWeight={this.editAthleteWeight} registeredAthletes={registeredAthletes} />
 			case 'athleteregistration':
 				return <AthleteRegistration addAthlete={this.addAthlete} />
 			default:

@@ -1,7 +1,7 @@
 import React from 'react';
 import Athlete from './Athlete/Athlete';
 
-const AthleteList = ({ registeredAthletes, inCompetitionAthletes, lift, name }) => {
+const AthleteList = ({ registeredAthletes, inCompetitionAthletes, lift, name, editAthleteWeight }) => {
 	if (registeredAthletes) {
 		return (
 			<div>
@@ -37,6 +37,7 @@ const AthleteList = ({ registeredAthletes, inCompetitionAthletes, lift, name }) 
 									cnj={athlete.cnj}
 									coachName={athlete.coachname}
 									weight={athlete.weight}
+									editAthleteWeight={editAthleteWeight}
 								/>
 							)
 						})

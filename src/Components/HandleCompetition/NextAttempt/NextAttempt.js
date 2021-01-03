@@ -65,7 +65,7 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 	useEffect(() => {
 		setMinutes(time.minutes);
 		setSeconds(time.seconds)
-	}, [time, athletes])
+	}, [time])
 
 	useEffect(() => {
 		timer === true

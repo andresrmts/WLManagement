@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Competition = ({ adminToggle, email, useremail, name, location, date, onRouteChange, attempt, cnj, snatch, changeWeight, lift, onTheClock, coachTimer, toggleTimer }) => {
+const Competition = ({ adminToggle, email, useremail, name, location, date, onRouteChange, attempt, cnj, snatch, changeWeight, lift, onTheClock, coachTimer, toggleTimer, setCurrentChangeCounter, currentChangeCounter }) => {
 	const [weight, setWeight] = useState(lift === 'snatch' ? snatch : cnj);
 	if (useremail && useremail === email) {
 		return (
@@ -57,8 +57,13 @@ const Competition = ({ adminToggle, email, useremail, name, location, date, onRo
 			    	}}>+</p>
 			    	<p className="pointer ba pa2 w-50 flex center" onClick={() => {
 			    		if (onTheClock.name === name) {
-			    			changeWeight({name}, weight);
-			    			toggleTimer()
+			    			if (currentChangeCounter < 2) {
+				    			changeWeight({name}, weight);
+				    			toggleTimer();
+				    			setCurrentChangeCounter(prev => prev + 1);
+			    			} else {
+			    				alert('You are only allowed 2 changes when athlete is on the clock!')
+			    			}
 			    		} else {
 			    			changeWeight({name}, weight);
 			    		}

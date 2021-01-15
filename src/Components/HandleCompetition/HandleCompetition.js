@@ -247,7 +247,7 @@ class HandleCompetition extends Component {
 					} else if (filteredName.length > 0 && filteredName[0].role === 'coach') {
 						return <CoachInCompetition toggleTimer={this.toggleTimer} timer={timer} time={time} changeWeight={this.changeWeight} name={name} lift={lift} athletes={registeredAthletes} />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {
-						return <Judge changeLift={this.changeLift} setTime={this.setTime} time={time} timer={timer} goToNextAttempt={this.goToNextAttempt} lift={lift} athletes={registeredAthletes} castVote={this.castVote} status={status} />
+						return <Judge setTime={this.setTime} time={time} timer={timer} goToNextAttempt={this.goToNextAttempt} lift={lift} athletes={registeredAthletes} castVote={this.castVote} status={status} />
 					} else if (filteredName.length > 0 && filteredName[0].role === 'changetable') {
 						return <ChangeTable />
 					}

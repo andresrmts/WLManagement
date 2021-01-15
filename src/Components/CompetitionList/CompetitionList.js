@@ -1,12 +1,12 @@
 import React from 'react';
 import Competition from './Competition/Competition';
 
-const CompetitionList = ({ adminToggle, useremail, yourComps, onRouteChange, competitions, myAthletes, changeWeight, lift, onTheClock, coachTimer, toggleTimer, setCurrentChangeCounter, currentChangeCounter }) => {
-	if (yourComps) {
+const CompetitionList = ({ adminToggle, useremail, onRouteChange, competitions, myAthletes, changeWeight, lift, onTheClock, coachTimer, toggleTimer, setCurrentChangeCounter, currentChangeCounter }) => {
+	if (competitions) {
 		return (
 			<div>
 				{
-					yourComps.map((comp, i) => {
+					competitions.map((comp, i) => {
 						return (
 							<Competition 
 								key={i}
@@ -17,24 +17,6 @@ const CompetitionList = ({ adminToggle, useremail, yourComps, onRouteChange, com
 								onRouteChange={onRouteChange}
 								useremail={useremail}
 								adminToggle={adminToggle}
-							/>
-						)
-					})
-				}
-			</div>
-		)
-	} else if (competitions) {
-		return (
-			<div>
-				{
-					competitions.map((comp, i) => {
-						return (
-							<Competition 
-								key={i}
-								name={comp.name}
-								location={comp.address.city}
-								date={comp.id}
-								onRouteChange={onRouteChange}
 							/>
 						)
 					})

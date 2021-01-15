@@ -41,7 +41,7 @@ class CompetitionSelection extends React.Component {
 							Your Competitions
 						</h1>
 						<div>
-							<CompetitionList adminToggle={adminToggle} useremail={useremail} yourComps={yourComps} onRouteChange={onRouteChange}/>
+							<CompetitionList adminToggle={adminToggle} useremail={useremail} competitions={yourComps} onRouteChange={onRouteChange}/>
 						</div>
 					</div>
 				</div>

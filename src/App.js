@@ -41,13 +41,12 @@ class App extends Component {
   }
 
   renderRoute = (route) => {
-    const { admin } = this.state;
+    const { admin, user } = this.state;
     switch(route) {
       case 'competitionselection':
         return <CompetitionSelection 
-          adminToggle={this.adminToggle} 
-          useremail={this.state.user.email} 
-          name={this.state.user.name} 
+          adminToggle={this.adminToggle}
+          user={user} 
           onRouteChange={this.onRouteChange} 
           onSearchChange={this.onSearchChange} />
       case 'competitioncreation':
@@ -60,7 +59,7 @@ class App extends Component {
         return <Register onRouteChange={this.onRouteChange} />
       case 'competition':
         return <HandleCompetition 
-          name={this.state.user.name} 
+          name={user.name} 
           adminToggle={this.adminToggle} 
           onRouteChange={this.onRouteChange} 
           isAdmin={admin} />

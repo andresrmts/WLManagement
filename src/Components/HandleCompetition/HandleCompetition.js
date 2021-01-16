@@ -49,7 +49,7 @@ class HandleCompetition extends Component {
 			],
 			registeredAthletes: [
 				{
-					name: 'Poobe Pullertis',
+					name: 'Athlete1',
 					attempt: 0,
 					weight: "-",
 					age: 27,
@@ -62,7 +62,7 @@ class HandleCompetition extends Component {
 					}
 				},
 				{
-					name: 'Saskia Kissitamine',
+					name: 'Athlete2',
 					attempt: 0,
 					weight: "-",
 					age: 27,
@@ -75,7 +75,7 @@ class HandleCompetition extends Component {
 					}
 				},
 				{
-					name: 'Kraadiklaasi Kadri',
+					name: 'Athlete3',
 					attempt: 0,
 					weight: "-",
 					age: 27,
@@ -230,11 +230,11 @@ class HandleCompetition extends Component {
 				if (status === 'notstarted') {
 					if (isAdmin) {
 						return <Registrations registrations={registrations} acceptedRegistrations={acceptedRegistrations} />
-					} else if (filteredName.length > 0 && filteredName[0].role === 'coach') {
+					} else if (filteredName[0] && filteredName[0].role === 'coach') {
 						return <MyAthletes editAthleteWeight={this.editAthleteWeight} coachName={name} coachAthletes={onlyCoachAthletes} />
-					} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {
+					} else if (filteredName[0] && filteredName[0].role === 'judge') {
 						return <Judge status={status} />
-					} else if (filteredName.length > 0 && filteredName[0].role === 'changetable') {
+					} else if (filteredName[0] && filteredName[0].role === 'changetable') {
 						return <ChangeTable />
 					} else if (registrations.find(reg => reg.name === name) !== undefined) {
 						return <h1>Your registration hasn't been accepted yet by the admin!</h1>
@@ -244,11 +244,11 @@ class HandleCompetition extends Component {
 				} else {
 					if (isAdmin) {
 						return <CompetitionAdmin nextLift={this.nextLift} time={time} toggleTimer={this.toggleTimer} timer={timer} lift={lift} athletes={registeredAthletes} />
-					} else if (filteredName.length > 0 && filteredName[0].role === 'coach') {
+					} else if (filteredName[0] && filteredName[0].role === 'coach') {
 						return <CoachInCompetition toggleTimer={this.toggleTimer} timer={timer} time={time} changeWeight={this.changeWeight} name={name} lift={lift} athletes={registeredAthletes} />
-					} else if (filteredName.length > 0 && filteredName[0].role === 'judge') {
+					} else if (filteredName[0] && filteredName[0].role === 'judge') {
 						return <Judge setTime={this.setTime} time={time} timer={timer} goToNextAttempt={this.goToNextAttempt} lift={lift} athletes={registeredAthletes} castVote={this.castVote} status={status} />
-					} else if (filteredName.length > 0 && filteredName[0].role === 'changetable') {
+					} else if (filteredName[0] && filteredName[0].role === 'changetable') {
 						return <ChangeTable />
 					}
 				}

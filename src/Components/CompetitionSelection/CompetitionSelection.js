@@ -18,13 +18,13 @@ class CompetitionSelection extends React.Component {
   }
 
 	render() {
-		const { onRouteChange, onSearchChange, name, useremail, adminToggle } = this.props;
+		const { onRouteChange, onSearchChange, user, adminToggle } = this.props;
 		const yourComps = this.state.competitions.filter(competition => competition.id < 4);
 		const availableComps = this.state.competitions.filter(competition => !yourComps.some(comp => competition.name === comp.name))
 		return (
 			<div>
 				<p className="pa4 tc" style={{ display: 'flex', justifyContent: 'center'}}>
-					You are signed in as {name}. Please Create a new Competition or join an existing competition.
+					You are signed in as {user.name}. Please Create a new Competition or join an existing competition.
 				</p>
 				<div>
 					<div className="fl w-100 w-50-ns pa2 tc" style={{ display: 'flex', justifyContent: 'center'}}>
@@ -41,7 +41,7 @@ class CompetitionSelection extends React.Component {
 							Your Competitions
 						</h1>
 						<div>
-							<CompetitionList adminToggle={adminToggle} useremail={useremail} competitions={yourComps} onRouteChange={onRouteChange}/>
+							<CompetitionList adminToggle={adminToggle} useremail={user.email} competitions={yourComps} onRouteChange={onRouteChange}/>
 						</div>
 					</div>
 				</div>

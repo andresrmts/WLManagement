@@ -220,6 +220,27 @@ class HandleCompetition extends Component {
 		}))
 	}
 
+	approveRemove = (decision, name, role) => {
+		let splicedArray;
+		const {registrations, acceptedRegistrations} = this.state;
+		if (decision === 'yes' && role === 'judge') {
+			if (acceptedRegistrations.filter(judge => judge.role === 'judge').length < 3) {
+				splicedArray = registrations.splice(registrations.findIndex(participant => participant.name === name), 1);
+				acceptedRegistrations.push(splicedArray[0]);
+				this.setState({registrations: registrations});
+			} else {
+				alert('There already are 3 judges in the competition')
+			}
+		} else if (decision === 'yes') {
+			splicedArray = registrations.splice(registrations.findIndex(participant => participant.name === name), 1);
+			acceptedRegistrations.push(splicedArray[0]);
+			this.setState({registrations: registrations});
+		} else {
+			registrations.splice(registrations.findIndex(participant => participant.name === name), 1);
+			this.setState({registrations: registrations});
+		}
+	}
+
 	renderCompRoutes = (route) => {
 		const { name, isAdmin } = this.props;
 		const { lift, registrations, status, registeredAthletes, acceptedRegistrations, timer, time } = this.state;
@@ -229,7 +250,7 @@ class HandleCompetition extends Component {
 			case 'home':
 				if (status === 'notstarted') {
 					if (isAdmin) {
-						return <Registrations registrations={registrations} acceptedRegistrations={acceptedRegistrations} />
+						return <Registrations approveRemove={this.approveRemove} registrations={registrations} acceptedRegistrations={acceptedRegistrations} />
 					} else if (filteredName[0] && filteredName[0].role === 'coach') {
 						return <MyAthletes editAthleteWeight={this.editAthleteWeight} coachName={name} coachAthletes={onlyCoachAthletes} />
 					} else if (filteredName[0] && filteredName[0].role === 'judge') {

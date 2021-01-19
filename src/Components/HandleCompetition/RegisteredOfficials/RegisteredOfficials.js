@@ -1,19 +1,10 @@
 import React from 'react';
 import PendingRegistrationsList from '../Registrations/PendingRegistrationsList/PendingRegistrationsList';
 
-class RegisteredOfficials extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-
-		}
-	}
-
-	render() {
-		return (
-			<PendingRegistrationsList acceptedRegistrations={this.props.acceptedRegistrations} />
-		)
-	}
+const RegisteredOfficials = ({ acceptedRegistrations }) => {
+	return (
+		<PendingRegistrationsList acceptedRegistrations={acceptedRegistrations} />
+	)
 }
 
 export default RegisteredOfficials;

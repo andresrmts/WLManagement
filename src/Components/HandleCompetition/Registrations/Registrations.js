@@ -32,20 +32,7 @@ class Registrations extends React.Component {
 
 	render() {
 		return (
-			<div>
-				<div className="tc pa5 pb0 flex flex-nowrap">
-					<div className="fl w-100 w-third-ns pa2 tc bl br bb">
-						<p>Name</p>
-					</div>
-					<div className="fl w-100 w-third-ns pa2 tc bl br bb">
-						<p>Role</p>
-					</div>
-					<div className="fl w-100 w-third-ns pa2 tc bl br bb">
-						<p>Approve</p>
-					</div>
-				</div>
-				<PendingRegistrationsList approveRemove={this.approveRemove} registrations={this.props.registrations} />
-			</div>
+			<PendingRegistrationsList approveRemove={this.approveRemove} registrations={this.props.registrations} />
 		)
 	}
 }

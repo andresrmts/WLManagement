@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React from 'react';
 import AthleteList from '../AthleteList/AthleteList';
 import NextAttempt from '../NextAttempt/NextAttempt';
 
@@ -7,7 +7,7 @@ const CompetitionAdmin = ({ athletes, lift, timer, toggleTimer, time, nextLift }
 	return (
 		<div className="cf ph2-ns">
 			<div className="flex">
-				<div className="pointer" onClick={() => toggleTimer()} className="ba tc w-20 center">
+				<div className="pointer ba tc w-20 center" onClick={() => toggleTimer()}>
 					{timer === true ? <p className="pointer">Stop</p> : <p className="pointer">Start</p>}
 				</div>
 				<div onClick={() => nextLift()} className="ba tc w-20 center">

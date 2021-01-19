@@ -1,38 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-class AthleteRegistration extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			name: '',
-			age: '',
-			snatch: '',
-			cnj: ''
-		}
-	}
+const AthleteRegistration = ({ addAthlete }) => {
+	const [name, setName] = useState('');
+	const [age, setAge] = useState('');
+	const [snatch, setSnatch] = useState('');
+	const [cnj, setCnj] = useState('');
 
-	setAthleteName = (e) => {
-		this.setState({name: e.target.value})
-	}
-
-	setAthleteAge = (e) => {
-		this.setState({age: e.target.value})
-	}
-
-	setAthleteSnatch = (e) => {
-		this.setState({snatch: Number(e.target.value)})
-	}
-
-	setAthleteCnj = (e) => {
-		this.setState({cnj: Number(e.target.value)})
-	}
-
-
-	render() {
-		const { addAthlete } = this.props;
-		const { name, age, snatch, cnj} = this.state;
-		return (
-			<article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
+	return (
+		<article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
 				<main className="pa4 black-80">
 					<div className="measure center">
 				    <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
@@ -40,7 +15,7 @@ class AthleteRegistration extends React.Component {
 				      <div className="mt3">
 				        <label className="db fw6 lh-copy f6" htmlFor="Name">Name</label>
 				        <input 
-				        	onChange={this.setAthleteName}
+				        	onChange={e => setName(e.target.value)}
 				        	className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" type="name" name="name"  id="name" />
 				      </div>
 				      <div className="mv3">
@@ -50,7 +25,7 @@ class AthleteRegistration extends React.Component {
 				        		Age (number between 1 and 99)
 				        	</label>
 				        <input 
-				        	onChange={this.setAthleteAge}
+				        	onChange={e => setAge(e.target.value)}
 				        	className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 				        	type="number"
 				        	min="1"
@@ -65,7 +40,7 @@ class AthleteRegistration extends React.Component {
 				        		Snatch
 				        	</label>
 				        <input 
-				        	onChange={this.setAthleteSnatch}
+				        	onChange={e => setSnatch(e.target.value)}
 				        	className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 				        	type="number"
 				        	min="10"
@@ -80,7 +55,7 @@ class AthleteRegistration extends React.Component {
 				        		Clean and Jerk
 				        	</label>
 				        <input 
-				        	onChange={this.setAthleteCnj}
+				        	onChange={e => setCnj(e.target.value)}
 				        	className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
 				        	type="number"
 				        	min="10"
@@ -100,8 +75,7 @@ class AthleteRegistration extends React.Component {
 				    </div>
 				</main>
 			</article>
-		)
-	}
+	)
 }
 
 export default AthleteRegistration;

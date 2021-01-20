@@ -2,7 +2,7 @@ import React from 'react';
 import AthleteList from '../AthleteList/AthleteList';
 import NextAttempt from '../NextAttempt/NextAttempt';
 
-const CompetitionAdmin = ({ athletes, lift, timer, toggleTimer, time, nextLift }) => {
+const CompetitionAdmin = ({ athletes, lift, timer, toggleTimer, time, nextLift, setTime }) => {
 
 	return (
 		<div className="cf ph2-ns">
@@ -16,7 +16,7 @@ const CompetitionAdmin = ({ athletes, lift, timer, toggleTimer, time, nextLift }
 			</div>
 			<div className="fl w-100 w-60-ns pa2 tc">
 				Next Attempt
-				<NextAttempt time={time} timer={timer} lift={lift} athletes={athletes} />
+				<NextAttempt setTime={setTime} time={time} timer={timer} lift={lift} athletes={athletes} />
 			</div>
 			<div className="fl w-100 w-40-ns pa2">
 				<div className="tc outline bg-white pv4">

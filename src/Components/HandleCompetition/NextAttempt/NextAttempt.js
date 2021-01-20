@@ -10,21 +10,18 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 	const updateTime = () => {
 		if (minutes === 0 && seconds === 0) {
 			if (setTimedOut) {
-				setSeconds(0 + '0');
-				setMinutes(1);
+				setTime(1, 0 + '0')
 				setTimedOut(true);
 			} else {
-				setSeconds(0 + '0');
-				setMinutes(1);
+				setTime(1, 0 + '0')
 			}
 		} else {
 			if (seconds === 0 + '0' || seconds === 0) {
-				setMinutes(minutes => minutes - 1);
-				setSeconds(59);
+				setTime(minutes - 1, 59)
 			} else if (timerStart === false) {
-				setSeconds(seconds);
+				setTime(minutes, seconds)
 			} else if (timerStart === true) {
-				setSeconds(seconds => seconds - 1);
+				setTime(minutes, seconds - 1)
 			}
 		}
 	}
@@ -47,12 +44,16 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 	useEffect(() => {
 		if (setTime && next.length > 0) {
 			if (prevAthlete === next[0].name) {
-				setTime(2)
+				setTime(2, 0 + '0')
 			} else {
-				setTime(1)
+				setTime(1, 0 + '0')
 			}
 		}
 	}, [])
+
+	useEffect(() => {
+		setTime(1, 0 + '0')
+	}, [next[0]])
 
 	useEffect(() => {
 		setMinutes(time.minutes);

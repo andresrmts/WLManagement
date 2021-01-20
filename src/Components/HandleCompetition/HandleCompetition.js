@@ -18,7 +18,7 @@ class HandleCompetition extends Component {
 		super(props);
 		this.state = {
 			comproute: 'home',
-			status: 'notstarted',
+			status: 'started',
 			timer: true,
 			time: {minutes: 1, seconds: 0 + '0'},
 			lift: 'snatch',
@@ -108,11 +108,11 @@ class HandleCompetition extends Component {
 			registeredAthletes: this.state.registeredAthletes.map(athlete => Object.assign(athlete, {attempt: 0})),
 			time: {minutes: 1, seconds: 0 + '0'},
 			timer: false
-		}, () => this.setTime(1))
+		}, () => this.setTime(1, 0 + '0'))
 	}
 
-	setTime = (minutes) => {
-		this.setState({time: {minutes, seconds: 0 + '0'}});
+	setTime = (minutes, seconds) => {
+		this.setState({time: {minutes, seconds}});
 	}
 
 	toggleStatus = (status) => {
@@ -264,9 +264,9 @@ class HandleCompetition extends Component {
 					}
 				} else {
 					if (isAdmin) {
-						return <CompetitionAdmin nextLift={this.nextLift} time={time} toggleTimer={this.toggleTimer} timer={timer} lift={lift} athletes={registeredAthletes} />
+						return <CompetitionAdmin setTime={this.setTime} nextLift={this.nextLift} time={time} toggleTimer={this.toggleTimer} timer={timer} lift={lift} athletes={registeredAthletes} />
 					} else if (filteredName[0] && filteredName[0].role === 'coach') {
-						return <CoachInCompetition toggleTimer={this.toggleTimer} timer={timer} time={time} changeWeight={this.changeWeight} name={name} lift={lift} athletes={registeredAthletes} />
+						return <CoachInCompetition setTime={this.setTime} toggleTimer={this.toggleTimer} timer={timer} time={time} changeWeight={this.changeWeight} name={name} lift={lift} athletes={registeredAthletes} />
 					} else if (filteredName[0] && filteredName[0].role === 'judge') {
 						return <Judge setTime={this.setTime} time={time} timer={timer} goToNextAttempt={this.goToNextAttempt} lift={lift} athletes={registeredAthletes} castVote={this.castVote} status={status} />
 					} else if (filteredName[0] && filteredName[0].role === 'changetable') {

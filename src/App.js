@@ -18,7 +18,7 @@ class App extends Component {
       user: {
         id: '',
         name: 'Andres Riimets',
-        email: 'Sincere@april.biz'
+        email: ''
       }
     }
   }

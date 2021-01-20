@@ -21,17 +21,6 @@ const CompetitionAdmin = ({ athletes, lift, timer, toggleTimer, time, nextLift }
 			<div className="fl w-100 w-40-ns pa2">
 				<div className="tc outline bg-white pv4">
 			   	Next Up
-			      <div className="pa1 tc" style={{display: 'flex'}}>
-						<div className="fl w-80 w-third-ns pa2">
-							<h4>Name</h4>
-						</div>
-						<div className="fl w-80 w-third-ns pa2">
-							<h4>Attempt</h4>
-						</div>
-						<div className="fl w-80 w-third-ns pa2">
-							<h4>{lift}</h4>
-						</div>
-					</div>
 			      <AthleteList lift={lift} inCompetitionAthletes={athletes} />
 			   </div>
 			</div>

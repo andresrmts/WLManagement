@@ -29,14 +29,6 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 		}
 	}
 
-	// const next = athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {
-	// 	if (a[lift] === b[lift]) {
-	// 		return a.attempt - b.attempt
-	// 	} else {
-	// 		return a[lift] - b[lift]
-	// 	}
-	// })
-
 	useEffect(() => {
 		if (setAthlete) {
 			setAthlete(next.length > 0 ? next[0].name : '');
@@ -92,7 +84,7 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 			    <div className="mt1">
 			      <div className="flex flex-column justify-around">
 			      <Timer seconds={seconds} minutes={minutes} />
-			        <h1 onClick={() => console.log(timer)} className="f2 pa2">{next[0].name}</h1>
+			        <h1 className="f2 pa2">{next[0].name}</h1>
 			        <h1 className="f2 pa2">Attempt: {next[0].attempt + 1}</h1>
 			      </div>
 			      <div className="flex justify-around">

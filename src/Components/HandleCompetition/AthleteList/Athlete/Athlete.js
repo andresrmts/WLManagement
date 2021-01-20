@@ -4,17 +4,11 @@ const Athlete = ({name, snatch, cnj, age, coachName, weight, attempt, lift, regi
 
 	if (lift) {
 		return (
-			<div className={`pa1 tc flex ${registeredName === coachName ? "red" : ""}`}>
-				<div className="fl w-80 w-third-ns pa2">
-					<h4>{name}</h4>
-				</div>
-				<div className="fl w-80 w-third-ns pa2">
-					<h4>{attempt + 1}</h4>
-				</div>
-				<div className="fl w-80 w-third-ns pa2">
-					<h4>{lift === 'snatch' ? snatch : cnj}</h4>
-				</div>
-			</div>
+			<tr className="stripe-dark">
+		      <td headers="name" className={`pa3 tc flex ${registeredName === coachName ? "red" : ""}`}>{name}</td>
+		      <td headers="attempt" className="tc pa3">{attempt + 1}</td>
+		      <td headers="lift" className="tc pa3">{lift === 'snatch' ? snatch : cnj}</td>
+		   </tr>
 		)
 	} else {
 		return (

@@ -22,26 +22,15 @@ const CoachInCompetition = ({ athletes, lift, name, changeWeight, time, timer, t
 			<div className="fl w-100 w-60-ns pa2">
 				<NextAttempt timer={timer} athletes={athletes} lift={lift} time={time} setCoachTimer={setCoachTimer} />
 			</div>
-			<div className="fl w-100 w-40-ns pa2">
+			<div className="fl w-100 w-40-ns pa2 mv4">
 			   <div className="tc outline bg-white pv4">
-			      Your boiiis
+			      Your Competitors
 			      <CompetitionList toggleTimer={toggleTimer} onTheClock={onTheClock[0]} coachTimer={coachTimer} lift={lift} changeWeight={changeWeight} myAthletes={myAthletes} setCurrentChangeCounter={setCurrentChangeCounter} currentChangeCounter={currentChangeCounter} />
 				</div>
 			</div>
 			<div className="fl w-100 w-100-ns pa2">
 			   <div className="tc outline bg-white pv4">
 			     	Next Up
-			   <div className="pa1 tc" style={{display: 'flex'}}>
-					<div className="fl w-80 w-third-ns pa2">
-						<h4>Name</h4>
-					</div>
-					<div className="fl w-80 w-third-ns pa2">
-						<h4>Attempt</h4>
-					</div>
-					<div className="fl w-80 w-third-ns pa2">
-						<h4>{lift}</h4>
-					</div>
-				</div>
 			   <AthleteList onTheClock={onTheClock[0]} name={name} lift={lift} inCompetitionAthletes={athletes} />
 			   </div>
 			</div>

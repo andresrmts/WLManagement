@@ -41,31 +41,44 @@ const AthleteList = ({ registeredAthletes, inCompetitionAthletes, lift, name, ed
 		)
 	} else {
 		return (
-			<div>
-				{
-					inCompetitionAthletes.sort((a, b) => {
-						if (a[lift] === b[lift]) {
-							return a.attempt - b.attempt
-						} else {
-							return a[lift] - b[lift]
-						} 
-					}).map((athlete, i) => {
-						if (athlete.attempt < 3) {
-								return (
-									<Athlete 
-										key={i}
-										name={athlete.name}
-										attempt={athlete.attempt}
-										snatch={athlete.snatch}
-										cnj={athlete.cnj}
-										lift={lift}
-										coachName={athlete.coachname}
-										registeredName={name}
-									/>
-							)
-						}
-					})
-				}
+			<div className="pa4">
+				<div className="center overflow-auto">
+			    	<table className="f6 w-100 mw8" cellSpacing="0">
+				      <thead>
+				        <tr className="stripe-dark">
+				          <th id="name" className="fw6 pa3 bg-white">Name</th>
+				          <th id="attempt" className="fw6 pa3 bg-white">Attempt</th>
+				          <th id="lift" className="fw6 pa3 bg-white">{lift}</th>
+				        </tr>
+				      </thead>
+				      <tbody className="lh-copy">
+						  {
+								inCompetitionAthletes.sort((a, b) => {
+									if (a[lift] === b[lift]) {
+										return a.attempt - b.attempt
+									} else {
+										return a[lift] - b[lift]
+									} 
+								}).map((athlete, i) => {
+									if (athlete.attempt < 3) {
+											return (
+												<Athlete 
+													key={i}
+													name={athlete.name}
+													attempt={athlete.attempt}
+													snatch={athlete.snatch}
+													cnj={athlete.cnj}
+													lift={lift}
+													coachName={athlete.coachname}
+													registeredName={name}
+												/>
+										)
+									}
+								})
+							}
+				      </tbody>
+				   </table>
+			   </div>
 			</div>
 		)
 	}

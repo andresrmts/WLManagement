@@ -28,9 +28,9 @@ const Competition = ({ adminToggle, email, useremail, name, location, date, onRo
 		)
 	} else if (lift) {
 		return (
-			<article className="mw5 tc dib bg-white br3 pa3 ma3 ba b--black-10">
+			<article className="mw5 tc dib bg-white br3 pa3 ma3 mh4 ba b--black-10">
 			  <div className="tc">
-			    <h1 className={`tc f4 flex flex-wrap ${onTheClock.name === name ? "red" : ""}`}>{name}</h1>
+			    <h1 className={`tc center f4 flex flex-wrap ${onTheClock.name === name ? "red" : ""}`}>{name}</h1>
 			    <h2 className="tc f5">Attempt: {attempt + 1}</h2>
 			    <h3 className="tc f6">Next weight: {weight} 
 			    	<p className="pointer ba w-25 flex center pa1" onClick={() => {
@@ -40,7 +40,7 @@ const Competition = ({ adminToggle, email, useremail, name, location, date, onRo
 			    			setWeight(weight + 1)
 			    		}
 			    	}}>+</p>
-			    	<p className="pointer ba pa2 w-50 flex center" onClick={() => {
+			    	<p className="pointer ba pa4 w-50 flex center" onClick={() => {
 			    		if (onTheClock.name === name) {
 			    			if (currentChangeCounter < 2) {
 				    			changeWeight({name}, weight);

@@ -18,7 +18,7 @@ class HandleCompetition extends Component {
 		super(props);
 		this.state = {
 			comproute: 'home',
-			status: 'started',
+			status: 'notstarted',
 			timer: true,
 			time: {minutes: 1, seconds: 0 + '0'},
 			lift: 'snatch',

@@ -30,10 +30,10 @@ const MyAthletes = ({ coachAthletes, coachName, editAthleteWeight }) => {
 		},
 	]
 
-	// const props = {name, age, weight, snatch, cnj, coachName};
+	const props = {name: '', age: '', weight: '', snatch: '', cnj: '', coachname:''};
 	return (
 			// <AthleteList editAthleteWeight={editAthleteWeight} registeredAthletes={coachAthletes} />
-			<Table headers={headers} tableContent={coachAthletes} />
+			<Table props={props} headers={headers} tableContent={coachAthletes} />
 
 	)
 }

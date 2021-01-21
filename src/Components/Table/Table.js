@@ -1,15 +1,7 @@
 import React from 'react';
 import TableRow from './TableRow/TableRow';
 
-const Table = ({headers, tableContent}) => {
-	// const props = {
-	// 	name: row.name,
-	// 	age: row.age,
-	// 	weight: row.weight,
-	// 	snatch: row.snatch,
-	// 	cnj: row.cnj,
-	// 	coachName: row.coachname
-	// }
+const Table = ({headers, tableContent, props}) => {
 
 	return (
 		<div className="pa4">
@@ -29,20 +21,12 @@ const Table = ({headers, tableContent}) => {
 				   <tbody className="lh-copy">
 				   		{
 				   			tableContent.map((row, i) => {
-				   				// const rowProps = Object.fromEntries(Object.entries(props)
-				   				// 	.map(([key, val]) => [key, `${row.val}`]))
-				   				const props = {
-										name: row.name,
-										age: row.age,
-										weight: row.weight,
-										snatch: row.snatch,
-										cnj: row.cnj,
-										coachName: row.coachname
-									}
+				   				const rowProps = Object.fromEntries(Object.entries(props)
+				   					.map(([key, val]) => [key, `${row[key]}`]))
 				   				return (
 				   					<TableRow
 				   						key={i} 
-				   						{...props}
+				   						{...rowProps}
 				   					/>
 				   				)
 				   			})

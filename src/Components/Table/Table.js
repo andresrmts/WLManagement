@@ -1,7 +1,7 @@
 import React from 'react';
 import TableRow from './TableRow/TableRow';
 
-const Table = ({headers, tableContent, props}) => {
+const Table = ({headers, tableContent, props, outSideProps}) => {
 
 	return (
 		<div className="pa4">
@@ -12,7 +12,7 @@ const Table = ({headers, tableContent, props}) => {
 				      	{
 				      		headers.map((header, i) => {
 				      			return (
-				      				<th id={`${header.header}`} className={`${header.styles}`}>{header.header}</th>
+				      				<th key={i} id={`${header.header}`} className={`${header.styles}`}>{header.header}</th>
 				      			)
 				      		})
 				      	}
@@ -26,7 +26,8 @@ const Table = ({headers, tableContent, props}) => {
 				   				return (
 				   					<TableRow
 				   						key={i} 
-				   						{...rowProps}
+				   						rowProps={rowProps}
+				   						outSideProps={outSideProps}
 				   					/>
 				   				)
 				   			})

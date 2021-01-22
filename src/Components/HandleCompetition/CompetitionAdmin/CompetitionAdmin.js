@@ -1,8 +1,30 @@
-import React from 'react';
-import AthleteList from '../AthleteList/AthleteList';
+import React, { useState, useEffect } from 'react';
 import NextAttempt from '../NextAttempt/NextAttempt';
+import Table from '../../Table/Table';
 
 const CompetitionAdmin = ({ athletes, lift, timer, toggleTimer, time, nextLift, setTime }) => {
+	const [onTheClock, setOnTheClock] = useState(athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}));
+
+	useEffect(() => {
+		setOnTheClock(athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}))
+	}, [athletes, lift])
+
+	const headers = [
+		{
+			header: 'Name',
+			styles: "fw6 pa3 bg-white"
+		},
+		{
+			header: 'Attempt',
+			styles: "fw6 pa3 bg-white"
+		},
+		{
+			header: lift,
+			styles: "fw6 pa3 bg-white"
+		}
+	];
+
+	const props = {name: '', attempt: '', [lift]: ''};
 
 	return (
 		<div className="cf ph2-ns">
@@ -21,7 +43,7 @@ const CompetitionAdmin = ({ athletes, lift, timer, toggleTimer, time, nextLift, 
 			<div className="fl w-100 w-40-ns pa2">
 				<div className="tc outline bg-white pv4">
 			   	Next Up
-			      <AthleteList lift={lift} inCompetitionAthletes={athletes} />
+			      <Table props={props} headers={headers} tableContent={onTheClock} />
 			   </div>
 			</div>
 		</div>

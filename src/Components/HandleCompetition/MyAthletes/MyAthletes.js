@@ -1,5 +1,4 @@
 import React from 'react';
-import AthleteList from '../AthleteList/AthleteList';
 import Table from '../../Table/Table';
 
 const MyAthletes = ({ coachAthletes, coachName, editAthleteWeight }) => {
@@ -31,9 +30,9 @@ const MyAthletes = ({ coachAthletes, coachName, editAthleteWeight }) => {
 	]
 
 	const props = {name: '', age: '', weight: '', snatch: '', cnj: '', coachname:''};
+	const outSideProps = {functions: {weight: editAthleteWeight}}
 	return (
-			// <AthleteList editAthleteWeight={editAthleteWeight} registeredAthletes={coachAthletes} />
-			<Table props={props} headers={headers} tableContent={coachAthletes} />
+			<Table props={props} headers={headers} tableContent={coachAthletes} outSideProps={outSideProps} />
 
 	)
 }

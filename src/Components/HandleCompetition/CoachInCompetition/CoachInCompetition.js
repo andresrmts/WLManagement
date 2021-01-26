@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CompetitionList from '../../CompetitionList/CompetitionList';
-import AthleteList from '../AthleteList/AthleteList';
 import NextAttempt from '../NextAttempt/NextAttempt';
+import Table from '../../Table/Table';
 
 const CoachInCompetition = ({ setTime, athletes, lift, name, changeWeight, time, timer, toggleTimer }) => {
 	const [myAthletes] = useState(athletes.filter(athlete => athlete.coachname === name));
@@ -11,11 +11,28 @@ const CoachInCompetition = ({ setTime, athletes, lift, name, changeWeight, time,
 
 	useEffect(() => {
 		setOnTheClock(athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}))
-	}, [athletes])
+	}, [athletes, lift])
 
 	useEffect(() => {
 		setCurrentChangeCounter(0);
 	}, [])
+
+	const headers = [
+		{
+			header: 'Name',
+			styles: "fw6 pa3 bg-white"
+		},
+		{
+			header: 'Attempt',
+			styles: "fw6 pa3 bg-white"
+		},
+		{
+			header: lift,
+			styles: "fw6 pa3 bg-white"
+		}
+	]
+
+	const props = {name: '', attempt: '', [lift]: '', coachname: ''}
 
 	return (
 		<div className="cf ph2-ns">
@@ -31,7 +48,7 @@ const CoachInCompetition = ({ setTime, athletes, lift, name, changeWeight, time,
 			<div className="fl w-100 w-100-ns pa2">
 			   <div className="tc outline bg-white pv4">
 			     	Next Up
-			   <AthleteList onTheClock={onTheClock[0]} name={name} lift={lift} inCompetitionAthletes={athletes} />
+			   <Table props={props} headers={headers} tableContent={onTheClock} />
 			   </div>
 			</div>
 

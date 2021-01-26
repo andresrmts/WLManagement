@@ -1,9 +1,26 @@
 import React from 'react';
-import PendingRegistrationsList from '../Registrations/PendingRegistrationsList/PendingRegistrationsList';
+import Table from '../../Table/Table';
 
 const RegisteredOfficials = ({ acceptedRegistrations }) => {
+	const headers = [
+		{
+			header: 'Name',
+			styles: 'fw6 pa3 bg-white'
+		},
+		{
+			header: 'Role',
+			styles: 'fw6 pa3 bg-white'
+		},
+		{
+			header: 'Delete?',
+			styles: 'fw6 pa3 bg-white'
+		}
+	]
+
+	const props = {name: '', role: '', delete:''}
+
 	return (
-		<PendingRegistrationsList acceptedRegistrations={acceptedRegistrations} />
+		<Table props={props} headers={headers} tableContent={acceptedRegistrations} />
 	)
 }
 

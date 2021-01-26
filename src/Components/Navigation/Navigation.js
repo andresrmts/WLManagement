@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link, Router } from '../router/';
+import { routes } from '../router/routes';
 
 const Navigation = ({adminToggle, isSignedIn, onRouteChange}) => {
 			if (isSignedIn) {
@@ -13,10 +15,12 @@ const Navigation = ({adminToggle, isSignedIn, onRouteChange}) => {
 				)				
 			} else {
 				return (
-					<nav style={{display: 'flex', justifyContent: 'center'}}>
-						<p onClick={() => onRouteChange('signin')} className="f3 pa3 underline pointer">Sign In</p>
-						<p onClick={() => onRouteChange('register')} className="f3 pa3 underline pointer">Register</p>
-					</nav>
+					<Router routes={routes}>
+						<nav style={{display: 'flex', justifyContent: 'center'}}>
+							<Link to={routes.home.path} className='f3 pa3 underline pointer'>Sign In</Link>
+							<Link to={routes.register.path} className='f3 pa3 underline pointer'>Register</Link>
+						</nav>
+					</Router>
 					)			
 			}
 }

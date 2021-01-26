@@ -6,6 +6,8 @@ import SignIn from './Components/SignIn/SignIn';
 import CompetitionCreation from './Components/CompetitionCreation/CompetitionCreation';
 import HandleCompetition from './Components/HandleCompetition/HandleCompetition';
 import './App.css';
+import { Router, Route, Link } from './Components/router/';
+import { routes } from './Components/router/routes';
 
 class App extends Component {
   constructor() {
@@ -40,41 +42,55 @@ class App extends Component {
     this.setState({searchBox: e.target.value})
   }
 
-  renderRoute = (route) => {
-    const { admin, user } = this.state;
-    switch(route) {
-      case 'competitionselection':
-        return <CompetitionSelection 
-          adminToggle={this.adminToggle}
-          user={user} 
-          onRouteChange={this.onRouteChange} 
-          onSearchChange={this.onSearchChange} />
-      case 'competitioncreation':
-        return <CompetitionCreation 
-          adminToggle={this.adminToggle} 
-          onRouteChange={this.onRouteChange} />
-      case 'signin':
-        return <SignIn onRouteChange={this.onRouteChange} />
-      case 'register':
-        return <Register onRouteChange={this.onRouteChange} />
-      case 'competition':
-        return <HandleCompetition 
-          name={user.name} 
-          adminToggle={this.adminToggle} 
-          onRouteChange={this.onRouteChange} 
-          isAdmin={admin} />
-      default:
-        return <h1>Oops, something went wrong....</h1>
-    }
+  // renderRoute = (route) => {
+  //   const { admin, user } = this.state;
+  //   switch(route) {
+  //     case 'competitionselection':
+  //       return <CompetitionSelection 
+  //         adminToggle={this.adminToggle}
+  //         user={user} 
+  //         onRouteChange={this.onRouteChange} 
+  //         onSearchChange={this.onSearchChange} />
+  //     case 'competitioncreation':
+  //       return <CompetitionCreation 
+  //         adminToggle={this.adminToggle} 
+  //         onRouteChange={this.onRouteChange} />
+  //     case 'signin':
+  //       return <SignIn onRouteChange={this.onRouteChange} />
+  //     case 'register':
+  //       return <Register onRouteChange={this.onRouteChange} />
+  //     case 'competition':
+  //       return <HandleCompetition 
+  //         name={user.name} 
+  //         adminToggle={this.adminToggle} 
+  //         onRouteChange={this.onRouteChange} 
+  //         isAdmin={admin} />
+  //     default:
+  //       return <h1>Oops, something went wrong....</h1>
+  //   }
+  // }
+
+  notFound = () => {
+    return (
+      <div>
+        <p>404 - Not Found</p>
+        <Link to={routes.home.path}>Back to home</Link>
+      </div>
+    )
   }
 
   render() {
     const { route, isSignedIn } = this.state;
     return (
-      <div>
-        <Navigation adminToggle={this.adminToggle} isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
-        { this.renderRoute(route) }
-      </div>
+        <Router routes={routes} NotFound={this.notFound} >
+          <Navigation adminToggle={this.adminToggle} isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
+          <Route path={routes.home.path}>
+            <SignIn />
+          </Route>
+          <Route path={routes.register.path}>
+            <Register />
+          </Route>
+        </Router>
     )
   }
 }

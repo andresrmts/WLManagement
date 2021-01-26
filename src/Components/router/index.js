@@ -9,8 +9,6 @@ class Router extends React.Component {
 		super(props);
 		this.routes = Object.keys(props.routes).map((key) => props.routes[key].path);
 
-		this.unlisten = history.listen(this.handleRouteChange);
-
 		this.state = {
 			route: locationToRoute(history.location)
 		}
@@ -20,7 +18,11 @@ class Router extends React.Component {
 		this.unlisten()
 	}
 
-	handleRouteChange = (location) => {
+	componentDidMount() {
+		this.unlisten = history.listen(this.handleRouteChange);
+	}
+
+	handleRouteChange = ({location}) => {
 		const route = locationToRoute(location);
 		this.setState({route: route})
 	}

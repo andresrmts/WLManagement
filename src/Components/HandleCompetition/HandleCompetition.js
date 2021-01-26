@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import AdminNav from './AdminNav/AdminNav';
 import Registrations from './Registrations/Registrations';
-import AthleteList from './AthleteList/AthleteList';
 import CoachNav from './CoachNav/CoachNav';
 import MyAthletes from './MyAthletes/MyAthletes';
 import RegisteredOfficials from './RegisteredOfficials/RegisteredOfficials';

@@ -1,5 +1,4 @@
 import React from 'react';
-import PendingRegistrationsList from './PendingRegistrationsList/PendingRegistrationsList';
 import Table from '../../Table/Table';
 
 const Registrations = ({ approveRemove, registrations }) => {
@@ -22,7 +21,6 @@ const Registrations = ({ approveRemove, registrations }) => {
 	const outSideProps = {rows: {content: ['Yes', 'No']}}
 	return (
 		<Table props={props} headers={headers} tableContent={registrations} outSideProps={outSideProps} />
-		// <PendingRegistrationsList approveRemove={approveRemove} registrations={registrations} />
 	)
 }
 

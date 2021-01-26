@@ -12,6 +12,7 @@ import ChangeTable from './ChangeTable/ChangeTable';
 import RoleSelection from '../RoleSelection/RoleSelection';
 import CoachInCompetition from './CoachInCompetition/CoachInCompetition';
 import CompetitionAdmin from './CompetitionAdmin/CompetitionAdmin';
+import Table from '../Table/Table';
 
 class HandleCompetition extends Component {
 	constructor(props) {
@@ -245,7 +246,35 @@ class HandleCompetition extends Component {
 		const { name, isAdmin } = this.props;
 		const { lift, registrations, status, registeredAthletes, acceptedRegistrations, timer, time } = this.state;
 		const filteredName = acceptedRegistrations.filter(reg => reg.name === name);
-		const onlyCoachAthletes = registeredAthletes.filter(athlete => athlete.coachname === name)
+		const onlyCoachAthletes = registeredAthletes.filter(athlete => athlete.coachname === name);
+		const headers = [
+			{
+				header: 'Name',
+				styles: 'fw6 pa3 bg-white',
+			},
+			{
+				header: 'Age',
+				styles: 'fw6 pa3 bg-white',
+			},
+			{
+				header: 'Weight',
+				styles: 'fw6 pa3 bg-white',
+			},
+			{
+				header: 'Snatch',
+				styles: 'fw6 pa3 bg-white',
+			},
+			{
+				header: 'CNJ',
+				styles: 'fw6 pa3 bg-white',
+			},
+			{
+				header: 'Coachname',
+				styles: 'fw6 pa3 bg-white',
+			},
+		];
+		const props = {name: '', age: '', weight: '', snatch: '', cnj: '', coachname:''};
+		const outSideProps = {functions: {weight: this.editAthleteWeight}}
 		switch(route) {
 			case 'home':
 				if (status === 'notstarted') {
@@ -277,7 +306,7 @@ class HandleCompetition extends Component {
 			case 'registered':
 				return <RegisteredOfficials acceptedRegistrations={acceptedRegistrations} />
 			case 'athletelist':
-				return <AthleteList editAthleteWeight={this.editAthleteWeight} registeredAthletes={registeredAthletes} />
+				return <Table props={props} headers={headers} tableContent={registeredAthletes} outSideProps={outSideProps} />
 			case 'athleteregistration':
 				return <AthleteRegistration addAthlete={this.addAthlete} />
 			default:

@@ -13,12 +13,17 @@ const TableRow = (props) => {
 			{
 				Object.keys(props.rowProps)
 				.map((prop, i) => {
+					let usableFunction;
 					const isFunction = () => {
-						return Object.keys(props.outSideProps.functions).filter(functionName => functionName === prop).length > 0 ? true : false
+						if (props.outSideProps.functions) {
+							const isTrue = Object.keys(props.outSideProps.functions).filter(functionName => functionName === prop).length > 0 ? true : false;
+							usableFunction = props.outSideProps.functions[prop];
+							return isTrue
+						}
 					}
-					const usableFunction = props.outSideProps.functions[prop];
+					
 					return (
-						<td key={i} headers={`${prop}`} onClick={isFunction ? () => usableFunction(athleteName) : undefined}  className="tc pa3">{props.rowProps[prop]}</td>
+						<td key={i} headers={`${prop}`} onClick={isFunction() ? () => usableFunction(athleteName) : undefined}  className="tc pa3">{props.rowProps[prop]}</td>
 					)
 				})
 			}
@@ -27,3 +32,5 @@ const TableRow = (props) => {
 }
 
 export default TableRow;
+
+// 

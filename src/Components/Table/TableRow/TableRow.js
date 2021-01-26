@@ -1,36 +1,37 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
-const TableRow = (props) => {
+const TableRow = ({rowProps, outSideProps}) => {
 	const [athleteName, setAthleteName] = useState('');
 
 	useEffect(() => {
-		setAthleteName(props.rowProps.name)
-	}, [props.rowProps])
+		setAthleteName(rowProps.name);
+	}, [rowProps]);
 
+	const callFunction = (prop) => {
+		if (outSideProps.functions && outSideProps.functions[prop] && typeof outSideProps.functions[prop] === 'function') {
+			outSideProps.functions[prop](athleteName);
+		}
+	};
 
 	return (
-		<tr className="stripe-dark">
+		<tr className='stripe-dark'>
 			{
-				Object.keys(props.rowProps)
-				.map((prop, i) => {
-					let usableFunction;
-					const isFunction = () => {
-						if (props.outSideProps.functions) {
-							const isTrue = Object.keys(props.outSideProps.functions).filter(functionName => functionName === prop).length > 0 ? true : false;
-							usableFunction = props.outSideProps.functions[prop];
-							return isTrue
-						}
-					}
-					
-					return (
-						<td key={i} headers={`${prop}`} onClick={isFunction() ? () => usableFunction(athleteName) : undefined}  className="tc pa3">{props.rowProps[prop]}</td>
-					)
-				})
+				Object.keys(rowProps)
+					.map((prop, i) => (
+						<td
+							key={i}
+							headers={`${prop}`}
+							onClick={() => callFunction(prop)}
+							className='tc pa3'
+						>
+							{rowProps[prop]}
+						</td>
+					))
 			}
 		</tr>
-	)
-}
+	);
+};
 
 export default TableRow;
 
-// 
+

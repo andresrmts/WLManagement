@@ -7,5 +7,11 @@ export const routes = {
 	},
 	competitionselection: {
 		path: '/competitionselection'
+	},
+	competitioncreation: {
+		path: '/competitioncreation'
+	},
+	competition: {
+		path: '/competition'
 	}
 }

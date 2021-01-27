@@ -1,16 +1,17 @@
 import React from 'react';
-import { Link } from '../router/';
+import { Link, history } from '../router/';
 import { routes } from '../router/routes';
 
-const Navigation = ({adminToggle, isSignedIn, onRouteChange}) => {
+const Navigation = ({adminToggle, isSignedIn, setSignedIn}) => {
 			if (isSignedIn) {
 				return (
 					<nav style={{display: 'flex', justifyContent: 'center'}}>
-						<p onClick={() => {
+						{/* <p onClick={() => {
 							onRouteChange('signin')
 							adminToggle(false)
 						}} 
-						className="f3 pa3 underline pointer">Sign Out</p>
+						className="f3 pa3 underline pointer">Sign Out</p> */}
+						<Link to={routes.home.path} onClick={() => setSignedIn(routes.home.path)} className="f3 pa3 underline pointer">Sign Out</Link>
 					</nav>
 				)				
 			} else {

@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Navigation from './Components/Navigation/Navigation';
-import CompetitionSelection from './Components/CompetitionSelection/CompetitionSelection';
 import Register from './Components/Register/Register';
 import SignIn from './Components/SignIn/SignIn';
-import CompetitionCreation from './Components/CompetitionCreation/CompetitionCreation';
 import HandleCompetition from './Components/HandleCompetition/HandleCompetition';
+import AppRouter from './Components/AppRouter/AppRouter'
 import './App.css';
 import { Router, Route, Link } from './Components/router/';
 import { routes } from './Components/router/routes';
@@ -25,13 +24,12 @@ class App extends Component {
     }
   }
 
-  onRouteChange = (route) => {
-    if (route === 'signin' || route === 'register') {
-      this.setState({isSignedIn: false})
-    } else {
-      this.setState({isSignedIn: true});
+  setSignedIn = (location) => {
+		if (location === '/' || location === '/register') {
+			this.setState({isSignedIn: false})
+		} else {
+      this.setState({isSignedIn: true})
     }
-    this.setState({route: route});
   }
 
   adminToggle = (admin) => {
@@ -49,47 +47,33 @@ class App extends Component {
   //       return <CompetitionSelection 
   //         adminToggle={this.adminToggle}
   //         user={user} 
-  //         onRouteChange={this.onRouteChange} 
+  //         setSignedIn={this.setSignedIn} 
   //         onSearchChange={this.onSearchChange} />
   //     case 'competitioncreation':
   //       return <CompetitionCreation 
   //         adminToggle={this.adminToggle} 
-  //         onRouteChange={this.onRouteChange} />
+  //         setSignedIn={this.setSignedIn} />
   //     case 'signin':
-  //       return <SignIn onRouteChange={this.onRouteChange} />
+  //       return <SignIn setSignedIn={this.setSignedIn} />
   //     case 'register':
-  //       return <Register onRouteChange={this.onRouteChange} />
+  //       return <Register setSignedIn={this.setSignedIn} />
   //     case 'competition':
   //       return <HandleCompetition 
   //         name={user.name} 
   //         adminToggle={this.adminToggle} 
-  //         onRouteChange={this.onRouteChange} 
+  //         setSignedIn={this.setSignedIn} 
   //         isAdmin={admin} />
   //     default:
   //       return <h1>Oops, something went wrong....</h1>
   //   }
   // }
 
-  notFound = () => {
-    return (
-      <div>
-        <p>404 - Not Found</p>
-        <Link to={routes.home.path}>Back to home</Link>
-      </div>
-    )
-  }
-
   render() {
-    const { route, isSignedIn } = this.state;
+    const { isSignedIn, user, admin } = this.state;
     return (
         <Router routes={routes} NotFound={this.notFound} >
-          <Navigation adminToggle={this.adminToggle} isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
-          <Route path={routes.home.path}>
-            <SignIn />
-          </Route>
-          <Route path={routes.register.path}>
-            <Register />
-          </Route>
+          <Navigation adminToggle={this.adminToggle} isSignedIn={isSignedIn} setSignedIn={this.setSignedIn} />
+          <AppRouter isAdmin={admin} onSearchChange={this.onSearchChange} adminToggle={this.adminToggle} setSignedIn={this.setSignedIn} user={user} />
         </Router>
     )
   }

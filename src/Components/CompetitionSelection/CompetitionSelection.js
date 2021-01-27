@@ -1,5 +1,7 @@
 import React from 'react';
 import CompetitionList from '../CompetitionList/CompetitionList';
+import { Link } from '../router/';
+import { routes } from '../router/routes';
 
 class CompetitionSelection extends React.Component {
 	constructor(props) {
@@ -28,7 +30,8 @@ class CompetitionSelection extends React.Component {
 				</p>
 				<div>
 					<div className="fl w-100 w-50-ns pa2 tc" style={{ display: 'flex', justifyContent: 'center'}}>
-						<a onClick={() => onRouteChange('competitioncreation')} className="f6 link dim br-pill ba ph3 pv2 mb2 mid-gray" href="#0">New Competition</a>
+						<Link to={routes.competitioncreation.path} className="pointer f6 link dim br-pill ba ph3 pv2 mb2 mid-gray">New Competition</Link>
+						{/* <a onClick={() => onRouteChange('competitioncreation')} className="f6 link dim br-pill ba ph3 pv2 mb2 mid-gray" href="#0">New Competition</a> */}
 					</div>
 					<div className="fl w-100 w-50-ns pa1 black-80" style={{ display: 'flex', justifyContent: 'center'}}>
 						<div className="measure">

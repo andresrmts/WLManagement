@@ -1,6 +1,8 @@
 import React from 'react';
+import { Link, history } from '../router/';
+import { routes } from '../router/routes';
 
-const SignIn = ({onRouteChange}) => {
+const SignIn = ({setSignedIn}) => {
 	return (
 		<article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
 			<main className="pa4 black-80">
@@ -18,12 +20,7 @@ const SignIn = ({onRouteChange}) => {
 			    </fieldset>
 			   </div>
 			    <div className="measure center">
-			      <input 
-			      	className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
-			      	type="submit" 
-			      	value="Sign in" 
-			      	onClick={() => onRouteChange('competitionselection')}
-			      	/>
+					<Link to={routes.competitionselection.path} onClick={() => setSignedIn(history.location)} className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib">Sign In</Link>
 			    </div>
 			</main>
 		</article>

@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
-import Navigation from './Components/Navigation/Navigation';
-import CompetitionSelection from './Components/CompetitionSelection/CompetitionSelection';
-import Register from './Components/Register/Register';
-import SignIn from './Components/SignIn/SignIn';
-import CompetitionCreation from './Components/CompetitionCreation/CompetitionCreation';
-import HandleCompetition from './Components/HandleCompetition/HandleCompetition';
+import Navigation from './components/Navigation';
+import AppRouter from './components/AppRouter';
 import './App.css';
+import { Router, Link } from './Router';
+import { routes } from './Router/routes';
 
 class App extends Component {
   constructor() {
@@ -23,13 +21,12 @@ class App extends Component {
     }
   }
 
-  onRouteChange = (route) => {
-    if (route === 'signin' || route === 'register') {
-      this.setState({isSignedIn: false})
-    } else {
-      this.setState({isSignedIn: true});
+  setSignedIn = (location) => {
+		if (location === '/' || location === '/register') {
+			this.setState({isSignedIn: false})
+		} else {
+      this.setState({isSignedIn: true})
     }
-    this.setState({route: route});
   }
 
   adminToggle = (admin) => {
@@ -40,41 +37,22 @@ class App extends Component {
     this.setState({searchBox: e.target.value})
   }
 
-  renderRoute = (route) => {
-    const { admin, user } = this.state;
-    switch(route) {
-      case 'competitionselection':
-        return <CompetitionSelection 
-          adminToggle={this.adminToggle}
-          user={user} 
-          onRouteChange={this.onRouteChange} 
-          onSearchChange={this.onSearchChange} />
-      case 'competitioncreation':
-        return <CompetitionCreation 
-          adminToggle={this.adminToggle} 
-          onRouteChange={this.onRouteChange} />
-      case 'signin':
-        return <SignIn onRouteChange={this.onRouteChange} />
-      case 'register':
-        return <Register onRouteChange={this.onRouteChange} />
-      case 'competition':
-        return <HandleCompetition 
-          name={user.name} 
-          adminToggle={this.adminToggle} 
-          onRouteChange={this.onRouteChange} 
-          isAdmin={admin} />
-      default:
-        return <h1>Oops, something went wrong....</h1>
-    }
+  notFound = () => {
+    return (
+      <div>
+        <p>404 - Not Found</p>
+        <Link to={routes.home.path}>Back to home</Link>
+      </div>
+    )
   }
 
   render() {
-    const { route, isSignedIn } = this.state;
+    const { isSignedIn, user, admin } = this.state;
     return (
-      <div>
-        <Navigation adminToggle={this.adminToggle} isSignedIn={isSignedIn} onRouteChange={this.onRouteChange} />
-        { this.renderRoute(route) }
-      </div>
+        <Router routes={routes} NotFound={this.notFound} >
+          <Navigation adminToggle={this.adminToggle} isSignedIn={isSignedIn} setSignedIn={this.setSignedIn} />
+          <AppRouter isSignedIn={isSignedIn} isAdmin={admin} onSearchChange={this.onSearchChange} adminToggle={this.adminToggle} setSignedIn={this.setSignedIn} user={user} />
+        </Router>
     )
   }
 }

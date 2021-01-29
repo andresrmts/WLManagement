@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
-import Navigation from './Components/Navigation/Navigation';
-import Register from './Components/Register/Register';
-import SignIn from './Components/SignIn/SignIn';
-import HandleCompetition from './Components/HandleCompetition/HandleCompetition';
-import AppRouter from './Components/AppRouter/AppRouter'
+import Navigation from './components/Navigation';
+import AppRouter from './components/AppRouter';
 import './App.css';
-import { Router, Route, Link } from './Components/router/';
-import { routes } from './Components/router/routes';
+import { Router, Link } from './Router';
+import { routes } from './Router/routes';
 
 class App extends Component {
   constructor() {

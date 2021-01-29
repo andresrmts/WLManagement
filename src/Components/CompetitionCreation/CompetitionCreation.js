@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '../router/';
 import { routes } from '../router/routes';
 
-const CompetitionCreation = ({ adminToggle, onRouteChange }) => {
+const CompetitionCreation = ({ adminToggle }) => {
 	return (
 		<article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
 			<main className="pa4 black-80">
@@ -39,21 +39,8 @@ const CompetitionCreation = ({ adminToggle, onRouteChange }) => {
 			    </fieldset>
 			   </div>
 			    <div className="measure center">
-			      {/* <input
-			      	onClick={() => {
-			      		onRouteChange('competition')
-			      		adminToggle(true)
-			      	}} 
-			      	className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
-			      	type="submit" 
-			      	value="Create" /> */}
-					<Link to={routes.competition.path} className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 m14 dib">Create</Link>
-			      {/* <input 
-			      	onClick={() => onRouteChange('competitionselection')}
-			      	className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 m14 dib" 
-			      	type="submit" 
-			      	value="Back" /> */}
-					<Link to={routes.competitionselection.path} className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 m14 dib">Back</Link>
+						<Link to={routes.competition.path} onClick={() => adminToggle(true)} className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 m14 dib">Create</Link>
+						<Link to={routes.competitionselection.path} className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 m14 dib">Back</Link>
 			    </div>
 			</main>
 		</article>

@@ -40,40 +40,21 @@ class App extends Component {
     this.setState({searchBox: e.target.value})
   }
 
-  // renderRoute = (route) => {
-  //   const { admin, user } = this.state;
-  //   switch(route) {
-  //     case 'competitionselection':
-  //       return <CompetitionSelection 
-  //         adminToggle={this.adminToggle}
-  //         user={user} 
-  //         setSignedIn={this.setSignedIn} 
-  //         onSearchChange={this.onSearchChange} />
-  //     case 'competitioncreation':
-  //       return <CompetitionCreation 
-  //         adminToggle={this.adminToggle} 
-  //         setSignedIn={this.setSignedIn} />
-  //     case 'signin':
-  //       return <SignIn setSignedIn={this.setSignedIn} />
-  //     case 'register':
-  //       return <Register setSignedIn={this.setSignedIn} />
-  //     case 'competition':
-  //       return <HandleCompetition 
-  //         name={user.name} 
-  //         adminToggle={this.adminToggle} 
-  //         setSignedIn={this.setSignedIn} 
-  //         isAdmin={admin} />
-  //     default:
-  //       return <h1>Oops, something went wrong....</h1>
-  //   }
-  // }
+  notFound = () => {
+    return (
+      <div>
+        <p>404 - Not Found</p>
+        <Link to={routes.home.path}>Back to home</Link>
+      </div>
+    )
+  }
 
   render() {
     const { isSignedIn, user, admin } = this.state;
     return (
         <Router routes={routes} NotFound={this.notFound} >
           <Navigation adminToggle={this.adminToggle} isSignedIn={isSignedIn} setSignedIn={this.setSignedIn} />
-          <AppRouter isAdmin={admin} onSearchChange={this.onSearchChange} adminToggle={this.adminToggle} setSignedIn={this.setSignedIn} user={user} />
+          <AppRouter isSignedIn={isSignedIn} isAdmin={admin} onSearchChange={this.onSearchChange} adminToggle={this.adminToggle} setSignedIn={this.setSignedIn} user={user} />
         </Router>
     )
   }

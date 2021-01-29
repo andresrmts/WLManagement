@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from '../../router';
+import { routes } from '../../router/routes';
 
 const AdminNav = ({status, toggleStatus, compRoute, adminToggle, onRouteChange}) => {
 	return (
@@ -35,12 +37,7 @@ const AdminNav = ({status, toggleStatus, compRoute, adminToggle, onRouteChange})
 									<p 
 									onClick={() => compRoute('athletelist')}
 									className="f6 pa3 underline pointer">Competitor List</p>
-									<p 
-									onClick={() => {
-										onRouteChange('competitionselection')
-										adminToggle(false)
-										}} 
-									className="f6 pa3 underline pointer">Exit</p>
+									<Link to={routes.competitionselection.path} onClick={() => adminToggle(false)} className="f6 pa3 underline pointer">Exit</Link>
 								</nav>
 						)
 					}

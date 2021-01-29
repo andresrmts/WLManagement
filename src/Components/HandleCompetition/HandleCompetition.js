@@ -12,6 +12,8 @@ import RoleSelection from '../RoleSelection/RoleSelection';
 import CoachInCompetition from './CoachInCompetition/CoachInCompetition';
 import CompetitionAdmin from './CompetitionAdmin/CompetitionAdmin';
 import Table from '../Table/Table';
+import { Link } from '../router';
+import { routes } from '../router/routes';
 
 class HandleCompetition extends Component {
 	constructor(props) {
@@ -332,7 +334,7 @@ class HandleCompetition extends Component {
 									name={name} 
 									compRoute={this.changeCompRoute} 
 									onRouteChange={onRouteChange} />
-								: 	<p onClick={() => onRouteChange('competitionselection')} className="f6 tc underline pointer">Exit</p>)
+								: <Link to={routes.competitionselection.path} className="f6 tc underline pointer center">Exit</Link>)
 						)
 				}
 				{this.renderCompRoutes(comproute)}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from '../../../Router';
+import { Link, RouterContext } from '../../../Router';
 import { routes } from '../../../Router/routes';
 
 const Competition = ({ adminToggle, email, useremail, name, location, date, onRouteChange, attempt, cnj, snatch, changeWeight, lift, onTheClock, coachTimer, toggleTimer, setCurrentChangeCounter, currentChangeCounter }) => {
@@ -13,7 +13,14 @@ const Competition = ({ adminToggle, email, useremail, name, location, date, onRo
 			    <h3 className="tc f6">{date}</h3>
 			    <hr className="mw3 bb bw1 b--black-10" />
 			    <div style={{ display: 'flex', justifyContent: 'center'}}>
-					<Link to={routes.competition.path} onClick={() => adminToggle(useremail === email ? true : false)} className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer">{useremail === email ? 'Admin' : 'Handle'}</Link>
+					<RouterContext.Consumer>
+						{context => (
+							<Link to={routes.competition.path} onClick={() => {
+								adminToggle(useremail === email ? true : false);
+								context.changecompetition(name);
+							}} className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer">{useremail === email ? 'Admin' : 'Handle'}</Link>
+						)}
+					</RouterContext.Consumer>
 				</div>
 			  </div>
 			</article>

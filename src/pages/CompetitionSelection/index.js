@@ -1,6 +1,6 @@
 import React from 'react';
 import CompetitionList from '../../components/CompetitionList';
-import { Link } from '../../Router';
+import { Link, RouterContext } from '../../Router';
 import { routes } from '../../Router/routes';
 
 class CompetitionSelection extends React.Component {
@@ -25,9 +25,13 @@ class CompetitionSelection extends React.Component {
 		const availableComps = this.state.competitions.filter(competition => !yourComps.some(comp => competition.name === comp.name))
 		return (
 			<div>
-				<p className="pa4 tc" style={{ display: 'flex', justifyContent: 'center'}}>
-					You are signed in as {user.name}. Please Create a new Competition or join an existing competition.
-				</p>
+				<RouterContext.Consumer>
+					{context => (
+						<p className="pa4 tc" style={{ display: 'flex', justifyContent: 'center'}}>
+							You are signed in as {context.user.name}. Please Create a new Competition or join an existing competition.
+						</p>
+					)}
+				</RouterContext.Consumer>
 				<div>
 					<div className="fl w-100 w-50-ns pa2 tc" style={{ display: 'flex', justifyContent: 'center'}}>
 						<Link to={routes.competitioncreation.path} className="pointer f6 link dim br-pill ba ph3 pv2 mb2 mid-gray">New Competition</Link>

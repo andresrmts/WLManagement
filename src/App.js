@@ -13,11 +13,6 @@ class App extends Component {
       isSignedIn: false,
       searchBox: '',
       admin: false,
-      user: {
-        id: '',
-        name: 'Andres Riimets',
-        email: ''
-      }
     }
   }
 
@@ -47,11 +42,11 @@ class App extends Component {
   }
 
   render() {
-    const { isSignedIn, user, admin } = this.state;
+    const { isSignedIn, admin } = this.state;
     return (
         <Router routes={routes} NotFound={this.notFound} >
           <Navigation adminToggle={this.adminToggle} isSignedIn={isSignedIn} setSignedIn={this.setSignedIn} />
-          <AppRouter isSignedIn={isSignedIn} isAdmin={admin} onSearchChange={this.onSearchChange} adminToggle={this.adminToggle} setSignedIn={this.setSignedIn} user={user} />
+          <AppRouter isSignedIn={isSignedIn} isAdmin={admin} onSearchChange={this.onSearchChange} adminToggle={this.adminToggle} setSignedIn={this.setSignedIn} />
         </Router>
     )
   }

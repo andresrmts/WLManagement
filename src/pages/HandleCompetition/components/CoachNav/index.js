@@ -1,11 +1,16 @@
 import React from 'react';
-import { Link } from '../../../../Router';
+import { Link, RouterContext } from '../../../../Router';
 import { routes } from '../../../../Router/routes';
 
-const CoachNav = ({ name, compRoute, onRouteChange }) => {
+const CoachNav = ({ compRoute }) => {
 	return (
 		<div>
-		<h1>You are currently coach {name} in COMPETITIONNAME</h1>
+			<RouterContext.Consumer>
+				{({user, competition}) => (
+					<h1>You are currently coach {user.name} in {competition}</h1>
+				)
+				}
+			</RouterContext.Consumer>
 			<nav style={{display: 'flex', justifyContent: 'center'}}>
 				<p 
 					onClick={() => compRoute('home')}
@@ -13,9 +18,6 @@ const CoachNav = ({ name, compRoute, onRouteChange }) => {
 				<p 
 					onClick={() => compRoute('athleteregistration')}
 					className="f3 pa3 underline pointer">Register Athlete</p>
-				{/* <p 
-					onClick={() => onRouteChange('competitionselection')}
-					className="f3 pa3 underline pointer">Exit</p> */}
 				<Link to={routes.competitionselection.path}	className="f3 pa3 underline pointer">Exit</Link>
 			</nav>
 		</div>

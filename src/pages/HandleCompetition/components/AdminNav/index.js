@@ -1,11 +1,15 @@
 import React from 'react';
-import { Link } from '../../../../Router';
+import { Link, RouterContext } from '../../../../Router';
 import { routes } from '../../../../Router/routes';
 
-const AdminNav = ({status, toggleStatus, compRoute, adminToggle, onRouteChange}) => {
+const AdminNav = ({status, toggleStatus, compRoute, adminToggle }) => {
 	return (
 		<div>
-			<h1>You are currently working on COMPETITIONNAME</h1>
+			<RouterContext.Consumer>
+				{context => (
+					<h1>You are currently working on {context.competition}</h1>
+				)}
+			</RouterContext.Consumer>
 				{status === 'started' 
 					? 	<nav style={{display: 'flex', justifyContent: 'center'}}>
 							<p 
@@ -26,7 +30,10 @@ const AdminNav = ({status, toggleStatus, compRoute, adminToggle, onRouteChange})
 								</nav>
 							: 	<nav style={{display: 'flex', justifyContent: 'center'}}>
 									<p 
-									onClick={() => toggleStatus('started')}
+									onClick={() => {
+										toggleStatus('started');
+										compRoute('home');
+									}}
 									className="f6 pa3 underline pointer red ba">START COMPETITION</p>
 									<p 
 									onClick={() => compRoute('home')}

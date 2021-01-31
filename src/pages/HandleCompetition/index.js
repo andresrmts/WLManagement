@@ -325,8 +325,7 @@ class HandleCompetition extends Component {
 						status={status} 
 						toggleStatus={this.toggleStatus} 
 						compRoute={this.changeCompRoute} 
-						adminToggle={adminToggle} 
-						onRouteChange={onRouteChange} />
+						adminToggle={adminToggle} />
 					: (status !== 'notstarted' 
 						? <Result seeState={this.seeState} result={this.state.verdict.result} votes={this.state.verdict.votes} />
 						: (this.state.acceptedRegistrations.find(reg => reg.name === name && reg.role === 'coach')

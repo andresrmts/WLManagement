@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link, RouterContext } from '../../../../Router';
+import { useCompetitionContext } from '../../CompetitionContext';
 import { routes } from '../../../../Router/routes';
 
-const AdminNav = ({status, toggleStatus, compRoute, adminToggle }) => {
+const AdminNav = ({compRoute, adminToggle }) => {
+	const { status, setstatus} = useCompetitionContext();
 	return (
 		<div>
 			<RouterContext.Consumer>
@@ -13,7 +15,7 @@ const AdminNav = ({status, toggleStatus, compRoute, adminToggle }) => {
 				{status === 'started' 
 					? 	<nav style={{display: 'flex', justifyContent: 'center'}}>
 							<p 
-							onClick={() => toggleStatus('paused')}
+							onClick={() => setstatus('paused')}
 							className="f6 pa3 underline pointer red ba">PAUSE COMPETITION</p>
 							<p 
 							onClick={() => compRoute('home')}
@@ -22,7 +24,7 @@ const AdminNav = ({status, toggleStatus, compRoute, adminToggle }) => {
 					:	(status === 'paused'
 							? 	<nav style={{display: 'flex', justifyContent: 'center'}}>
 									<p 
-									onClick={() => toggleStatus('started')}
+									onClick={() => setstatus('started')}
 									className="f6 pa3 underline pointer red ba">START COMPETITION</p>
 									<p 
 									onClick={() => compRoute('home')}
@@ -31,7 +33,7 @@ const AdminNav = ({status, toggleStatus, compRoute, adminToggle }) => {
 							: 	<nav style={{display: 'flex', justifyContent: 'center'}}>
 									<p 
 									onClick={() => {
-										toggleStatus('started');
+										setstatus('started');
 										compRoute('home');
 									}}
 									className="f6 pa3 underline pointer red ba">START COMPETITION</p>

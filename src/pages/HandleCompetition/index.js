@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import AdminNav from './components/AdminNav';
 import Registrations from './components/Registrations';
 import CoachNav from './components/CoachNav';
@@ -12,242 +12,185 @@ import RoleSelection from './components/RoleSelection';
 import CoachInCompetition from './components/CoachInCompetition';
 import CompetitionAdmin from './components/CompetitionAdmin';
 import Table from '../../components/Table';
+import { useCompetitionContext } from './CompetitionContext';
 import { Link } from '../../Router';
 import { routes } from '../../Router/routes';
 
-class HandleCompetition extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			comproute: 'home',
-			status: 'notstarted',
-			timer: true,
-			time: {minutes: 1, seconds: 0 + '0'},
-			lift: 'snatch',
-			acceptedRegistrations: [
+const HandleCompetition = ({ adminToggle, isAdmin, officialName }) => {
+	const [comproute, setCompRoute] = useState('home');
+	const { status } = useCompetitionContext();
+	const [timer, setTimer] = useState(true);
+	const [time, setTime] = useState({minutes: 1, seconds: 0 + '0'});
+	const [lift, setLift] = useState('snatch');
+	const [acceptedRegistrations, setAcceptedRegistrations] = useState([
+		{
+			name: 'Külli', 
+			role: 'judge'
+		}, 
+		{
+			name: 'Andres Riimets', 
+			role: 'coach'
+		}
+	]);
+	const [registrations, setRegistrations] = useState([
+		{
+			name: 'Andres Riimets', 
+			role: 'coach'
+		}, 
+		{
+			name: 'Piibe Pullerits', 
+			role: 'changetable'
+		}, 
+		{
+			name: 'Priit', 
+			role: 'judge'
+		}
+	]);
+	const [registeredAthletes, setRegisteredAthletes] = useState([
+		{
+			name: 'Athlete1', 
+			attempt: 0, 
+			weight: "-", 
+			age: 27, 
+			snatch: 30, 
+			cnj: 23, 
+			coachname: 'Coach', 
+			result: 
 				{
-					name: 'Külli',
-					role: 'judge'
-				},
-				{
-					name: 'Andres Riimets',
-					role: 'coach'
+					snatch: [], 
+					cnj: []
 				}
-
-			],
-			registrations: [
-				{
-					name: 'Andres Riimets',
-					role: 'coach'
-				},
-				{
-					name: 'Piibe Pullerits',
-					role: 'changetable'
-				},
-				{
-					name: 'Priit',
-					role: 'judge'
-				}
-			],
-			registeredAthletes: [
-				{
-					name: 'Athlete1',
-					attempt: 0,
-					weight: "-",
-					age: 27,
-					snatch: 30,
-					cnj: 23,
-					coachname: 'Coach',
-					result: {
-						snatch: [],
-						cnj: []
-					}
-				},
-				{
-					name: 'Athlete2',
-					attempt: 0,
-					weight: "-",
-					age: 27,
-					snatch: 26,
-					cnj: 23,
-					coachname: 'Andres Riimets',
-					result: {
-						snatch: [],
-						cnj: []
-					}
-				},
-				{
-					name: 'Athlete3',
-					attempt: 0,
-					weight: "-",
-					age: 27,
-					snatch: 30,
-					cnj: 40,
-					coachname: 'Andres Riimets',
-					result: {
-						snatch: [],
-						cnj: []
-					}
-				}
-			],
-			verdict: {
-				result: 0,
-				votes: 0
+		}, 
+		{
+			name: 'Athlete2', 
+			attempt: 0, 
+			weight: "-",
+			age: 27, 
+			snatch: 26, 
+			cnj: 23, 
+			coachname: 'Andres Riimets', 
+			result: {
+				snatch: [], 
+				cnj: []
+			}
+		}, 
+		{
+			name: 'Athlete3', 
+			attempt: 0, 
+			weight: "-", 
+			age: 27, 
+			snatch: 30, 
+			cnj: 40, 
+			coachname: 'Andres Riimets', 
+			result: {
+				snatch: [], 
+				cnj: []
 			}
 		}
-	}
+	]);
+	const [verdict, setVerdict] = useState({
+		result: 0,
+		votes: 0
+	})
 
-	editAthleteWeight = (athleteName) => {
+	const editAthleteWeight = (athleteName) => {
 		const weight = prompt('Enter athlete weight:')
-		this.setState({
-			registeredAthletes: this.state.registeredAthletes.map(athlete => athleteName === athlete.name ? Object.assign(athlete, {weight: weight}) : athlete)
-		})
+		setRegisteredAthletes(pS => pS.map(ath => athleteName === ath.name ? Object.assign(ath, {weight: weight}) : ath));
 	}
 
-	nextLift = () => {
-		this.setState({
-			lift: 'cnj',
-			registeredAthletes: this.state.registeredAthletes.map(athlete => Object.assign(athlete, {attempt: 0})),
-			time: {minutes: 1, seconds: 0 + '0'},
-			timer: false
-		}, () => this.setTime(1, 0 + '0'))
+	const nextLift = () => {
+		setLift('cnj');
+		setRegisteredAthletes(pS => pS.map(ath => Object.assign(ath, {attempt: 0})));
+		setTime({minutes: 1, seconds: 0 + '0'});
+		setTimer(false);
 	}
 
-	setTime = (minutes, seconds) => {
-		this.setState({time: {minutes, seconds}});
+	const changeTime = (minutes, seconds) => {
+		setTime({minutes: minutes, seconds: seconds});
 	}
 
-	toggleStatus = (status) => {
-		this.setState({status: status})
+	const changeCompRoute = (route) => {
+		setCompRoute(route);
 	}
 
-	changeCompRoute = (route) => {
-		this.setState({comproute: route})
-	}
-
-	addAthlete = (name, age, snatch, cnj) => {
+	const addAthlete = (name, age, snatch, cnj) => {
 		if (age < 1 || age > 99 || snatch < 10 || snatch > 230 || cnj < 10 || cnj > 300) {
 			alert('Please enter valid info!')
 		} else {
-			this.state.registeredAthletes.push(
-				{
-					name,
-					attempt: 0,
-					weight: '',
-					age,
-					snatch,
-					cnj,
-					coachname: this.props.name,
-					result: {
-						snatch: [
-
-						],
-						cnj: [
-
-						]
-					}
-				}
-			)
+			registeredAthletes.push({
+				name, 
+				attempt: 0, 
+				weight: '', 
+				age, 
+				snatch, 
+				cnj, 
+				coachname: officialName, 
+				result: {snatch: [], cnj: []}
+			})
 			document.getElementById('name').value=''; 
-         document.getElementById('age').value=''; 
-         document.getElementById('snatch').value='';
-         document.getElementById('cnj').value='';
+			document.getElementById('age').value=''; 
+			document.getElementById('snatch').value='';
+			document.getElementById('cnj').value='';
 		}
 	}
 
-	seeState = () => {
-		console.log(this.state)
-	}
-
-	goToNextAttempt = (athlete, weight, attempt) => {
-		const index = this.state.registeredAthletes.findIndex(registration => registration.name === athlete);
-		const { lift } = this.state;
-		if (this.state.verdict.result > 0 && this.state.verdict.votes === 3 && this.state.registeredAthletes[index].attempt < 3) {
-			this.state.registeredAthletes[index].result[lift].push(weight);
-			this.setState(prevState => ({
-				registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete ? Object.assign(el, {[lift]: weight++, attempt: attempt++}) : el),
-				verdict: {
-					result: 0,
-					votes: 0
-				}
-			}))
-		} else if (this.state.verdict.result < 0 && this.state.verdict.votes === 3 && this.state.registeredAthletes[index].attempt < 3) {
-			this.state.registeredAthletes[index].result[lift].push(weight + 'x');
-			this.setState(prevState => ({
-				registeredAthletes: prevState.registeredAthletes.map(el => el.name === athlete ? Object.assign(el, {attempt: attempt++}) : el),
-				verdict: {
-					result: 0,
-					votes: 0
-				}
-			}))
+	const goToNextAttempt = (athlete, weight, attempt) => {
+		const index = registeredAthletes.findIndex(reg => reg.name === athlete);
+		if (verdict.result > 0 && verdict.votes === 3 && registeredAthletes[index].attempt < 3) {
+			registeredAthletes[index].result[lift].push(weight);
+			setRegisteredAthletes(pS => pS.map(ath => ath.name === athlete ? Object.assign(ath, {[lift]: weight++, attempt: attempt++}) : ath));
+			setVerdict({result: 0, votes: 0});
+		} else if (verdict.result < 0 && verdict.votes === 3 && registeredAthletes[index].attempt < 3) {
+			registeredAthletes[index].result[lift].push(weight + 'x');
+			setRegisteredAthletes(pS => pS.map(ath => ath.name === athlete ? Object.assign(ath, {attempt: attempt++}) : ath));
+			setVerdict({result: 0, votes: 0});
 		}
 	}
 
-	castVote = (decision, athlete, weight, attempt) => {
+	const castVote = (decision, athlete, weight, attempt) => {
 		if (decision === 'yes') {
-			this.setState(prevState => ({
-				verdict: {
-					result: prevState.verdict.result + 1,
-					votes: prevState.verdict.votes + 3
-				}
-			}
-			), () => setTimeout(() => this.goToNextAttempt(athlete, weight, attempt), 3000))
+			setVerdict({result: 1, votes: 3});
 		} else {
-			this.setState(prevState => ({
-				verdict: {
-					result: prevState.verdict.result - 1,
-					votes: prevState.verdict.votes + 3
-				}
-			}
-			), () => setTimeout(() => this.goToNextAttempt(athlete, weight, attempt), 3000))
+			setVerdict({result: -1, votes: 3});
 		}
 	}
 
-	joinComp = (name, role) => {
-		this.state.registrations.push({name: name, role: role});
+	const joinComp = (name, role) => {
+		registrations.push({name: name, role: role});
 	}
 
-	changeWeight = (athlete, weight) => {
-		const { lift, registeredAthletes } = this.state;
-		this.setState({registeredAthletes: registeredAthletes.map(el => el.name === athlete.name ? Object.assign(el, {[lift]: weight}) : el)})
+	const changeWeight = (athlete, weight) => {
+		setRegisteredAthletes(pS => pS.map(ath => ath.name === athlete.name ? Object.assign(ath, {[lift]: weight}) : ath));
 	}
 
-	changeAlert = () => {
-
+	const toggleTimer = () => {
+		setTimer(pS => !pS);
 	}
 
-	toggleTimer = () => {
-		this.setState(prevState => ({
-			timer: !prevState.timer
-		}))
-	}
-
-	approveRemove = (decision, name, role) => {
+	const approveRemove = (decision, name, role) => {
 		let splicedArray;
-		const {registrations, acceptedRegistrations} = this.state;
 		if (decision === 'yes' && role === 'judge') {
 			if (acceptedRegistrations.filter(judge => judge.role === 'judge').length < 3) {
 				splicedArray = registrations.splice(registrations.findIndex(participant => participant.name === name), 1);
 				acceptedRegistrations.push(splicedArray[0]);
 				this.setState({registrations: registrations});
+				setRegistrations(registrations);
 			} else {
 				alert('There already are 3 judges in the competition')
 			}
 		} else if (decision === 'yes') {
 			splicedArray = registrations.splice(registrations.findIndex(participant => participant.name === name), 1);
 			acceptedRegistrations.push(splicedArray[0]);
-			this.setState({registrations: registrations});
+			setRegistrations(registrations);
 		} else {
 			registrations.splice(registrations.findIndex(participant => participant.name === name), 1);
-			this.setState({registrations: registrations});
+			setRegistrations(registrations);
 		}
 	}
 
-	renderCompRoutes = (route) => {
-		const { name, isAdmin } = this.props;
-		const { lift, registrations, status, registeredAthletes, acceptedRegistrations, timer, time } = this.state;
-		const filteredName = acceptedRegistrations.filter(reg => reg.name === name);
-		const onlyCoachAthletes = registeredAthletes.filter(athlete => athlete.coachname === name);
+	const renderCompRoutes = (route) => {
+		const filteredName = acceptedRegistrations.filter(reg => reg.name === officialName);
+		const onlyCoachAthletes = registeredAthletes.filter(athlete => athlete.coachname === officialName);
 		const headers = [
 			{
 				header: 'Name',
@@ -275,30 +218,30 @@ class HandleCompetition extends Component {
 			},
 		];
 		const props = {name: '', age: '', weight: '', snatch: '', cnj: '', coachname:''};
-		const outSideProps = {functions: {weight: this.editAthleteWeight}}
+		const outSideProps = {functions: {weight: editAthleteWeight}}
 		switch(route) {
 			case 'home':
 				if (status === 'notstarted') {
 					if (isAdmin) {
-						return <Registrations approveRemove={this.approveRemove} registrations={registrations} acceptedRegistrations={acceptedRegistrations} />
+						return <Registrations approveRemove={approveRemove} registrations={registrations} acceptedRegistrations={acceptedRegistrations} />
 					} else if (filteredName[0] && filteredName[0].role === 'coach') {
-						return <MyAthletes editAthleteWeight={this.editAthleteWeight} coachName={name} coachAthletes={onlyCoachAthletes} />
+						return <MyAthletes editAthleteWeight={editAthleteWeight} coachName={officialName} coachAthletes={onlyCoachAthletes} />
 					} else if (filteredName[0] && filteredName[0].role === 'judge') {
-						return <Judge status={status} />
+						return <Judge />
 					} else if (filteredName[0] && filteredName[0].role === 'changetable') {
 						return <ChangeTable />
-					} else if (registrations.find(reg => reg.name === name) !== undefined) {
+					} else if (registrations.find(reg => reg.name === officialName) !== undefined) {
 						return <h1>Your registration hasn't been accepted yet by the admin!</h1>
 					} else {
-						return <RoleSelection changeCompRoute={this.changeCompRoute} joinComp={this.joinComp} name={name} />
+						return <RoleSelection changeCompRoute={changeCompRoute} joinComp={joinComp} name={officialName} />
 					}
 				} else {
 					if (isAdmin) {
-						return <CompetitionAdmin setTime={this.setTime} nextLift={this.nextLift} time={time} toggleTimer={this.toggleTimer} timer={timer} lift={lift} athletes={registeredAthletes} />
+						return <CompetitionAdmin changeTime={changeTime} nextLift={nextLift} time={time} toggleTimer={toggleTimer} timer={timer} lift={lift} athletes={registeredAthletes} />
 					} else if (filteredName[0] && filteredName[0].role === 'coach') {
-						return <CoachInCompetition setTime={this.setTime} toggleTimer={this.toggleTimer} timer={timer} time={time} changeWeight={this.changeWeight} name={name} lift={lift} athletes={registeredAthletes} />
+						return <CoachInCompetition changeTime={changeTime} toggleTimer={toggleTimer} timer={timer} time={time} changeWeight={changeWeight} name={officialName} lift={lift} athletes={registeredAthletes} />
 					} else if (filteredName[0] && filteredName[0].role === 'judge') {
-						return <Judge setTime={this.setTime} time={time} timer={timer} goToNextAttempt={this.goToNextAttempt} lift={lift} athletes={registeredAthletes} castVote={this.castVote} status={status} />
+						return <Judge changeTime={changeTime} time={time} timer={timer} goToNextAttempt={goToNextAttempt} lift={lift} athletes={registeredAthletes} castVote={castVote} />
 					} else if (filteredName[0] && filteredName[0].role === 'changetable') {
 						return <ChangeTable />
 					}
@@ -309,37 +252,31 @@ class HandleCompetition extends Component {
 			case 'athletelist':
 				return <Table props={props} headers={headers} tableContent={registeredAthletes} outSideProps={outSideProps} />
 			case 'athleteregistration':
-				return <AthleteRegistration addAthlete={this.addAthlete} />
+				return <AthleteRegistration addAthlete={addAthlete} />
 			default:
 				return <h1>Something went wrong...</h1>
 		}
 	}
 
-	render() {
-		const { onRouteChange, adminToggle, isAdmin, name } = this.props;
-		const { comproute, status } = this.state;
-		return (
+	return (
 			<div>
 				{isAdmin
-					? <AdminNav 
-						status={status} 
-						toggleStatus={this.toggleStatus} 
-						compRoute={this.changeCompRoute} 
-						adminToggle={adminToggle} />
-					: (status !== 'notstarted' 
-						? <Result seeState={this.seeState} result={this.state.verdict.result} votes={this.state.verdict.votes} />
-						: (this.state.acceptedRegistrations.find(reg => reg.name === name && reg.role === 'coach')
-								? <CoachNav 
-									name={name} 
-									compRoute={this.changeCompRoute} 
-									onRouteChange={onRouteChange} />
-								: <Link to={routes.competitionselection.path} className="f6 tc underline pointer center">Exit</Link>)
-						)
-				}
-				{this.renderCompRoutes(comproute)}
-			</div>
-		)
-	}
+						? <AdminNav 
+							compRoute={changeCompRoute} 
+							adminToggle={adminToggle} />
+						: (status !== 'notstarted' 
+							? <Result result={verdict.result} votes={verdict.votes} />
+							: (acceptedRegistrations.find(reg => reg.name === officialName && reg.role === 'coach')
+									? <CoachNav 
+										name={officialName} 
+										compRoute={changeCompRoute}  />
+									: <Link to={routes.competitionselection.path} className="f6 tc underline pointer center">Exit</Link>)
+							)
+					}
+					{renderCompRoutes(comproute)}
+				</div>
+	)
+
 }
 
 export default HandleCompetition;

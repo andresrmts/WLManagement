@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Timer from '../Timer';
 
-const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTimedOut, prevAthlete, timer, time, setTime, setCoachTimer }) => {
+const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTimedOut, prevAthlete, timer, time, changeTime, setCoachTimer }) => {
 	const [next, setNext] = useState(athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}));
 	const [seconds, setSeconds] = useState(time.seconds);
 	const [minutes, setMinutes] = useState(time.minutes);
@@ -10,18 +10,18 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 	const updateTime = () => {
 		if (minutes === 0 && seconds === 0) {
 			if (setTimedOut) {
-				setTime(1, 0 + '0')
+				changeTime(1, 0 + '0')
 				setTimedOut(true);
 			} else {
-				setTime(1, 0 + '0')
+				changeTime(1, 0 + '0')
 			}
 		} else {
 			if (seconds === 0 + '0' || seconds === 0) {
-				setTime(minutes - 1, 59)
+				changeTime(minutes - 1, 59)
 			} else if (timerStart === false) {
-				setTime(minutes, seconds)
+				changeTime(minutes, seconds)
 			} else if (timerStart === true) {
-				setTime(minutes, seconds - 1)
+				changeTime(minutes, seconds - 1)
 			}
 		}
 	}
@@ -32,7 +32,7 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 			setWeight(next.length > 0 ? next[0][lift] : '');
 			setAttempt(next.length > 0 ? next[0].attempt : '');
 		}
-	})
+	}, []);
 
 	useEffect(() => {
 		const token = setTimeout(updateTime, 1000)
@@ -42,18 +42,14 @@ const NextAttempt = ({athletes, lift, setAthlete, setWeight, setAttempt, setTime
 	}, [seconds, timerStart])
 
 	useEffect(() => {
-		if (setTime && next.length > 0) {
+		if (changeTime && next.length > 0) {
 			if (prevAthlete === next[0].name) {
-				setTime(2, 0 + '0')
+				changeTime(2, 0 + '0');
 			} else {
-				setTime(1, 0 + '0')
+				changeTime(1, 0 + '0');
 			}
 		}
-	}, [])
-
-	useEffect(() => {
-		setTime(1, 0 + '0')
-	}, [next[0]])
+	}, [athletes])
 
 	useEffect(() => {
 		setMinutes(time.minutes);

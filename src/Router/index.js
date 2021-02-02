@@ -14,7 +14,7 @@ class Router extends React.Component {
 			competition: '',
 			user: {
 				id: '',
-				name: 'Andres Riimets',
+				name: 'Külli',
 				email: ''
 			}
 		}

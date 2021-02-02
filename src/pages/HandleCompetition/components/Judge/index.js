@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import NextAttempt from '../NextAttempt';
+import { useCompetitionContext } from '../../CompetitionContext';
 
 const usePrevious = (value) => {
 	const ref = useRef(null);
@@ -9,12 +10,13 @@ const usePrevious = (value) => {
 	return ref.current;
 }
 
-const Judge = ({ status, castVote, athletes, lift, goToNextAttempt, timer, time, setTime }) => {
+const Judge = ({ castVote, athletes, lift, timer, time, changeTime, goToNextAttempt }) => {
 	const [voted, setVoted] = useState(false);
 	const [athlete, setAthlete] = useState('');
 	const [weight, setWeight] = useState('');
 	const [attempt, setAttempt] = useState(0);
 	const [timedOut, setTimedOut] = useState(false);
+	const { status } = useCompetitionContext();
 
 	const prevAthlete = usePrevious(athlete);
 
@@ -30,6 +32,12 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt, timer, time,
 		}
 	}, [timedOut])
 
+	useEffect(() => {
+		if (status === 'started') {
+			goToNextAttempt(athlete, weight, attempt);
+		}
+	}, [voted])
+
 	if (status === 'notstarted') {
 		return (
 			<h1>The competition hasnt started yet. It will start in TIMER</h1>
@@ -40,7 +48,7 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt, timer, time,
 				<div className="flex center pa2">
 					<NextAttempt
 						athlete={athlete}
-						setTime={setTime} 
+						changeTime={changeTime} 
 						timer={timer}
 						prevAthlete={prevAthlete}
 						setTimedOut={setTimedOut} 

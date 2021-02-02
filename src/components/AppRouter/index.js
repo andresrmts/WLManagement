@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, RouterContext } from '../../Router';
+import { CompetitionProvider } from '../../pages/HandleCompetition/CompetitionContext';
 import { routes } from '../../Router/routes';
 import SignIn from '../../pages/SignIn';
 import CompetitionSelection from '../../pages/CompetitionSelection';
@@ -32,7 +33,9 @@ const AppRouter = ({ setSignedIn, adminToggle, onSearchChange, isAdmin, isSigned
 								<CompetitionCreation adminToggle={adminToggle} />
 							</Route>
 							<Route path={routes.competition.path}>
-								<HandleCompetition name={context.user.name} adminToggle={adminToggle} isAdmin={isAdmin} />
+								<CompetitionProvider>
+									<HandleCompetition officialName={context.user.name} adminToggle={adminToggle} isAdmin={isAdmin} />
+								</CompetitionProvider>
 							</Route>
 						</div>
 					)}

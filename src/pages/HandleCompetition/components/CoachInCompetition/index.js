@@ -3,7 +3,7 @@ import CompetitionList from '../../../../components/CompetitionList';
 import NextAttempt from '../NextAttempt';
 import Table from '../../../../components/Table';
 
-const CoachInCompetition = ({ setTime, athletes, lift, name, changeWeight, time, timer, toggleTimer }) => {
+const CoachInCompetition = ({ changeTime, athletes, lift, name, changeWeight, time, timer, toggleTimer }) => {
 	const [myAthletes] = useState(athletes.filter(athlete => athlete.coachname === name));
 	const [onTheClock, setOnTheClock] = useState(athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}));
 	const [coachTimer, setCoachTimer] = useState({minutes: time.minutes, seconds: time.seconds});
@@ -37,7 +37,7 @@ const CoachInCompetition = ({ setTime, athletes, lift, name, changeWeight, time,
 	return (
 		<div className="cf ph2-ns">
 			<div className="fl w-100 w-60-ns pa2">
-				<NextAttempt setTime={setTime} timer={timer} athletes={athletes} lift={lift} time={time} setCoachTimer={setCoachTimer} />
+				<NextAttempt changeTime={changeTime} timer={timer} athletes={athletes} lift={lift} time={time} setCoachTimer={setCoachTimer} />
 			</div>
 			<div className="fl w-100 w-40-ns pa2 mv4">
 			   <div className="tc outline bg-white pv4">

@@ -9,6 +9,7 @@ import CompetitionCreation from '../../pages/CompetitionCreation';
 import HandleCompetition from '../../pages/HandleCompetition';
 
 const AppRouter = ({ setSignedIn, adminToggle, onSearchChange, isAdmin, isSignedIn }) => {
+	const { user } = React.useContext(RouterContext);
 
   return (
 		<div>
@@ -23,24 +24,21 @@ const AppRouter = ({ setSignedIn, adminToggle, onSearchChange, isAdmin, isSigned
 				</div>
 			)}
 			{isSignedIn && (
-				<RouterContext.Consumer>
-					{context => (
-						<div>
-							<Route path={routes.competitionselection.path}>
-								<CompetitionSelection user={context.user} onSearchChange={onSearchChange} adminToggle={adminToggle}/>
-							</Route>
-							<Route path={routes.competitioncreation.path}>
-								<CompetitionCreation adminToggle={adminToggle} />
-							</Route>
-							<Route path={routes.competition.path}>
-								<CompetitionProvider officialName={context.user.name} >
-									<HandleCompetition adminToggle={adminToggle} isAdmin={isAdmin} />
-								</CompetitionProvider>
-							</Route>
-						</div>
-					)}
-				</RouterContext.Consumer>
-			)}
+				<div>
+					<Route path={routes.competitionselection.path}>
+						<CompetitionSelection user={user} onSearchChange={onSearchChange} adminToggle={adminToggle}/>
+					</Route>
+					<Route path={routes.competitioncreation.path}>
+						<CompetitionCreation adminToggle={adminToggle} />
+					</Route>
+					<Route path={routes.competition.path}>
+						<CompetitionProvider officialName={user.name} >
+							<HandleCompetition adminToggle={adminToggle} isAdmin={isAdmin} />
+						</CompetitionProvider>
+					</Route>
+				</div>
+				)
+			}
 		</div>
   )
 }

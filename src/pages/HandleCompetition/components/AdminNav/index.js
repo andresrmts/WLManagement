@@ -5,13 +5,10 @@ import { routes } from '../../../../Router/routes';
 
 const AdminNav = ({ adminToggle }) => {
 	const { status, setstatus, changeCompRoute} = useCompetitionContext();
+	const { competition } = React.useContext(RouterContext);
 	return (
 		<div>
-			<RouterContext.Consumer>
-				{context => (
-					<h1>You are currently working on {context.competition}</h1>
-				)}
-			</RouterContext.Consumer>
+					<h1>You are currently working on {competition}</h1>
 				{status === 'started' 
 					? 	<nav style={{display: 'flex', justifyContent: 'center'}}>
 							<p 

@@ -5,14 +5,10 @@ import { routes } from '../../../../Router/routes';
 
 const CoachNav = () => {
 	const { changeCompRoute } = useCompetitionContext();
+	const { user, competition} = React.useContext(RouterContext);
 	return (
 		<div>
-			<RouterContext.Consumer>
-				{({user, competition}) => (
-					<h1>You are currently coach {user.name} in {competition}</h1>
-				)
-				}
-			</RouterContext.Consumer>
+				<h1>You are currently coach {user.name} in {competition}</h1>
 			<nav style={{display: 'flex', justifyContent: 'center'}}>
 				<p 
 					onClick={() => changeCompRoute('home')}

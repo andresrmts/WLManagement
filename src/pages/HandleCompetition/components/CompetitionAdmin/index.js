@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import NextAttempt from '../NextAttempt';
 import Table from '../../../../components/Table';
+import { useCompetitionContext } from '../../CompetitionContext';
 
-const CompetitionAdmin = ({ athletes, lift, timer, toggleTimer, time, nextLift, changeTime }) => {
-	const [onTheClock, setOnTheClock] = useState(athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}));
+const CompetitionAdmin = () => {
+	const { registeredAthletes, lift, toggleTimer, nextLift, timer} = useCompetitionContext();
+	const [onTheClock, setOnTheClock] = useState(registeredAthletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}));
 
 	useEffect(() => {
-		setOnTheClock(athletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}))
-	}, [athletes, lift])
+		setOnTheClock(registeredAthletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}))
+	}, [registeredAthletes, lift])
 
 	const headers = [
 		{
@@ -36,7 +38,7 @@ const CompetitionAdmin = ({ athletes, lift, timer, toggleTimer, time, nextLift, 
 			</div>
 			<div className="fl w-100 w-60-ns pa2 tc">
 				Next Attempt
-				<NextAttempt changeTime={changeTime} time={time} timer={timer} lift={lift} athletes={athletes} />
+				<NextAttempt />
 			</div>
 			<div className="fl w-100 w-40-ns pa2">
 				<div className="tc outline bg-white pv4">

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useCompetitionContext } from '../../CompetitionContext';
 
-const AthleteRegistration = ({ addAthlete }) => {
+const AthleteRegistration = () => {
+	const { addAthlete } = useCompetitionContext();
 	const [name, setName] = useState('');
 	const [age, setAge] = useState('');
 	const [snatch, setSnatch] = useState('');

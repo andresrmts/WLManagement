@@ -33,8 +33,8 @@ const AppRouter = ({ setSignedIn, adminToggle, onSearchChange, isAdmin, isSigned
 								<CompetitionCreation adminToggle={adminToggle} />
 							</Route>
 							<Route path={routes.competition.path}>
-								<CompetitionProvider>
-									<HandleCompetition officialName={context.user.name} adminToggle={adminToggle} isAdmin={isAdmin} />
+								<CompetitionProvider officialName={context.user.name} >
+									<HandleCompetition adminToggle={adminToggle} isAdmin={isAdmin} />
 								</CompetitionProvider>
 							</Route>
 						</div>

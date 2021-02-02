@@ -3,8 +3,8 @@ import { Link, RouterContext } from '../../../../Router';
 import { useCompetitionContext } from '../../CompetitionContext';
 import { routes } from '../../../../Router/routes';
 
-const AdminNav = ({compRoute, adminToggle }) => {
-	const { status, setstatus} = useCompetitionContext();
+const AdminNav = ({ adminToggle }) => {
+	const { status, setstatus, changeCompRoute} = useCompetitionContext();
 	return (
 		<div>
 			<RouterContext.Consumer>
@@ -18,7 +18,7 @@ const AdminNav = ({compRoute, adminToggle }) => {
 							onClick={() => setstatus('paused')}
 							className="f6 pa3 underline pointer red ba">PAUSE COMPETITION</p>
 							<p 
-							onClick={() => compRoute('home')}
+							onClick={() => changeCompRoute('home')}
 							className="f6 pa3 underline pointer">Competition Home</p>
 						</nav>
 					:	(status === 'paused'
@@ -27,24 +27,24 @@ const AdminNav = ({compRoute, adminToggle }) => {
 									onClick={() => setstatus('started')}
 									className="f6 pa3 underline pointer red ba">START COMPETITION</p>
 									<p 
-									onClick={() => compRoute('home')}
+									onClick={() => changeCompRoute('home')}
 									className="f6 pa3 underline pointer">Competition Home</p>
 								</nav>
 							: 	<nav style={{display: 'flex', justifyContent: 'center'}}>
 									<p 
 									onClick={() => {
 										setstatus('started');
-										compRoute('home');
+										changeCompRoute('home');
 									}}
 									className="f6 pa3 underline pointer red ba">START COMPETITION</p>
 									<p 
-									onClick={() => compRoute('home')}
+									onClick={() => changeCompRoute('home')}
 									className="f6 pa3 underline pointer">Pending registrations</p>
 									<p 
-									onClick={() => compRoute('registered')}
+									onClick={() => changeCompRoute('registered')}
 									className="f6 pa3 underline pointer">Accepted Registrations</p>
 									<p 
-									onClick={() => compRoute('athletelist')}
+									onClick={() => changeCompRoute('athletelist')}
 									className="f6 pa3 underline pointer">Competitor List</p>
 									<Link to={routes.competitionselection.path} onClick={() => adminToggle(false)} className="f6 pa3 underline pointer">Exit</Link>
 								</nav>

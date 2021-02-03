@@ -8,7 +8,6 @@ const CoachInCompetition = () => {
 	const { registeredAthletes, officialName, lift, changeWeight, toggleTimer, time } = useCompetitionContext();
 	const [myAthletes] = useState(registeredAthletes.filter(athlete => athlete.coachname === officialName));
 	const [onTheClock, setOnTheClock] = useState(registeredAthletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}));
-	const [coachTimer, setCoachTimer] = useState({minutes: time.minutes, seconds: time.seconds});
 	const [currentChangeCounter, setCurrentChangeCounter] = useState(0);
 
 	useEffect(() => {
@@ -39,12 +38,12 @@ const CoachInCompetition = () => {
 	return (
 		<div className="cf ph2-ns">
 			<div className="fl w-100 w-60-ns pa2">
-				<NextAttempt setCoachTimer={setCoachTimer} />
+				<NextAttempt />
 			</div>
 			<div className="fl w-100 w-40-ns pa2 mv4">
 			   <div className="tc outline bg-white pv4">
 			      Your Competitors
-			      <CompetitionList toggleTimer={toggleTimer} onTheClock={onTheClock[0]} coachTimer={coachTimer} lift={lift} changeWeight={changeWeight} myAthletes={myAthletes} setCurrentChangeCounter={setCurrentChangeCounter} currentChangeCounter={currentChangeCounter} />
+			      <CompetitionList toggleTimer={toggleTimer} onTheClock={onTheClock[0]} time={time} lift={lift} changeWeight={changeWeight} myAthletes={myAthletes} setCurrentChangeCounter={setCurrentChangeCounter} currentChangeCounter={currentChangeCounter} />
 				</div>
 			</div>
 			<div className="fl w-100 w-100-ns pa2">

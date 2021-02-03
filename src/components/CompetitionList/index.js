@@ -1,7 +1,7 @@
 import React from 'react';
 import Competition from './Competition';
 
-const CompetitionList = ({ adminToggle, useremail, onRouteChange, competitions, myAthletes, changeWeight, lift, onTheClock, coachTimer, toggleTimer, setCurrentChangeCounter, currentChangeCounter }) => {
+const CompetitionList = ({ adminToggle, useremail, onRouteChange, competitions, myAthletes, changeWeight, lift, onTheClock, toggleTimer, setCurrentChangeCounter, currentChangeCounter, time }) => {
 	if (competitions) {
 		return (
 			<div>
@@ -38,7 +38,7 @@ const CompetitionList = ({ adminToggle, useremail, onRouteChange, competitions, 
 								changeWeight={changeWeight}
 								lift={lift}
 								onTheClock={onTheClock}
-								coachTimer={coachTimer}
+								time={time}
 								toggleTimer={toggleTimer}
 								setCurrentChangeCounter={setCurrentChangeCounter}
 								currentChangeCounter={currentChangeCounter}

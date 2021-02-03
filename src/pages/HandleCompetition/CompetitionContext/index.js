@@ -3,7 +3,7 @@ import React, { useState, useContext, createContext } from 'react';
 const CompetitionContext = createContext();
 
 const CompetitionProvider = ({children, officialName}) => {
-  const [status, setStatus] = useState('notstarted');
+  const [status, setStatus] = useState('started');
   const [comproute, setCompRoute] = useState('home');
   const [timer, setTimer] = useState(true);
   const [time, setTime] = useState({minutes: 1, seconds: 0 + '0'});

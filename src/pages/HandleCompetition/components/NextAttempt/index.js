@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Timer from '../Timer';
 import { useCompetitionContext } from '../../CompetitionContext';;
 
-const NextAttempt = ({ setAthlete, setWeight, setAttempt, setTimedOut, prevAthlete, setCoachTimer }) => {
+const NextAttempt = ({ setAthlete, setWeight, setAttempt, setTimedOut, prevAthlete }) => {
 	const { registeredAthletes, lift, timer, time, changeTime } = useCompetitionContext();
 	const [next, setNext] = useState(registeredAthletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}));
 	const [seconds, setSeconds] = useState(time.seconds);
@@ -65,12 +65,6 @@ const NextAttempt = ({ setAthlete, setWeight, setAttempt, setTimedOut, prevAthle
 		:
 		setTimerStart(false)
 	}, [timer])
-
-	useEffect(() => {
-		if (setCoachTimer) {
-			setCoachTimer({minutes, seconds})
-		}
-	}, [seconds])
 
 	useEffect(() => {
 		setNext(registeredAthletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}))

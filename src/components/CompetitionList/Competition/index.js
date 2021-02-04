@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, RouterContext } from '../../../Router';
 import { routes } from '../../../Router/routes';
 
-const Competition = ({ adminToggle, email, name, location, date, attempt, cnj, snatch, onTheClock, coachTimer, setCurrentChangeCounter, currentChangeCounter, changeWeight, lift, toggleTimer, time }) => {
+const Competition = ({ adminToggle, email, name, location, date, attempt, cnj, snatch, onTheClock, setCurrentChangeCounter, currentChangeCounter, changeWeight, lift, toggleTimer, time }) => {
 	const [weight, setWeight] = useState(lift === 'snatch' ? snatch : cnj);
 	const { user, changecompetition } = React.useContext(RouterContext);
 	
@@ -16,7 +16,7 @@ const Competition = ({ adminToggle, email, name, location, date, attempt, cnj, s
 			    <hr className="mw3 bb bw1 b--black-10" />
 			    <div style={{ display: 'flex', justifyContent: 'center'}}>
 							<Link to={routes.competition.path} onClick={() => {
-								adminToggle(user.email === email ? true : false);
+								adminToggle(user.email === email);
 								changecompetition(name);
 							}} className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer">{user.email === email ? 'Admin' : 'Handle'}</Link>
 				</div>
@@ -32,24 +32,24 @@ const Competition = ({ adminToggle, email, name, location, date, attempt, cnj, s
 			    <h3 className="tc f6">Next weight: {weight}</h3>
 			    	<p className="pointer ba w-25 flex center pa1" onClick={() => {
 			    		if (onTheClock.name === name && time.seconds < 31) {
-			    			alert('No changes allowed when 30sec remaining on clock')
-			    		} else {
-			    			setWeight(weight + 1)
+								alert('No changes allowed when 30sec remaining on clock');
+								return;
 			    		}
+			    		setWeight(weight + 1)
 			    	}}>+</p>
 			    	<p className="pointer ba pa4 w-50 flex center" onClick={() => {
 			    		if (onTheClock.name === name) {
-			    			if (currentChangeCounter < 2) {
+			    			if (currentChangeCounter < 2 && time.seconds > 30) {
 				    			changeWeight({name}, weight);
 				    			toggleTimer();
-				    			setCurrentChangeCounter(prev => prev + 1);
-			    			} else {
-			    				alert('You are only allowed 2 changes when athlete is on the clock!')
-			    			}
-			    		} else {
-			    			changeWeight({name}, weight);
+									setCurrentChangeCounter(prev => prev + 1);
+									return;
+			    			} 
+								alert('You are only allowed 2 changes when athlete is on the clock!');
+								setWeight(lift === 'snatch' ? snatch : cnj);
+								return;
 			    		}
-			    		
+			    		changeWeight({name}, weight);
 			    	}}>Approve</p>
 			    <hr className="mw3 bb bw1 b--black-10" />
 			  </div>

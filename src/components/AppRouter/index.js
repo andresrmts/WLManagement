@@ -26,7 +26,7 @@ const AppRouter = ({ setSignedIn, adminToggle, onSearchChange, isAdmin, isSigned
 			{isSignedIn && (
 				<div>
 					<Route path={routes.competitionselection.path}>
-						<CompetitionSelection user={user} onSearchChange={onSearchChange} adminToggle={adminToggle}/>
+						<CompetitionSelection onSearchChange={onSearchChange} adminToggle={adminToggle}/>
 					</Route>
 					<Route path={routes.competitioncreation.path}>
 						<CompetitionCreation adminToggle={adminToggle} />

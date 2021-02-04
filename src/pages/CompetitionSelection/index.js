@@ -1,41 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CompetitionList from '../../components/CompetitionList';
 import { Link, RouterContext } from '../../Router';
 import { routes } from '../../Router/routes';
 
-class CompetitionSelection extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			competitions: []
-		}
-	}
+const CompetitionSelection = ({ adminToggle, onSearchChange }) => {
+	const [competitions, setCompetitions] = useState([]);
+	const { user } = React.useContext(RouterContext);
 
-  componentDidMount() {
-    fetch('https://jsonplaceholder.typicode.com/users')
-    .then(response => response.json())
-    .then(competitions => {
-    	this.setState({ competitions: competitions })
-    });
-  }
+	useEffect(() => {
+		fetch('https://jsonplaceholder.typicode.com/users')
+		.then(res => res.json())
+		.then(comp => setCompetitions(comp))
+	}, []);
 
-	render() {
-		const { onRouteChange, onSearchChange, user, adminToggle } = this.props;
-		const yourComps = this.state.competitions.filter(competition => competition.id < 4);
-		const availableComps = this.state.competitions.filter(competition => !yourComps.some(comp => competition.name === comp.name))
-		return (
+	const yourComps = competitions.filter(competition => competition.id < 4);
+	const availableComps = competitions.filter(competition => !yourComps.some(comp => competition.name === comp.name));
+
+	return (
 			<div>
-				<RouterContext.Consumer>
-					{context => (
-						<p className="pa4 tc" style={{ display: 'flex', justifyContent: 'center'}}>
-							You are signed in as {context.user.name}. Please Create a new Competition or join an existing competition.
-						</p>
-					)}
-				</RouterContext.Consumer>
+				<p className="pa4 tc" style={{ display: 'flex', justifyContent: 'center'}}>
+					You are signed in as {user.name}. Please Create a new Competition or join an existing competition.
+				</p>
 				<div>
 					<div className="fl w-100 w-50-ns pa2 tc" style={{ display: 'flex', justifyContent: 'center'}}>
 						<Link to={routes.competitioncreation.path} className="pointer f6 link dim br-pill ba ph3 pv2 mb2 mid-gray">New Competition</Link>
-						{/* <a onClick={() => onRouteChange('competitioncreation')} className="f6 link dim br-pill ba ph3 pv2 mb2 mid-gray" href="#0">New Competition</a> */}
 					</div>
 					<div className="fl w-100 w-50-ns pa1 black-80" style={{ display: 'flex', justifyContent: 'center'}}>
 						<div className="measure">
@@ -48,7 +36,7 @@ class CompetitionSelection extends React.Component {
 							Your Competitions
 						</h1>
 						<div>
-							<CompetitionList adminToggle={adminToggle} useremail={user.email} competitions={yourComps} onRouteChange={onRouteChange}/>
+							<CompetitionList adminToggle={adminToggle} useremail={user.email} competitions={yourComps} />
 						</div>
 					</div>
 				</div>
@@ -56,11 +44,10 @@ class CompetitionSelection extends React.Component {
 					<h1>
 						Available Competitions
 					</h1>
-					<CompetitionList competitions={availableComps} onRouteChange={onRouteChange}/>
+					<CompetitionList competitions={availableComps} />
 				</div>
 			</div>
-		)
-	}
+	)
 }
 
 export default CompetitionSelection;

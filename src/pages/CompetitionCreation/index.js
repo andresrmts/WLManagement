@@ -3,7 +3,12 @@ import { Link, RouterContext } from '../../Router';
 import { routes } from '../../Router/routes';
 
 const CompetitionCreation = ({ adminToggle }) => {
+	const { changecompetition } = React.useContext(RouterContext);
 	const [competitionName, setCompetitionname] = useState('');
+	const createCompetition = (compname) => {
+		adminToggle(true);
+		changecompetition(compname);
+	}
 
 	return (
 		<article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
@@ -41,14 +46,7 @@ const CompetitionCreation = ({ adminToggle }) => {
 			    </fieldset>
 			   </div>
 			    <div className="measure center">
-						<RouterContext.Consumer>
-							{({ changecompetition }) => (
-								<Link to={routes.competition.path} onClick={() => {
-									adminToggle(true);
-									changecompetition(competitionName);
-								}} className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 m14 dib">Create</Link>
-							)}
-						</RouterContext.Consumer>
+						<Link to={routes.competition.path} onClick={() => createCompetition(competitionName)} className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 m14 dib">Create</Link>
 						<Link to={routes.competitionselection.path} className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 m14 dib">Back</Link>
 			    </div>
 			</main>

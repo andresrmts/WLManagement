@@ -80,8 +80,8 @@ const CompetitionProvider = ({children, officialName}) => {
   })
   
   const editAthleteWeight = (athleteName) => {
-		const weight = prompt('Enter athlete weight:')
-		setRegisteredAthletes(pS => pS.map(ath => athleteName === ath.name ? Object.assign(ath, {weight: weight}) : ath));
+		const weight = prompt('Enter athlete weight:');
+    setRegisteredAthletes(pS => pS.map(ath => athleteName === ath.name ? {...ath, weight} : ath));
 	}
   
   const changeCompRoute = (route) => {
@@ -105,23 +105,23 @@ const CompetitionProvider = ({children, officialName}) => {
 
   const addAthlete = (name, age, snatch, cnj) => {
 		if (age < 1 || age > 99 || snatch < 10 || snatch > 230 || cnj < 10 || cnj > 300) {
-			alert('Please enter valid info!')
-		} else {
-			registeredAthletes.push({
-				name, 
-				attempt: 0, 
-				weight: '', 
-				age, 
-				snatch, 
-				cnj, 
-				coachname: officialName, 
-				result: {snatch: [], cnj: []}
-			})
-			document.getElementById('name').value=''; 
-			document.getElementById('age').value=''; 
-			document.getElementById('snatch').value='';
-			document.getElementById('cnj').value='';
+      alert('Please enter valid info!');
+      return;
 		}
+    registeredAthletes.push({
+      name, 
+      attempt: 0, 
+      weight: '', 
+      age, 
+      snatch, 
+      cnj, 
+      coachname: officialName, 
+      result: {snatch: [], cnj: []}
+    })
+    document.getElementById('name').value=''; 
+    document.getElementById('age').value=''; 
+    document.getElementById('snatch').value='';
+    document.getElementById('cnj').value='';
   }
   
   const goToNextAttempt = (athlete, weight, attempt) => {
@@ -139,10 +139,10 @@ const CompetitionProvider = ({children, officialName}) => {
   
   const castVote = (decision) => {
 		if (decision === 'yes') {
-			setVerdict({result: 1, votes: 3});
-		} else {
-			setVerdict({result: -1, votes: 3});
+      setVerdict({result: 1, votes: 3});
+      return;
 		}
+		setVerdict({result: -1, votes: 3});
   }
   
   const joinComp = (name, role) => {
@@ -159,18 +159,19 @@ const CompetitionProvider = ({children, officialName}) => {
 			if (acceptedRegistrations.filter(judge => judge.role === 'judge').length < 3) {
 				splicedArray = registrations.splice(registrations.findIndex(participant => participant.name === name), 1);
 				acceptedRegistrations.push(splicedArray[0]);
-				setRegistrations(registrations);
-			} else {
-				alert('There already are 3 judges in the competition')
+        setRegistrations(registrations);
+        return;
 			}
+      alert('There already are 3 judges in the competition');
+      return;
 		} else if (decision === 'yes') {
 			splicedArray = registrations.splice(registrations.findIndex(participant => participant.name === name), 1);
 			acceptedRegistrations.push(splicedArray[0]);
-			setRegistrations(registrations);
-		} else {
-			registrations.splice(registrations.findIndex(participant => participant.name === name), 1);
-			setRegistrations(registrations);
+      setRegistrations(registrations);
+      return;
 		}
+    registrations.splice(registrations.findIndex(participant => participant.name === name), 1);
+    setRegistrations(registrations);
   }
   
   const contextValue = { status, setstatus: setStatus, comproute, changeCompRoute, timer, time, setTimer, setTime, lift, nextLift, changeTime, toggleTimer, editAthleteWeight, acceptedRegistrations, addAthlete, goToNextAttempt, castVote, joinComp, changeWeight, approveRemove, officialName, registeredAthletes, registrations, verdict };

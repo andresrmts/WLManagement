@@ -3,8 +3,13 @@ import { Link, history, RouterContext } from '../../Router';
 import { routes } from '../../Router/routes';
 
 const Register = ({setSignedIn}) => {
+	const { setuser } = React.useContext(RouterContext);
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
+	const registeruser = (user, useremail) => {
+		setSignedIn(history.location);
+		setuser(Math.floor(Math.random() * 10), user, useremail);
+	}
 	return (
 		<article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
 			<main className="pa4 black-80">
@@ -44,14 +49,7 @@ const Register = ({setSignedIn}) => {
 			    </fieldset>
 			   </div>
 			    <div className="measure center">
-					<RouterContext.Consumer>
-						{context => (
-							<Link to={routes.competitionselection.path} onClick={() => {
-								setSignedIn(history.location);
-								context.setuser(Math.floor(Math.random() * 10), username, email);
-							}} className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib">Register</Link>
-						)}
-					</RouterContext.Consumer>
+							<Link to={routes.competitionselection.path} onClick={() => registeruser(username, email)} className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib">Register</Link>
 			    </div>
 			</main>
 		</article>

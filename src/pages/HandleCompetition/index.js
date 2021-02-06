@@ -18,21 +18,21 @@ import { routes } from '../../Router/routes';
 import { useAuthContext } from '../../AuthContext'; 
 
 const HandleCompetition = () => {
-	const { status, comproute, acceptedRegistrations, registeredAthletes, editAthleteWeight, registrations, verdict } = useCompetitionContext();
+	const { status, comproute, acceptedRegistrations, registeredAthletes, editAthleteWeight, registrations } = useCompetitionContext();
 	const { userName, isAdmin, role, setRole } = useAuthContext();
 
 	const filteredName = acceptedRegistrations.filter(reg => reg.name === userName);
 
 	useEffect(() => {
-		if (filteredName[0]) {
-			setRole(filteredName[0].role);
-			return;
-		}
 		if (isAdmin) {
 			setRole('admin');
 			return;
 		}
-	}, [role]);
+		if (filteredName[0]) {
+			setRole(filteredName[0].role);
+			return;
+		}
+	});
 
 	const renderCompRoutes = (route) => {
 		const headers = [
@@ -102,17 +102,25 @@ const HandleCompetition = () => {
 		}
 	}
 
+	const renderNav = (role) => {
+		switch(role) {
+			case 'admin': 
+				return <AdminNav />
+			case 'coach':
+				return <CoachNav />
+			case 'judge':
+				if (status === 'started') {
+					return <Result />
+				}
+				return <Link to={routes.competitionselection.path} onClick={() => setRole('')} className="f6 tc underline pointer center">Exit</Link>
+			default:
+				return <Link to={routes.competitionselection.path} className="f6 tc underline pointer center">Exit</Link>
+		}
+	}
+
 	return (
 			<div>
-				{isAdmin
-						? <AdminNav />
-						: (status !== 'notstarted' 
-							? <Result />
-							: (acceptedRegistrations.find(reg => reg.name === userName && reg.role === 'coach')
-									? <CoachNav />
-									: <Link to={routes.competitionselection.path} className="f6 tc underline pointer center">Exit</Link>)
-							)
-					}
+					{renderNav(role)}
 					{renderCompRoutes(comproute)}
 				</div>
 	)

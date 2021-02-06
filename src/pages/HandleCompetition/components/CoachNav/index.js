@@ -7,7 +7,9 @@ import { useAuthContext } from '../../../../AuthContext';
 const CoachNav = () => {
 	const { changeCompRoute } = useCompetitionContext();
 	const { competition } = React.useContext(RouterContext);
-	const { userName } = useAuthContext();
+	const { userName, setRole } = useAuthContext();
+
+	
 	return (
 		<div>
 				<h1>You are currently coach {userName} in {competition}</h1>
@@ -18,7 +20,7 @@ const CoachNav = () => {
 				<p 
 					onClick={() => changeCompRoute('athleteregistration')}
 					className="f3 pa3 underline pointer">Register Athlete</p>
-				<Link to={routes.competitionselection.path}	className="f3 pa3 underline pointer">Exit</Link>
+				<Link to={routes.competitionselection.path} onClick={() => setRole('')}	className="f3 pa3 underline pointer">Exit</Link>
 			</nav>
 		</div>
 	)

@@ -7,7 +7,13 @@ import { useAuthContext } from '../../../../AuthContext';
 const AdminNav = () => {
 	const { status, setstatus, changeCompRoute} = useCompetitionContext();
 	const { competition } = React.useContext(RouterContext);
-	const { setIsAdmin } = useAuthContext();
+	const { setIsAdmin, setRole } = useAuthContext();
+	
+	const exitComp = () => {
+		setIsAdmin(false);
+		setRole('');
+	}
+
 	return (
 		<div>
 					<h1>You are currently working on {competition}</h1>
@@ -45,7 +51,7 @@ const AdminNav = () => {
 									<p 
 									onClick={() => changeCompRoute('athletelist')}
 									className="f6 pa3 underline pointer">Competitor List</p>
-									<Link to={routes.competitionselection.path} onClick={() => setIsAdmin(false)} className="f6 pa3 underline pointer">Exit</Link>
+									<Link to={routes.competitionselection.path} onClick={() => exitComp()} className="f6 pa3 underline pointer">Exit</Link>
 								</nav>
 						)
 					}

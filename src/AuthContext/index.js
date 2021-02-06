@@ -4,8 +4,8 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [userName, setUserName] = useState('Külli');
-  const [userId, setUserId] = useState('');
-  const [userEmail, setUserEmail] = useState('');
+  const [userId, setUserId] = useState(null);
+  const [userEmail, setUserEmail] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [role, setRole] = useState('');
 

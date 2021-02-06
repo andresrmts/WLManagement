@@ -9,18 +9,20 @@ import CompetitionCreation from '../../pages/CompetitionCreation';
 import HandleCompetition from '../../pages/HandleCompetition';
 import { useAuthContext } from '../../AuthContext';
 
-const AppRouter = ({ setSignedIn, onSearchChange, isSignedIn }) => {
-	const { userName } = useAuthContext();
+const AppRouter = ({ onSearchChange }) => {
+	const { userName, userId } = useAuthContext();
+
+	const isSignedIn = !!userId;
 
   return (
 		<div>
 			{!isSignedIn && (
 				<div>
 					<Route path={routes.home.path}>
-						<SignIn setSignedIn={setSignedIn} />
+						<SignIn />
 					</Route>
 					<Route path={routes.register.path}>
-						<Register setSignedIn={setSignedIn}/>
+						<Register />
 					</Route>
 				</div>
 			)}

@@ -10,9 +10,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      isSignedIn: false,
       searchBox: '',
-      admin: false,
     }
   }
 
@@ -42,12 +40,11 @@ class App extends Component {
   }
 
   render() {
-    const { isSignedIn, admin } = this.state;
     return (
       <AuthProvider>
         <Router routes={routes} NotFound={this.notFound} >
-          <Navigation adminToggle={this.adminToggle} isSignedIn={isSignedIn} setSignedIn={this.setSignedIn} />
-          <AppRouter isSignedIn={isSignedIn} isAdmin={admin} onSearchChange={this.onSearchChange} adminToggle={this.adminToggle} setSignedIn={this.setSignedIn} />
+          <Navigation />
+          <AppRouter onSearchChange={this.onSearchChange} />
         </Router>
       </AuthProvider>
     )

@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { useAuthContext } from '../../AuthContext';
-import { Link, history, RouterContext } from '../../Router';
+import { Link } from '../../Router';
 import { routes } from '../../Router/routes';
 
-const Register = ({ setSignedIn }) => {
+const Register = () => {
 	const { setUserName, setUserId, setUserEmail } = useAuthContext();
 	const [username, setUsername] = useState('');
 	const [email, setEmail] = useState('');
 	const registeruser = (user, useremail) => {
-		setSignedIn(history.location);
 		setUserName(user);
-		setUserEmail(email);
+		setUserEmail(useremail);
 		setUserId(Math.random() * 10);
 	}
 	return (

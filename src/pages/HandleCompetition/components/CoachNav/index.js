@@ -1,22 +1,26 @@
 import React from 'react';
-import { Link } from '../../../../Router';
+import { Link, RouterContext } from '../../../../Router';
+import { useCompetitionContext } from '../../CompetitionContext';
 import { routes } from '../../../../Router/routes';
+import { useAuthContext } from '../../../../AuthContext';
 
-const CoachNav = ({ name, compRoute, onRouteChange }) => {
+const CoachNav = () => {
+	const { changeCompRoute } = useCompetitionContext();
+	const { competition } = React.useContext(RouterContext);
+	const { userName, setRole } = useAuthContext();
+
+	
 	return (
 		<div>
-		<h1>You are currently coach {name} in COMPETITIONNAME</h1>
+				<h1>You are currently coach {userName} in {competition}</h1>
 			<nav style={{display: 'flex', justifyContent: 'center'}}>
 				<p 
-					onClick={() => compRoute('home')}
+					onClick={() => changeCompRoute('home')}
 					className="f3 pa3 underline pointer">My Athletes</p>
 				<p 
-					onClick={() => compRoute('athleteregistration')}
+					onClick={() => changeCompRoute('athleteregistration')}
 					className="f3 pa3 underline pointer">Register Athlete</p>
-				{/* <p 
-					onClick={() => onRouteChange('competitionselection')}
-					className="f3 pa3 underline pointer">Exit</p> */}
-				<Link to={routes.competitionselection.path}	className="f3 pa3 underline pointer">Exit</Link>
+				<Link to={routes.competitionselection.path} onClick={() => setRole('')}	className="f3 pa3 underline pointer">Exit</Link>
 			</nav>
 		</div>
 	)

@@ -1,7 +1,12 @@
 import React from 'react';
+import { useAuthContext } from '../../../../AuthContext';
 import Table from '../../../../components/Table';
+import { useCompetitionContext } from '../../CompetitionContext';
 
-const MyAthletes = ({ coachAthletes, coachName, editAthleteWeight }) => {
+const MyAthletes = () => {
+	const { registeredAthletes, editAthleteWeight } = useCompetitionContext();
+	const { userName } = useAuthContext();
+	const onlyCoachAthletes = registeredAthletes.filter(athlete => athlete.coachname === userName);
 	const headers = [
 		{
 			header: 'Name',
@@ -31,7 +36,7 @@ const MyAthletes = ({ coachAthletes, coachName, editAthleteWeight }) => {
 
 	const props = {name: '', age: '', weight: '', snatch: '', cnj: '', coachname:''};
 	const outSideProps = {functions: {weight: editAthleteWeight}}
-	return <Table props={props} headers={headers} tableContent={coachAthletes} outSideProps={outSideProps} />
+	return <Table props={props} headers={headers} tableContent={onlyCoachAthletes} outSideProps={outSideProps} />
 }
 
 export default MyAthletes;

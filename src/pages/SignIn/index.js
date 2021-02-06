@@ -1,8 +1,10 @@
-import React from 'react';
-import { Link, history } from '../../Router';
+import React, {useState} from 'react';
+import { useAuthContext } from '../../AuthContext';
+import { Link } from '../../Router';
 import { routes } from '../../Router/routes';
 
-const SignIn = ({setSignedIn}) => {
+const SignIn = () => {
+	const { setUserId } = useAuthContext();
 	return (
 		<article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
 			<main className="pa4 black-80">
@@ -19,9 +21,9 @@ const SignIn = ({setSignedIn}) => {
 			      </div>
 			    </fieldset>
 			   </div>
-			    <div className="measure center">
-					<Link to={routes.competitionselection.path} onClick={() => setSignedIn(history.location)} className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib">Sign In</Link>
-			    </div>
+			  <div className="measure center">
+					<Link to={routes.competitionselection.path} onClick={() => setUserId(Math.random() * 10)} className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib">Sign In</Link>
+			  </div>
 			</main>
 		</article>
 	)

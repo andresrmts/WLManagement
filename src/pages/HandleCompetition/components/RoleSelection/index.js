@@ -1,32 +1,30 @@
 import React from 'react';
+import { useCompetitionContext } from '../../CompetitionContext';
 
-const RoleSelection = ({ changeCompRoute, joinComp, name }) => {
+const RoleSelection = () => {
+	const { changeCompRoute, joinComp, officialName } = useCompetitionContext();
+	const joinCompetition = (role) => {
+		joinComp(officialName, role);
+		changeCompRoute('home');
+	}
+
 	return (
 		<div className="tc">
 			<button 
 					className="f2 link dim br-pill ba ph3 pv2 ma2 dib mid-gray pointer"
-					onClick={() => {
-						joinComp(name, 'coach')
-						changeCompRoute('home')
-					}}
+					onClick={() => joinCompetition('coach')}
 					>
 					Coach
 			</button>
 			<button 
 					className="f2 link dim br-pill ba ph3 pv2 ma2 dib mid-gray pointer"
-					onClick={() => {
-						joinComp(name, 'judge')
-						changeCompRoute('home')
-					}}
+					onClick={() => joinCompetition('judge')}
 					>
 					Judge
 			</button>
 			<button 
 					className="f2 link dim br-pill ba ph3 pv2 ma2 dib mid-gray pointer"
-					onClick={() => {
-						joinComp(name, 'changetable')
-						changeCompRoute('home')
-					}}
+					onClick={() => joinCompetition('changetable')}
 					>
 					Change Table
 			</button>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import NextAttempt from '../NextAttempt';
+import { useCompetitionContext } from '../../CompetitionContext';
 
 const usePrevious = (value) => {
 	const ref = useRef(null);
@@ -9,14 +10,15 @@ const usePrevious = (value) => {
 	return ref.current;
 }
 
-const Judge = ({ status, castVote, athletes, lift, goToNextAttempt, timer, time, setTime }) => {
+const Judge = () => {
 	const [voted, setVoted] = useState(false);
 	const [athlete, setAthlete] = useState('');
 	const [weight, setWeight] = useState('');
 	const [attempt, setAttempt] = useState(0);
 	const [timedOut, setTimedOut] = useState(false);
+	const { status, castVote, goToNextAttempt } = useCompetitionContext();
 
-	const prevAthlete = usePrevious(athlete);
+	const prevAthlete = usePrevious(athlete); // Stores the previous athlete name so timer rules could be followed
 
 	useEffect(() => {
 		setTimeout(() => setVoted(false), 5000);
@@ -24,11 +26,17 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt, timer, time,
 
 	useEffect(() => {
 		if (timedOut === true) {
-			castVote('no', athlete, weight, attempt);
+			castVote('no');
 			setTimedOut(false);
 			setVoted(true);
 		}
 	}, [timedOut])
+
+	useEffect(() => {
+		if (status === 'started') {
+			setTimeout(() => goToNextAttempt(athlete, weight, attempt), 3000);
+		}
+	}, [voted])
 
 	if (status === 'notstarted') {
 		return (
@@ -40,29 +48,25 @@ const Judge = ({ status, castVote, athletes, lift, goToNextAttempt, timer, time,
 				<div className="flex center pa2">
 					<NextAttempt
 						athlete={athlete}
-						setTime={setTime} 
-						timer={timer}
 						prevAthlete={prevAthlete}
 						setTimedOut={setTimedOut} 
 						setAttempt={setAttempt} 
 						setWeight={setWeight} 
 						setAthlete={setAthlete} 
-						athletes={athletes} 
-						lift={lift}
-						time={time} />
+					 />
 				</div>
 				<div className="flex center pa2">
 					<p
 						id="yes"
-						onClick={ () => {
-							castVote('yes', athlete, weight, attempt);
+						onClick={() => {
+							castVote('yes');
 							setVoted(true);
 					}} 
 						className="btn pointer flex flex-column center pa2 ma2 vh-50 w-40 ba b--black tc">YES</p>
 					<p 
 						id="no"
-						onClick={ () => {
-							castVote('no', athlete, weight, attempt);
+						onClick={() => {
+							castVote('no');
 							setVoted(true);
 					}}
 						className="btn pointer flex flex-column center pa2 ma2 vh-50 w-40 outline-m tc bg-red ba b--red">NO</p>

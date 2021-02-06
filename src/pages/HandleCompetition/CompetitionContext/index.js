@@ -2,8 +2,8 @@ import React, { useState, useContext, createContext } from 'react';
 
 const CompetitionContext = createContext();
 
-const CompetitionProvider = ({children, officialName}) => {
-  const [status, setStatus] = useState('started');
+const CompetitionProvider = ({children, userName}) => {
+  const [status, setStatus] = useState('notstarted');
   const [comproute, setCompRoute] = useState('home');
   const [timer, setTimer] = useState(true);
   const [time, setTime] = useState({minutes: 1, seconds: 0 + '0'});
@@ -77,7 +77,7 @@ const CompetitionProvider = ({children, officialName}) => {
   const [verdict, setVerdict] = useState({
 		result: 0,
 		votes: 0
-  })
+	});
   
   const editAthleteWeight = (athleteName) => {
 		const weight = prompt('Enter athlete weight:');
@@ -115,7 +115,7 @@ const CompetitionProvider = ({children, officialName}) => {
       age, 
       snatch, 
       cnj, 
-      coachname: officialName, 
+      coachname: userName, 
       result: {snatch: [], cnj: []}
     })
     document.getElementById('name').value=''; 
@@ -174,7 +174,7 @@ const CompetitionProvider = ({children, officialName}) => {
     setRegistrations(registrations);
   }
   
-  const contextValue = { status, setstatus: setStatus, comproute, changeCompRoute, timer, time, setTimer, setTime, lift, nextLift, changeTime, toggleTimer, editAthleteWeight, acceptedRegistrations, addAthlete, goToNextAttempt, castVote, joinComp, changeWeight, approveRemove, officialName, registeredAthletes, registrations, verdict };
+  const contextValue = { status, setstatus: setStatus, comproute, changeCompRoute, timer, time, setTimer, setTime, lift, nextLift, changeTime, toggleTimer, editAthleteWeight, acceptedRegistrations, addAthlete, goToNextAttempt, castVote, joinComp, changeWeight, approveRemove, registeredAthletes, registrations, verdict };
 
   return (
     <CompetitionContext.Provider value={contextValue}>

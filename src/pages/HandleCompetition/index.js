@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AdminNav from './components/AdminNav';
 import Registrations from './components/Registrations';
 import CoachNav from './components/CoachNav';
@@ -15,12 +15,26 @@ import Table from '../../components/Table';
 import { useCompetitionContext } from './CompetitionContext';
 import { Link } from '../../Router';
 import { routes } from '../../Router/routes';
+import { useAuthContext } from '../../AuthContext'; 
 
-const HandleCompetition = ({ adminToggle, isAdmin }) => {
-	const { status, comproute, acceptedRegistrations, registeredAthletes, editAthleteWeight, registrations, verdict, officialName } = useCompetitionContext();
+const HandleCompetition = () => {
+	const { status, comproute, acceptedRegistrations, registeredAthletes, editAthleteWeight, registrations, verdict } = useCompetitionContext();
+	const { userName, isAdmin, role, setRole } = useAuthContext();
+
+	const filteredName = acceptedRegistrations.filter(reg => reg.name === userName);
+
+	useEffect(() => {
+		if (filteredName[0]) {
+			setRole(filteredName[0].role);
+			return;
+		}
+		if (isAdmin) {
+			setRole('admin');
+			return;
+		}
+	}, [role]);
 
 	const renderCompRoutes = (route) => {
-		const filteredName = acceptedRegistrations.filter(reg => reg.name === officialName);
 		const headers = [
 			{
 				header: 'Name',
@@ -60,7 +74,7 @@ const HandleCompetition = ({ adminToggle, isAdmin }) => {
 						return <Judge />
 					} else if (filteredName[0] && filteredName[0].role === 'changetable') {
 						return <ChangeTable />
-					} else if (registrations.find(reg => reg.name === officialName) !== undefined) {
+					} else if (registrations.find(reg => reg.name === userName) !== undefined) {
 						return <h1>Your registration hasn't been accepted yet by the admin!</h1>
 					} else {
 						return <RoleSelection />
@@ -91,11 +105,10 @@ const HandleCompetition = ({ adminToggle, isAdmin }) => {
 	return (
 			<div>
 				{isAdmin
-						? <AdminNav 
-							adminToggle={adminToggle} />
+						? <AdminNav />
 						: (status !== 'notstarted' 
-							? <Result result={verdict.result} votes={verdict.votes} />
-							: (acceptedRegistrations.find(reg => reg.name === officialName && reg.role === 'coach')
+							? <Result />
+							: (acceptedRegistrations.find(reg => reg.name === userName && reg.role === 'coach')
 									? <CoachNav />
 									: <Link to={routes.competitionselection.path} className="f6 tc underline pointer center">Exit</Link>)
 							)

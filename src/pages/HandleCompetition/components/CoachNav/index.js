@@ -2,13 +2,15 @@ import React from 'react';
 import { Link, RouterContext } from '../../../../Router';
 import { useCompetitionContext } from '../../CompetitionContext';
 import { routes } from '../../../../Router/routes';
+import { useAuthContext } from '../../../../AuthContext';
 
 const CoachNav = () => {
 	const { changeCompRoute } = useCompetitionContext();
-	const { user, competition} = React.useContext(RouterContext);
+	const { competition } = React.useContext(RouterContext);
+	const { userName } = useAuthContext();
 	return (
 		<div>
-				<h1>You are currently coach {user.name} in {competition}</h1>
+				<h1>You are currently coach {userName} in {competition}</h1>
 			<nav style={{display: 'flex', justifyContent: 'center'}}>
 				<p 
 					onClick={() => changeCompRoute('home')}

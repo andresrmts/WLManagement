@@ -2,10 +2,12 @@ import React from 'react';
 import { Link, RouterContext } from '../../../../Router';
 import { useCompetitionContext } from '../../CompetitionContext';
 import { routes } from '../../../../Router/routes';
+import { useAuthContext } from '../../../../AuthContext';
 
-const AdminNav = ({ adminToggle }) => {
+const AdminNav = () => {
 	const { status, setstatus, changeCompRoute} = useCompetitionContext();
 	const { competition } = React.useContext(RouterContext);
+	const { setIsAdmin } = useAuthContext();
 	return (
 		<div>
 					<h1>You are currently working on {competition}</h1>
@@ -43,7 +45,7 @@ const AdminNav = ({ adminToggle }) => {
 									<p 
 									onClick={() => changeCompRoute('athletelist')}
 									className="f6 pa3 underline pointer">Competitor List</p>
-									<Link to={routes.competitionselection.path} onClick={() => adminToggle(false)} className="f6 pa3 underline pointer">Exit</Link>
+									<Link to={routes.competitionselection.path} onClick={() => setIsAdmin(false)} className="f6 pa3 underline pointer">Exit</Link>
 								</nav>
 						)
 					}

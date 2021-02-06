@@ -3,10 +3,12 @@ import CompetitionList from '../../../../components/CompetitionList';
 import NextAttempt from '../NextAttempt';
 import Table from '../../../../components/Table';
 import { useCompetitionContext } from '../../CompetitionContext';
+import { useAuthContext } from '../../../../AuthContext';
 
 const CoachInCompetition = () => {
-	const { registeredAthletes, officialName, lift, changeWeight, toggleTimer, time } = useCompetitionContext();
-	const [myAthletes] = useState(registeredAthletes.filter(athlete => athlete.coachname === officialName));
+	const { registeredAthletes, lift, changeWeight, toggleTimer, time } = useCompetitionContext();
+	const { userName } = useAuthContext();
+	const [myAthletes] = useState(registeredAthletes.filter(athlete => athlete.coachname === userName));
 	const [onTheClock, setOnTheClock] = useState(registeredAthletes.filter(athlete => athlete.attempt < 3).sort((a,b) => {if (a[lift] === b[lift]) {return a.attempt - b.attempt} else {return a[lift] - b[lift]}}));
 	const [currentChangeCounter, setCurrentChangeCounter] = useState(0);
 

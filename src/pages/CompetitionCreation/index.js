@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useAuthContext } from '../../AuthContext';
 import { Link, RouterContext } from '../../Router';
 import { routes } from '../../Router/routes';
 
-const CompetitionCreation = ({ adminToggle }) => {
+const CompetitionCreation = () => {
 	const { changecompetition } = React.useContext(RouterContext);
+	const { setIsAdmin } = useAuthContext();
 	const [competitionName, setCompetitionname] = useState('');
 	const createCompetition = (compname) => {
-		adminToggle(true);
+		setIsAdmin(true);
 		changecompetition(compname);
 	}
 

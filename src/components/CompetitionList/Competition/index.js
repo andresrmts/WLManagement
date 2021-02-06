@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Link, RouterContext } from '../../../Router';
 import { routes } from '../../../Router/routes';
+import { useAuthContext } from '../../../AuthContext';
 
-const Competition = ({ adminToggle, email, name, location, date, attempt, cnj, snatch, onTheClock, setCurrentChangeCounter, currentChangeCounter, changeWeight, lift, toggleTimer, time }) => {
+const Competition = ({ email, name, location, date, attempt, cnj, snatch, onTheClock, setCurrentChangeCounter, currentChangeCounter, changeWeight, lift, toggleTimer, time }) => {
 	const [weight, setWeight] = useState(lift === 'snatch' ? snatch : cnj);
-	const { user, changecompetition } = React.useContext(RouterContext);
+	const { changecompetition } = React.useContext(RouterContext);
+	const { userEmail, setIsAdmin } = useAuthContext();
+
 	
-	if (adminToggle) {
+	if (date < 4) {
 		return (
 			<article className="mw5 tc dib bg-white br3 pa3 ma3 ba b--black-10">
 			  <div className="tc">
@@ -15,10 +18,11 @@ const Competition = ({ adminToggle, email, name, location, date, attempt, cnj, s
 			    <h3 className="tc f6">{date}</h3>
 			    <hr className="mw3 bb bw1 b--black-10" />
 			    <div style={{ display: 'flex', justifyContent: 'center'}}>
-							<Link to={routes.competition.path} onClick={() => {
-								adminToggle(user.email === email);
-								changecompetition(name);
-							}} className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer">{user.email === email ? 'Admin' : 'Handle'}</Link>
+						<Link to={routes.competition.path} onClick={() => {
+							setIsAdmin(userEmail === email);
+							changecompetition(name);
+						}} className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer">{userEmail === email ? 'Admin' : 'Handle'}
+						</Link>
 				</div>
 			  </div>
 			</article>

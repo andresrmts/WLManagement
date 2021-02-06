@@ -11,12 +11,7 @@ class Router extends React.Component {
 
 		this.state = {
 			route: locationToRoute(history.location),
-			competition: '',
-			user: {
-				id: '',
-				name: 'Külli',
-				email: ''
-			}
+			competition: ''
 		}
 	}
 
@@ -36,18 +31,12 @@ class Router extends React.Component {
 	changeCompetition = (competition) => {
 		this.setState({competition: competition})
 	}
-	
-	setUser = (id, name, email) => {
-		this.setState({
-			user: {id, name, email}
-		})
-	}
 
 	render() {
 		const { children, NotFound } = this.props;
-		const { route, competition, user } = this.state;
+		const { route, competition } = this.state;
 
-		const routerContextValue = { route, competition, user, changecompetition: this.changeCompetition, setuser: this.setUser };
+		const routerContextValue = { route, competition, changecompetition: this.changeCompetition };
 
 		const is404 = this.routes.indexOf(route.path) === -1;
 

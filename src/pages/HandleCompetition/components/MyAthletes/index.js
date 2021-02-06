@@ -1,10 +1,12 @@
 import React from 'react';
+import { useAuthContext } from '../../../../AuthContext';
 import Table from '../../../../components/Table';
 import { useCompetitionContext } from '../../CompetitionContext';
 
 const MyAthletes = () => {
-	const { registeredAthletes, officialName, editAthleteWeight } = useCompetitionContext();
-	const onlyCoachAthletes = registeredAthletes.filter(athlete => athlete.coachname === officialName);
+	const { registeredAthletes, editAthleteWeight } = useCompetitionContext();
+	const { userName } = useAuthContext();
+	const onlyCoachAthletes = registeredAthletes.filter(athlete => athlete.coachname === userName);
 	const headers = [
 		{
 			header: 'Name',

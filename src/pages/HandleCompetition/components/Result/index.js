@@ -1,21 +1,23 @@
 import React from 'react';
+import { useCompetitionContext } from '../../CompetitionContext';
 
-const Result = ({ result, votes, seeState }) => {
-	if (result < 0 && votes === 3) {
+const Result = () => {
+	const { verdict } = useCompetitionContext();
+	if (verdict.result < 0 && verdict.votes === 3) {
 		return (
-			<div onClick={() => seeState()} className="flex flex-column center tc bg-red vh-25">
+			<div className="flex flex-column center tc bg-red vh-25">
 				NO LIFT
 			</div>
 		)
-	} else if (result > 0 && votes === 3) {
+	} else if (verdict.result > 0 && verdict.votes === 3) {
 		return (
-			<div onClick={() => seeState()} className="flex flex-column center tc bg-green vh-25">
+			<div className="flex flex-column center tc bg-green vh-25">
 				GOOD LIFT
 			</div>
 		)
 	} else {
 		return (
-			<div onClick={() => seeState()} className="flex flex-column center tc bg-black vh-25">
+			<div className="flex flex-column center tc bg-black vh-25">
 			</div>
 		)
 	}

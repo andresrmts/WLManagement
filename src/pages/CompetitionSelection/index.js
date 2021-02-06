@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import CompetitionList from '../../components/CompetitionList';
-import { Link, RouterContext } from '../../Router';
+import { Link } from '../../Router';
 import { routes } from '../../Router/routes';
+import { useAuthContext } from '../../AuthContext';
 
 const CompetitionSelection = ({ adminToggle, onSearchChange }) => {
 	const [competitions, setCompetitions] = useState([]);
-	const { user } = React.useContext(RouterContext);
+	const { userName } = useAuthContext();
 
 	useEffect(() => {
 		fetch('https://jsonplaceholder.typicode.com/users')
@@ -19,7 +20,7 @@ const CompetitionSelection = ({ adminToggle, onSearchChange }) => {
 	return (
 			<div>
 				<p className="pa4 tc" style={{ display: 'flex', justifyContent: 'center'}}>
-					You are signed in as {user.name}. Please Create a new Competition or join an existing competition.
+					You are signed in as {userName}. Please Create a new Competition or join an existing competition.
 				</p>
 				<div>
 					<div className="fl w-100 w-50-ns pa2 tc" style={{ display: 'flex', justifyContent: 'center'}}>
@@ -36,7 +37,7 @@ const CompetitionSelection = ({ adminToggle, onSearchChange }) => {
 							Your Competitions
 						</h1>
 						<div>
-							<CompetitionList adminToggle={adminToggle} useremail={user.email} competitions={yourComps} />
+							<CompetitionList competitions={yourComps} />
 						</div>
 					</div>
 				</div>

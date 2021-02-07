@@ -1,29 +1,38 @@
-import React, { useState, useContext, createContext } from 'react';
+import React, { useState, useContext, createContext } from "react";
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [userName, setUserName] = useState('Külli');
+  const [userName, setUserName] = useState("Külli");
   const [userId, setUserId] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState("");
 
-  const contextValue = { userName, userId, userEmail, isAdmin, role, setUserName, setUserEmail, setUserId, setIsAdmin, setRole };
+  const contextValue = {
+    userName,
+    userId,
+    userEmail,
+    isAdmin,
+    role,
+    setUserName,
+    setUserEmail,
+    setUserId,
+    setIsAdmin,
+    setRole,
+  };
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {children}
-    </AuthContext.Provider>
-  )
-}
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+  );
+};
 
 const useAuthContext = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('This function can only be used within AuthProvider');
+    throw new Error("This function can only be used within AuthProvider");
   }
   return context;
-}
+};
 
-export { AuthProvider, useAuthContext }
+export { AuthProvider, useAuthContext };

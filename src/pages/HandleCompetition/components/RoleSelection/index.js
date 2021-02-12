@@ -1,33 +1,39 @@
 import React from 'react';
+import { useRouteMatch, Link } from 'react-router-dom';
+import { useAuthContext } from '../../../../AuthContext';
 import { useCompetitionContext } from '../../CompetitionContext';
 
 const RoleSelection = () => {
-  const { changeCompRoute, joinComp, officialName } = useCompetitionContext();
+  const match = useRouteMatch();
+  const { userName } = useAuthContext();
+  const { joinComp } = useCompetitionContext();
   const joinCompetition = role => {
-    joinComp(officialName, role);
-    changeCompRoute('home');
+    joinComp(userName, role);
   };
 
   return (
     <div className="tc">
-      <button
-        className="f2 link dim br-pill ba ph3 pv2 ma2 dib mid-gray pointer"
+      <Link
+        to={match.url}
         onClick={() => joinCompetition('coach')}
+        className="f2 link dim br-pill ba ph3 pv2 ma2 dib mid-gray pointer"
       >
         Coach
-      </button>
-      <button
-        className="f2 link dim br-pill ba ph3 pv2 ma2 dib mid-gray pointer"
+      </Link>
+      <Link
+        to={match.url}
         onClick={() => joinCompetition('judge')}
+        className="f2 link dim br-pill ba ph3 pv2 ma2 dib mid-gray pointer"
       >
         Judge
-      </button>
-      <button
-        className="f2 link dim br-pill ba ph3 pv2 ma2 dib mid-gray pointer"
+      </Link>
+      <Link
+        to={match.url}
         onClick={() => joinCompetition('changetable')}
+        className="f2 link dim br-pill ba ph3 pv2 ma2 dib mid-gray pointer"
       >
         Change Table
-      </button>
+      </Link>
     </div>
   );
 };

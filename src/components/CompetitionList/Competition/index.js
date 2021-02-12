@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link, RouterContext } from '../../../Router';
-import { routes } from '../../../Router/routes';
+import { Link } from 'react-router-dom';
+// import { routes } from '../../../Router/routes';
 import { useAuthContext } from '../../../AuthContext';
 
 const Competition = ({
@@ -20,7 +20,6 @@ const Competition = ({
   time,
 }) => {
   const [weight, setWeight] = useState(lift === 'snatch' ? snatch : cnj);
-  const { changecompetition } = React.useContext(RouterContext);
   const { userEmail, setIsAdmin } = useAuthContext();
 
   if (date < 4) {
@@ -33,12 +32,11 @@ const Competition = ({
           <hr className="mw3 bb bw1 b--black-10" />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <Link
-              to={routes.competition.path}
+              to="/competition"
               onClick={() => {
                 setIsAdmin(userEmail === email);
-                changecompetition(name);
               }}
-              className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer"
+              className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer no-underline black-90"
             >
               {userEmail === email ? 'Admin' : 'Handle'}
             </Link>
@@ -97,7 +95,10 @@ const Competition = ({
         <h3 className="tc f6">{date}</h3>
         <hr className="mw3 bb bw1 b--black-10" />
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to={routes.competition.path} className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer">
+          <Link
+            to="/competition"
+            className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer no-underline black-90"
+          >
             Select Role
           </Link>
         </div>

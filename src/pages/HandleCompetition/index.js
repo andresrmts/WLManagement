@@ -13,8 +13,8 @@ import CoachInCompetition from './components/CoachInCompetition';
 import CompetitionAdmin from './components/CompetitionAdmin';
 import Table from '../../components/Table';
 import { useCompetitionContext } from './CompetitionContext';
-import { Link } from '../../Router';
-import { routes } from '../../Router/routes';
+import { Link } from 'react-router-dom';
+// import { routes } from '../../Router/routes';
 import { useAuthContext } from '../../AuthContext';
 
 const HandleCompetition = () => {
@@ -127,17 +127,13 @@ const HandleCompetition = () => {
           return <Result />;
         }
         return (
-          <Link
-            to={routes.competitionselection.path}
-            onClick={() => setRole('')}
-            className="f6 tc underline pointer center"
-          >
+          <Link to="/competitionselection" onClick={() => setRole('')} className="f6 tc underline pointer center">
             Exit
           </Link>
         );
       default:
         return (
-          <Link to={routes.competitionselection.path} className="f6 tc underline pointer center">
+          <Link to="/competitionselection" className="f6 tc underline pointer center">
             Exit
           </Link>
         );

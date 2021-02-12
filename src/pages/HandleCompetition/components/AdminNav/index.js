@@ -1,12 +1,11 @@
 import React from 'react';
-import { Link, RouterContext } from '../../../../Router';
+import { Link } from 'react-router-dom';
 import { useCompetitionContext } from '../../CompetitionContext';
-import { routes } from '../../../../Router/routes';
 import { useAuthContext } from '../../../../AuthContext';
 
 const AdminNav = () => {
   const { status, setstatus, changeCompRoute } = useCompetitionContext();
-  const { competition } = React.useContext(RouterContext);
+  // const { competition } = React.useContext(RouterContext);
   const { setIsAdmin, setRole } = useAuthContext();
 
   const exitComp = () => {
@@ -16,7 +15,7 @@ const AdminNav = () => {
 
   return (
     <div>
-      <h1>You are currently working on {competition}</h1>
+      <h1>You are currently working on COMPETITIONNAME</h1>
       {status === 'started' ? (
         <nav style={{ display: 'flex', justifyContent: 'center' }}>
           <p onClick={() => setstatus('paused')} className="f6 pa3 underline pointer red ba">
@@ -55,7 +54,7 @@ const AdminNav = () => {
           <p onClick={() => changeCompRoute('athletelist')} className="f6 pa3 underline pointer">
             Competitor List
           </p>
-          <Link to={routes.competitionselection.path} onClick={() => exitComp()} className="f6 pa3 underline pointer">
+          <Link to="/competitionselection" onClick={() => exitComp()} className="f6 pa3 underline pointer">
             Exit
           </Link>
         </nav>

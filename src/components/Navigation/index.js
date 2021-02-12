@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAuthContext } from '../../AuthContext';
-import { Link } from '../../Router';
-import { routes } from '../../Router/routes';
+import { Link } from 'react-router-dom';
 
 const Navigation = () => {
   const { userId, setUserId, setUserName, setUserEmail } = useAuthContext();
@@ -15,7 +14,7 @@ const Navigation = () => {
   if (userId) {
     return (
       <nav style={{ display: 'flex', justifyContent: 'center' }}>
-        <Link to={routes.home.path} onClick={() => signOut()} className="f3 pa3 underline pointer">
+        <Link to="/" onClick={() => signOut()} className="f3 pa3 underline pointer black-90">
           Sign Out
         </Link>
       </nav>
@@ -23,10 +22,10 @@ const Navigation = () => {
   } else {
     return (
       <nav style={{ display: 'flex', justifyContent: 'center' }}>
-        <Link to={routes.home.path} className="f3 pa3 underline pointer">
+        <Link to="/" className="f3 pa3 underline pointer black-90">
           Sign In
         </Link>
-        <Link to={routes.register.path} className="f3 pa3 underline pointer">
+        <Link to="/register" className="f3 pa3 underline pointer black-90">
           Register
         </Link>
       </nav>

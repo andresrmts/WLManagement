@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { useAuthContext } from '../../AuthContext';
-import { Link, RouterContext } from '../../Router';
-import { routes } from '../../Router/routes';
+import { Link } from 'react-router-dom';
 
 const CompetitionCreation = () => {
-  const { changecompetition } = React.useContext(RouterContext);
+  // const { changecompetition } = React.useContext(RouterContext);
   const { setIsAdmin } = useAuthContext();
   const [competitionName, setCompetitionname] = useState('');
   const createCompetition = compname => {
     setIsAdmin(true);
-    changecompetition(compname);
+    // changecompetition(compname);
   };
 
   return (
@@ -54,15 +53,15 @@ const CompetitionCreation = () => {
         </div>
         <div className="measure center">
           <Link
-            to={routes.competition.path}
+            to="/competition"
             onClick={() => createCompetition(competitionName)}
-            className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 m14 dib"
+            className="b ph3 pv2 input-reset ba b--black black-90 bg-transparent grow pointer f6 m14 dib no-underline"
           >
             Create
           </Link>
           <Link
-            to={routes.competitionselection.path}
-            className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 m14 dib"
+            to="/competitionselection"
+            className="b ph3 pv2 input-reset ba b--black black-90 bg-transparent grow pointer f6 m14 dib no-underline"
           >
             Back
           </Link>

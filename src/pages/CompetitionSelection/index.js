@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import CompetitionList from '../../components/CompetitionList';
-import { Link } from '../../Router';
-import { routes } from '../../Router/routes';
+import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../AuthContext';
 
 const CompetitionSelection = ({ adminToggle, onSearchChange }) => {
@@ -24,7 +23,7 @@ const CompetitionSelection = ({ adminToggle, onSearchChange }) => {
       </p>
       <div>
         <div className="fl w-100 w-50-ns pa2 tc" style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to={routes.competitioncreation.path} className="pointer f6 link dim br-pill ba ph3 pv2 mb2 mid-gray">
+          <Link to="/competitioncreation" className="pointer f6 link dim br-pill ba ph3 pv2 mb2 mid-gray no-underline">
             New Competition
           </Link>
         </div>

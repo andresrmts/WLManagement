@@ -1,17 +1,17 @@
 export const routes = {
   home: {
-    path: "/",
+    path: '/',
   },
   register: {
-    path: "/register",
+    path: '/register',
   },
   competitionselection: {
-    path: "/competitionselection",
+    path: '/competitionselection',
   },
   competitioncreation: {
-    path: "/competitioncreation",
+    path: '/competitioncreation',
   },
   competition: {
-    path: "/competition",
+    path: '/competition',
   },
 };

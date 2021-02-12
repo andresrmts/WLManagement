@@ -1,5 +1,5 @@
-import React from "react";
-import TableRow from "./TableRow";
+import React from 'react';
+import TableRow from './TableRow';
 
 const Table = ({ headers, tableContent, props, outSideProps }) => {
   return (
@@ -10,11 +10,7 @@ const Table = ({ headers, tableContent, props, outSideProps }) => {
             <tr className="stripe-dark">
               {headers.map((header, i) => {
                 return (
-                  <th
-                    key={i}
-                    id={`${header.header}`}
-                    className={`${header.styles}`}
-                  >
+                  <th key={i} id={`${header.header}`} className={`${header.styles}`}>
                     {header.header}
                   </th>
                 );
@@ -23,16 +19,8 @@ const Table = ({ headers, tableContent, props, outSideProps }) => {
           </thead>
           <tbody className="lh-copy">
             {tableContent.map((row, i) => {
-              const rowProps = Object.fromEntries(
-                Object.entries(props).map(([key, val]) => [key, `${row[key]}`])
-              );
-              return (
-                <TableRow
-                  key={i}
-                  rowProps={rowProps}
-                  outSideProps={outSideProps}
-                />
-              );
+              const rowProps = Object.fromEntries(Object.entries(props).map(([key, val]) => [key, `${row[key]}`]));
+              return <TableRow key={i} rowProps={rowProps} outSideProps={outSideProps} />;
             })}
           </tbody>
         </table>

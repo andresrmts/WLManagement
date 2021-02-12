@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { useAuthContext } from "../../AuthContext";
-import { Link, RouterContext } from "../../Router";
-import { routes } from "../../Router/routes";
+import React, { useState } from 'react';
+import { useAuthContext } from '../../AuthContext';
+import { Link, RouterContext } from '../../Router';
+import { routes } from '../../Router/routes';
 
 const CompetitionCreation = () => {
   const { changecompetition } = React.useContext(RouterContext);
   const { setIsAdmin } = useAuthContext();
-  const [competitionName, setCompetitionname] = useState("");
-  const createCompetition = (compname) => {
+  const [competitionName, setCompetitionname] = useState('');
+  const createCompetition = compname => {
     setIsAdmin(true);
     changecompetition(compname);
   };
@@ -23,7 +23,7 @@ const CompetitionCreation = () => {
                 Competition Name
               </label>
               <input
-                onChange={(e) => setCompetitionname(e.target.value)}
+                onChange={e => setCompetitionname(e.target.value)}
                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                 type="name"
                 name="name"

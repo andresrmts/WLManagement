@@ -1,20 +1,20 @@
-import React, { Component } from "react";
-import Navigation from "./components/Navigation";
-import AppRouter from "./components/AppRouter";
-import "./App.css";
-import { Router, Link } from "./Router";
-import { routes } from "./Router/routes";
-import { AuthProvider } from "./AuthContext";
+import React, { Component } from 'react';
+import Navigation from './components/Navigation';
+import AppRouter from './components/AppRouter';
+import './App.css';
+import { Router, Link } from './Router';
+import { routes } from './Router/routes';
+import { AuthProvider } from './AuthContext';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      searchBox: "",
+      searchBox: '',
     };
   }
 
-  onSearchChange = (e) => {
+  onSearchChange = e => {
     this.setState({ searchBox: e.target.value });
   };
 

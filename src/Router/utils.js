@@ -1,4 +1,4 @@
-export const locationToRoute = (location) => {
+export const locationToRoute = location => {
   return {
     path: location.pathname,
     hash: location.hash,

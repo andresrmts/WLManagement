@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import { Link, RouterContext } from "../../../Router";
-import { routes } from "../../../Router/routes";
-import { useAuthContext } from "../../../AuthContext";
+import React, { useState } from 'react';
+import { Link, RouterContext } from '../../../Router';
+import { routes } from '../../../Router/routes';
+import { useAuthContext } from '../../../AuthContext';
 
 const Competition = ({
   email,
@@ -19,7 +19,7 @@ const Competition = ({
   toggleTimer,
   time,
 }) => {
-  const [weight, setWeight] = useState(lift === "snatch" ? snatch : cnj);
+  const [weight, setWeight] = useState(lift === 'snatch' ? snatch : cnj);
   const { changecompetition } = React.useContext(RouterContext);
   const { userEmail, setIsAdmin } = useAuthContext();
 
@@ -31,7 +31,7 @@ const Competition = ({
           <h2 className="tc f5">{location}</h2>
           <h3 className="tc f6">{date}</h3>
           <hr className="mw3 bb bw1 b--black-10" />
-          <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             <Link
               to={routes.competition.path}
               onClick={() => {
@@ -40,7 +40,7 @@ const Competition = ({
               }}
               className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer"
             >
-              {userEmail === email ? "Admin" : "Handle"}
+              {userEmail === email ? 'Admin' : 'Handle'}
             </Link>
           </div>
         </div>
@@ -50,20 +50,14 @@ const Competition = ({
     return (
       <article className="mw5 tc dib bg-white br3 pa3 ma3 mh4 ba b--black-10">
         <div className="tc">
-          <h1
-            className={`tc center f4 flex flex-wrap ${
-              onTheClock.name === name ? "red" : ""
-            }`}
-          >
-            {name}
-          </h1>
+          <h1 className={`tc center f4 flex flex-wrap ${onTheClock.name === name ? 'red' : ''}`}>{name}</h1>
           <h2 className="tc f5">Attempt: {attempt + 1}</h2>
           <h3 className="tc f6">Next weight: {weight}</h3>
           <p
             className="pointer ba w-25 flex center pa1"
             onClick={() => {
               if (onTheClock.name === name && time.seconds < 31) {
-                alert("No changes allowed when 30sec remaining on clock");
+                alert('No changes allowed when 30sec remaining on clock');
                 return;
               }
               setWeight(weight + 1);
@@ -78,13 +72,11 @@ const Competition = ({
                 if (currentChangeCounter < 2 && time.seconds > 30) {
                   changeWeight({ name }, weight);
                   toggleTimer();
-                  setCurrentChangeCounter((prev) => prev + 1);
+                  setCurrentChangeCounter(prev => prev + 1);
                   return;
                 }
-                alert(
-                  "You are only allowed 2 changes when athlete is on the clock!"
-                );
-                setWeight(lift === "snatch" ? snatch : cnj);
+                alert('You are only allowed 2 changes when athlete is on the clock!');
+                setWeight(lift === 'snatch' ? snatch : cnj);
                 return;
               }
               changeWeight({ name }, weight);
@@ -104,11 +96,8 @@ const Competition = ({
         <h2 className="tc f5">{location}</h2>
         <h3 className="tc f6">{date}</h3>
         <hr className="mw3 bb bw1 b--black-10" />
-        <div style={{ display: "flex", justifyContent: "center" }}>
-          <Link
-            to={routes.competition.path}
-            className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer"
-          >
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Link to={routes.competition.path} className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer">
             Select Role
           </Link>
         </div>

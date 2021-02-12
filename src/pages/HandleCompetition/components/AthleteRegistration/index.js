@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useCompetitionContext } from "../../CompetitionContext";
+import React, { useState } from 'react';
+import { useCompetitionContext } from '../../CompetitionContext';
 
 const AthleteRegistration = () => {
   const { addAthlete } = useCompetitionContext();
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [snatch, setSnatch] = useState("");
-  const [cnj, setCnj] = useState("");
+  const [name, setName] = useState('');
+  const [age, setAge] = useState('');
+  const [snatch, setSnatch] = useState('');
+  const [cnj, setCnj] = useState('');
 
   return (
     <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
@@ -19,7 +19,7 @@ const AthleteRegistration = () => {
                 Name
               </label>
               <input
-                onChange={(e) => setName(e.target.value)}
+                onChange={e => setName(e.target.value)}
                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                 type="name"
                 name="name"
@@ -31,7 +31,7 @@ const AthleteRegistration = () => {
                 Age (number between 1 and 99)
               </label>
               <input
-                onChange={(e) => setAge(e.target.value)}
+                onChange={e => setAge(e.target.value)}
                 className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                 type="number"
                 min="1"
@@ -45,7 +45,7 @@ const AthleteRegistration = () => {
                 Snatch
               </label>
               <input
-                onChange={(e) => setSnatch(e.target.value)}
+                onChange={e => setSnatch(e.target.value)}
                 className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                 type="number"
                 min="10"
@@ -59,7 +59,7 @@ const AthleteRegistration = () => {
                 Clean and Jerk
               </label>
               <input
-                onChange={(e) => setCnj(e.target.value)}
+                onChange={e => setCnj(e.target.value)}
                 className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                 type="number"
                 min="10"

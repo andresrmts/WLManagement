@@ -1,12 +1,12 @@
-import React from "react";
-import { RouterContext, history } from "./context";
+import React from 'react';
+import { RouterContext, history } from './context';
 
-export const Link = (props) => {
+export const Link = props => {
   const { to, onClick, children } = props;
 
   const { route } = React.useContext(RouterContext);
 
-  const handleClick = (e) => {
+  const handleClick = e => {
     e.preventDefault();
 
     if (route.path === to) {

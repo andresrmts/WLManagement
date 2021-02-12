@@ -1,13 +1,13 @@
-import React from "react";
-import { Route } from "../../Router";
-import { CompetitionProvider } from "../../pages/HandleCompetition/CompetitionContext";
-import { routes } from "../../Router/routes";
-import SignIn from "../../pages/SignIn";
-import CompetitionSelection from "../../pages/CompetitionSelection";
-import Register from "../../pages/Register";
-import CompetitionCreation from "../../pages/CompetitionCreation";
-import HandleCompetition from "../../pages/HandleCompetition";
-import { useAuthContext } from "../../AuthContext";
+import React from 'react';
+import { Route } from '../../Router';
+import { CompetitionProvider } from '../../pages/HandleCompetition/CompetitionContext';
+import { routes } from '../../Router/routes';
+import SignIn from '../../pages/SignIn';
+import CompetitionSelection from '../../pages/CompetitionSelection';
+import Register from '../../pages/Register';
+import CompetitionCreation from '../../pages/CompetitionCreation';
+import HandleCompetition from '../../pages/HandleCompetition';
+import { useAuthContext } from '../../AuthContext';
 
 const AppRouter = ({ onSearchChange }) => {
   const { userName, userId } = useAuthContext();

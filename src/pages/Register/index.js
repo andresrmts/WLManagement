@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useAuthContext } from "../../AuthContext";
-import { Link } from "../../Router";
-import { routes } from "../../Router/routes";
+import React, { useState } from 'react';
+import { useAuthContext } from '../../AuthContext';
+import { Link } from '../../Router';
+import { routes } from '../../Router/routes';
 
 const Register = () => {
   const { setUserName, setUserId, setUserEmail } = useAuthContext();
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const registeruser = (user, useremail) => {
     setUserName(user);
     setUserEmail(useremail);
@@ -23,7 +23,7 @@ const Register = () => {
                 Name
               </label>
               <input
-                onChange={(e) => setUsername(e.target.value)}
+                onChange={e => setUsername(e.target.value)}
                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                 type="name"
                 name="name"
@@ -39,7 +39,7 @@ const Register = () => {
                 type="email"
                 name="email-address"
                 id="email-address"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
               />
             </div>
             <div className="mv3">

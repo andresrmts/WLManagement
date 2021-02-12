@@ -1,5 +1,5 @@
-import React from "react";
-import Competition from "./Competition";
+import React from 'react';
+import Competition from './Competition';
 
 const CompetitionList = ({
   onRouteChange,

@@ -1,13 +1,7 @@
-import React from "react";
-import Athlete from "./Athlete/Athlete";
+import React from 'react';
+import Athlete from './Athlete/Athlete';
 
-const AthleteList = ({
-  registeredAthletes,
-  inCompetitionAthletes,
-  lift,
-  name,
-  editAthleteWeight,
-}) => {
+const AthleteList = ({ registeredAthletes, inCompetitionAthletes, lift, name, editAthleteWeight }) => {
   if (registeredAthletes) {
     return (
       <div className="pa4">

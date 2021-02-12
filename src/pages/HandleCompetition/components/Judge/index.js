@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from "react";
-import NextAttempt from "../NextAttempt";
-import { useCompetitionContext } from "../../CompetitionContext";
+import React, { useState, useEffect, useRef } from 'react';
+import NextAttempt from '../NextAttempt';
+import { useCompetitionContext } from '../../CompetitionContext';
 
-const usePrevious = (value) => {
+const usePrevious = value => {
   const ref = useRef(null);
   useEffect(() => {
     ref.current = value;
@@ -12,8 +12,8 @@ const usePrevious = (value) => {
 
 const Judge = () => {
   const [voted, setVoted] = useState(false);
-  const [athlete, setAthlete] = useState("");
-  const [weight, setWeight] = useState("");
+  const [athlete, setAthlete] = useState('');
+  const [weight, setWeight] = useState('');
   const [attempt, setAttempt] = useState(0);
   const [timedOut, setTimedOut] = useState(false);
   const { status, castVote, goToNextAttempt } = useCompetitionContext();
@@ -26,21 +26,21 @@ const Judge = () => {
 
   useEffect(() => {
     if (timedOut === true) {
-      castVote("no");
+      castVote('no');
       setTimedOut(false);
       setVoted(true);
     }
   }, [timedOut]);
 
   useEffect(() => {
-    if (status === "started") {
+    if (status === 'started') {
       setTimeout(() => goToNextAttempt(athlete, weight, attempt), 3000);
     }
   }, [voted]);
 
-  if (status === "notstarted") {
+  if (status === 'notstarted') {
     return <h1>The competition hasnt started yet. It will start in TIMER</h1>;
-  } else if (status === "started" && voted === false && attempt !== "") {
+  } else if (status === 'started' && voted === false && attempt !== '') {
     return (
       <div className="w-100">
         <div className="flex center pa2">
@@ -57,7 +57,7 @@ const Judge = () => {
           <p
             id="yes"
             onClick={() => {
-              castVote("yes");
+              castVote('yes');
               setVoted(true);
             }}
             className="btn pointer flex flex-column center pa2 ma2 vh-50 w-40 ba b--black tc"
@@ -67,7 +67,7 @@ const Judge = () => {
           <p
             id="no"
             onClick={() => {
-              castVote("no");
+              castVote('no');
               setVoted(true);
             }}
             className="btn pointer flex flex-column center pa2 ma2 vh-50 w-40 outline-m tc bg-red ba b--red"
@@ -86,12 +86,8 @@ const Judge = () => {
           <h1>No more attempts left</h1>
         </div>
         <div className="flex center pa2">
-          <p className="pointer flex flex-column center pa2 ma2 vh-50 w-40 ba b--black tc">
-            PAUSE
-          </p>
-          <p className="pointer flex flex-column center pa2 ma2 vh-50 w-40 outline-m tc bg-red ba b--red">
-            PAUSE
-          </p>
+          <p className="pointer flex flex-column center pa2 ma2 vh-50 w-40 ba b--black tc">PAUSE</p>
+          <p className="pointer flex flex-column center pa2 ma2 vh-50 w-40 outline-m tc bg-red ba b--red">PAUSE</p>
         </div>
       </div>
     );

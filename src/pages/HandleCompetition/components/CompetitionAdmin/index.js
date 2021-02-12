@@ -1,78 +1,65 @@
-import React, { useState, useEffect } from "react";
-import NextAttempt from "../NextAttempt";
-import Table from "../../../../components/Table";
-import { useCompetitionContext } from "../../CompetitionContext";
+import React, { useState, useEffect } from 'react';
+import NextAttempt from '../NextAttempt';
+import Table from '../../../../components/Table';
+import { useCompetitionContext } from '../../CompetitionContext';
 
 const CompetitionAdmin = () => {
-  const {
-    registeredAthletes,
-    lift,
-    toggleTimer,
-    nextLift,
-    timer,
-  } = useCompetitionContext();
+  const { registeredAthletes, lift, toggleTimer, nextLift, timer } = useCompetitionContext();
   const [onTheClock, setOnTheClock] = useState(
     registeredAthletes
-      .filter((athlete) => athlete.attempt < 3)
+      .filter(athlete => athlete.attempt < 3)
       .sort((a, b) => {
         if (a[lift] === b[lift]) {
           return a.attempt - b.attempt;
         } else {
           return a[lift] - b[lift];
         }
-      })
+      }),
   );
 
   useEffect(() => {
     setOnTheClock(
       registeredAthletes
-        .filter((athlete) => athlete.attempt < 3)
+        .filter(athlete => athlete.attempt < 3)
         .sort((a, b) => {
           if (a[lift] === b[lift]) {
             return a.attempt - b.attempt;
           } else {
             return a[lift] - b[lift];
           }
-        })
+        }),
     );
   }, [registeredAthletes, lift]);
 
   const headers = [
     {
-      header: "Name",
-      styles: "fw6 pa3 bg-white",
+      header: 'Name',
+      styles: 'fw6 pa3 bg-white',
     },
     {
-      header: "Attempt",
-      styles: "fw6 pa3 bg-white",
+      header: 'Attempt',
+      styles: 'fw6 pa3 bg-white',
     },
     {
       header: lift,
-      styles: "fw6 pa3 bg-white",
+      styles: 'fw6 pa3 bg-white',
     },
   ];
 
-  const props = { name: "", attempt: "", [lift]: "" };
+  const props = { name: '', attempt: '', [lift]: '' };
 
   return (
     <div className="cf ph2-ns">
       <div className="flex">
-        <div
-          className="pointer ba tc w-20 center"
-          onClick={() => toggleTimer()}
-        >
-          {timer === true ? (
-            <p className="pointer">Stop</p>
-          ) : (
-            <p className="pointer">Start</p>
-          )}
+        <div className="pointer ba tc w-20 center" onClick={() => toggleTimer()}>
+          {timer === true ? <p className="pointer">Stop</p> : <p className="pointer">Start</p>}
         </div>
-        {lift === "snatch" ? (
+        {lift === 'snatch' ? (
           <div onClick={() => nextLift()} className="ba tc w-20 center">
             <p>Go to CNJ</p>
           </div>
         ) : (
-          ""
+          ''
         )}
       </div>
       <div className="fl w-100 w-60-ns pa2 tc">

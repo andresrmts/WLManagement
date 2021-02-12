@@ -1,11 +1,7 @@
-import React from "react";
-import Registration from "./Registration/Registration";
+import React from 'react';
+import Registration from './Registration/Registration';
 
-const PendingRegistrationList = ({
-  acceptedRegistrations,
-  approveRemove,
-  registrations,
-}) => {
+const PendingRegistrationList = ({ acceptedRegistrations, approveRemove, registrations }) => {
   if (registrations) {
     return (
       <div className="pa4">
@@ -26,14 +22,7 @@ const PendingRegistrationList = ({
             </thead>
             <tbody className="lh-copy">
               {registrations.map((reg, i) => {
-                return (
-                  <Registration
-                    key={i}
-                    name={reg.name}
-                    role={reg.role}
-                    approveRemove={approveRemove}
-                  />
-                );
+                return <Registration key={i} name={reg.name} role={reg.role} approveRemove={approveRemove} />;
               })}
             </tbody>
           </table>

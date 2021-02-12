@@ -1,5 +1,5 @@
-import React from "react";
-import { RouterContext } from "./context";
+import React from 'react';
+import { RouterContext } from './context';
 
 export const Route = ({ path, children }) => {
   const { route } = React.useContext(RouterContext);

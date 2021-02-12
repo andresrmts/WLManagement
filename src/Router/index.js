@@ -1,19 +1,17 @@
-import React from "react";
-import { locationToRoute } from "./utils";
-import { history, RouterContext } from "./context";
-import { Route } from "./route";
-import { Link } from "./link";
+import React from 'react';
+import { locationToRoute } from './utils';
+import { history, RouterContext } from './context';
+import { Route } from './route';
+import { Link } from './link';
 
 class Router extends React.Component {
   constructor(props) {
     super(props);
-    this.routes = Object.keys(props.routes).map(
-      (key) => props.routes[key].path
-    );
+    this.routes = Object.keys(props.routes).map(key => props.routes[key].path);
 
     this.state = {
       route: locationToRoute(history.location),
-      competition: "",
+      competition: '',
     };
   }
 
@@ -30,7 +28,7 @@ class Router extends React.Component {
     this.setState({ route: route });
   };
 
-  changeCompetition = (competition) => {
+  changeCompetition = competition => {
     this.setState({ competition: competition });
   };
 
@@ -47,9 +45,7 @@ class Router extends React.Component {
     const is404 = this.routes.indexOf(route.path) === -1;
 
     return (
-      <RouterContext.Provider value={routerContextValue}>
-        {is404 ? <NotFound /> : children}
-      </RouterContext.Provider>
+      <RouterContext.Provider value={routerContextValue}>{is404 ? <NotFound /> : children}</RouterContext.Provider>
     );
   }
 }

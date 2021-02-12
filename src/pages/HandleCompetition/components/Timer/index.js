@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useCompetitionContext } from "../../CompetitionContext";
+import React, { useEffect } from 'react';
+import { useCompetitionContext } from '../../CompetitionContext';
 
 const Timer = ({ setTimedOut }) => {
   const { time, changeTime, timer } = useCompetitionContext();
@@ -9,10 +9,10 @@ const Timer = ({ setTimedOut }) => {
       if (setTimedOut) {
         setTimedOut(true);
       } else {
-        changeTime(1, 0 + "0");
+        changeTime(1, 0 + '0');
       }
     } else {
-      if (time.seconds === 0 + "0" || time.seconds === 0) {
+      if (time.seconds === 0 + '0' || time.seconds === 0) {
         changeTime(time.minutes - 1, 59);
       } else if (timer === false) {
         changeTime(time.minutes, time.seconds);

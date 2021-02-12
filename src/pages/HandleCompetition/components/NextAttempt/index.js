@@ -1,61 +1,50 @@
-import React, { useEffect, useState } from "react";
-import Timer from "../Timer";
-import { useCompetitionContext } from "../../CompetitionContext";
+import React, { useEffect, useState } from 'react';
+import Timer from '../Timer';
+import { useCompetitionContext } from '../../CompetitionContext';
 
-const NextAttempt = ({
-  setAthlete,
-  setWeight,
-  setAttempt,
-  setTimedOut,
-  prevAthlete,
-}) => {
-  const {
-    registeredAthletes,
-    lift,
-    changeTime,
-    toggleTimer,
-  } = useCompetitionContext();
+const NextAttempt = ({ setAthlete, setWeight, setAttempt, setTimedOut, prevAthlete }) => {
+  const { registeredAthletes, lift, changeTime, toggleTimer } = useCompetitionContext();
   const [next, setNext] = useState(
     registeredAthletes
-      .filter((athlete) => athlete.attempt < 3)
+      .filter(athlete => athlete.attempt < 3)
       .sort((a, b) => {
         if (a[lift] === b[lift]) {
           return a.attempt - b.attempt;
         } else {
           return a[lift] - b[lift];
         }
-      })
+      }),
   );
 
   useEffect(() => {
     if (setAthlete) {
-      setAthlete(next.length > 0 ? next[0].name : "");
-      setWeight(next.length > 0 ? next[0][lift] : "");
-      setAttempt(next.length > 0 ? next[0].attempt : "");
+      setAthlete(next.length > 0 ? next[0].name : '');
+      setWeight(next.length > 0 ? next[0][lift] : '');
+      setAttempt(next.length > 0 ? next[0].attempt : '');
     }
   });
 
   useEffect(() => {
     if (next.length > 0) {
       if (prevAthlete === next[0].name) {
-        changeTime(2, 0 + "0");
+        changeTime(2, 0 + '0');
         return;
       }
-      changeTime(1, 0 + "0");
+      changeTime(1, 0 + '0');
     }
   }, [next[0]]);
 
   useEffect(() => {
     setNext(
       registeredAthletes
-        .filter((athlete) => athlete.attempt < 3)
+        .filter(athlete => athlete.attempt < 3)
         .sort((a, b) => {
           if (a[lift] === b[lift]) {
             return a.attempt - b.attempt;
           } else {
             return a[lift] - b[lift];
           }
-        })
+        }),
     );
   }, [registeredAthletes]);
 
@@ -70,9 +59,7 @@ const NextAttempt = ({
               <h1 className="f2 pa2">Attempt: {next[0].attempt + 1}</h1>
             </div>
             <div className="flex justify-around">
-              <h1 className="f2-m pa3">
-                {lift === "snatch" ? "Snatch" : "Clean and Jerk"}
-              </h1>
+              <h1 className="f2-m pa3">{lift === 'snatch' ? 'Snatch' : 'Clean and Jerk'}</h1>
               <h1 className="f2-m pa3">Weight: {next[0][lift]}</h1>
             </div>
           </div>

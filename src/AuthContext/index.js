@@ -9,14 +9,21 @@ const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [role, setRole] = useState('');
 
-  const contextValue = { userName, userId, userEmail, isAdmin, role, setUserName, setUserEmail, setUserId, setIsAdmin, setRole };
+  const contextValue = {
+    userName,
+    userId,
+    userEmail,
+    isAdmin,
+    role,
+    setUserName,
+    setUserEmail,
+    setUserId,
+    setIsAdmin,
+    setRole,
+  };
 
-  return (
-    <AuthContext.Provider value={contextValue}>
-      {children}
-    </AuthContext.Provider>
-  )
-}
+  return <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>;
+};
 
 const useAuthContext = () => {
   const context = useContext(AuthContext);
@@ -24,6 +31,6 @@ const useAuthContext = () => {
     throw new Error('This function can only be used within AuthProvider');
   }
   return context;
-}
+};
 
-export { AuthProvider, useAuthContext }
+export { AuthProvider, useAuthContext };

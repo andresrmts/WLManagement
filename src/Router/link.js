@@ -1,28 +1,28 @@
 import React from 'react';
 import { RouterContext, history } from './context';
 
-export const Link = (props) => {
-	const { to, onClick, children } = props;
+export const Link = props => {
+  const { to, onClick, children } = props;
 
-	const {route} = React.useContext(RouterContext);
+  const { route } = React.useContext(RouterContext);
 
-	const handleClick = (e) => {
-		e.preventDefault();
+  const handleClick = e => {
+    e.preventDefault();
 
-		if (route.path === to) {
-			return;
-		}
+    if (route.path === to) {
+      return;
+    }
 
-		if (onClick) {
-			onClick(e);
-		}
+    if (onClick) {
+      onClick(e);
+    }
 
-		history.push(to);
-	}
+    history.push(to);
+  };
 
-	return (
-		<a {...props} onClick={handleClick}>
-			{children}
-		</a>
-	)
-}
+  return (
+    <a {...props} onClick={handleClick}>
+      {children}
+    </a>
+  );
+};

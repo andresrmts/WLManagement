@@ -15,116 +15,141 @@ import Table from '../../components/Table';
 import { useCompetitionContext } from './CompetitionContext';
 import { Link } from '../../Router';
 import { routes } from '../../Router/routes';
-import { useAuthContext } from '../../AuthContext'; 
+import { useAuthContext } from '../../AuthContext';
 
 const HandleCompetition = () => {
-	const { status, comproute, acceptedRegistrations, registeredAthletes, editAthleteWeight, registrations } = useCompetitionContext();
-	const { userName, isAdmin, role, setRole } = useAuthContext();
+  const {
+    status,
+    comproute,
+    acceptedRegistrations,
+    registeredAthletes,
+    editAthleteWeight,
+    registrations,
+  } = useCompetitionContext();
+  const { userName, isAdmin, role, setRole } = useAuthContext();
 
-	const filteredName = acceptedRegistrations.filter(reg => reg.name === userName);
+  const filteredName = acceptedRegistrations.filter(reg => reg.name === userName);
 
-	useEffect(() => {
-		if (isAdmin) {
-			setRole('admin');
-			return;
-		}
-		if (filteredName[0]) {
-			setRole(filteredName[0].role);
-			return;
-		}
-	});
+  useEffect(() => {
+    if (isAdmin) {
+      setRole('admin');
+      return;
+    }
+    if (filteredName[0]) {
+      setRole(filteredName[0].role);
+      return;
+    }
+  });
 
-	const renderCompRoutes = (route) => {
-		const headers = [
-			{
-				header: 'Name',
-				styles: 'fw6 pa3 bg-white',
-			},
-			{
-				header: 'Age',
-				styles: 'fw6 pa3 bg-white',
-			},
-			{
-				header: 'Weight',
-				styles: 'fw6 pa3 bg-white',
-			},
-			{
-				header: 'Snatch',
-				styles: 'fw6 pa3 bg-white',
-			},
-			{
-				header: 'CNJ',
-				styles: 'fw6 pa3 bg-white',
-			},
-			{
-				header: 'Coachname',
-				styles: 'fw6 pa3 bg-white',
-			},
-		];
-		const props = {name: '', age: '', weight: '', snatch: '', cnj: '', coachname:''};
-		const outSideProps = {functions: {weight: editAthleteWeight}}
-		switch(route) {
-			case 'home':
-				if (status === 'notstarted') {
-					if (isAdmin) {
-						return <Registrations />
-					} else if (filteredName[0] && filteredName[0].role === 'coach') {
-						return <MyAthletes />
-					} else if (filteredName[0] && filteredName[0].role === 'judge') {
-						return <Judge />
-					} else if (filteredName[0] && filteredName[0].role === 'changetable') {
-						return <ChangeTable />
-					} else if (registrations.find(reg => reg.name === userName) !== undefined) {
-						return <h1>Your registration hasn't been accepted yet by the admin!</h1>
-					} else {
-						return <RoleSelection />
-					}
-				} else {
-					if (isAdmin) {
-						return <CompetitionAdmin />
-					} else if (filteredName[0] && filteredName[0].role === 'coach') {
-						return <CoachInCompetition />
-					} else if (filteredName[0] && filteredName[0].role === 'judge') {
-						return <Judge />
-					} else if (filteredName[0] && filteredName[0].role === 'changetable') {
-						return <ChangeTable />
-					}
-				}
-				break;
-			case 'registered':
-				return <RegisteredOfficials />
-			case 'athletelist':
-				return <Table props={props} headers={headers} tableContent={registeredAthletes} outSideProps={outSideProps} />
-			case 'athleteregistration':
-				return <AthleteRegistration />
-			default:
-				return <h1>Something went wrong...</h1>
-		}
-	}
+  const renderCompRoutes = route => {
+    const headers = [
+      {
+        header: 'Name',
+        styles: 'fw6 pa3 bg-white',
+      },
+      {
+        header: 'Age',
+        styles: 'fw6 pa3 bg-white',
+      },
+      {
+        header: 'Weight',
+        styles: 'fw6 pa3 bg-white',
+      },
+      {
+        header: 'Snatch',
+        styles: 'fw6 pa3 bg-white',
+      },
+      {
+        header: 'CNJ',
+        styles: 'fw6 pa3 bg-white',
+      },
+      {
+        header: 'Coachname',
+        styles: 'fw6 pa3 bg-white',
+      },
+    ];
+    const props = {
+      name: '',
+      age: '',
+      weight: '',
+      snatch: '',
+      cnj: '',
+      coachname: '',
+    };
+    const outSideProps = { functions: { weight: editAthleteWeight } };
+    switch (route) {
+      case 'home':
+        if (status === 'notstarted') {
+          if (isAdmin) {
+            return <Registrations />;
+          } else if (filteredName[0] && filteredName[0].role === 'coach') {
+            return <MyAthletes />;
+          } else if (filteredName[0] && filteredName[0].role === 'judge') {
+            return <Judge />;
+          } else if (filteredName[0] && filteredName[0].role === 'changetable') {
+            return <ChangeTable />;
+          } else if (registrations.find(reg => reg.name === userName) !== undefined) {
+            return <h1>Your registration hasn't been accepted yet by the admin!</h1>;
+          } else {
+            return <RoleSelection />;
+          }
+        } else {
+          if (isAdmin) {
+            return <CompetitionAdmin />;
+          } else if (filteredName[0] && filteredName[0].role === 'coach') {
+            return <CoachInCompetition />;
+          } else if (filteredName[0] && filteredName[0].role === 'judge') {
+            return <Judge />;
+          } else if (filteredName[0] && filteredName[0].role === 'changetable') {
+            return <ChangeTable />;
+          }
+        }
+        break;
+      case 'registered':
+        return <RegisteredOfficials />;
+      case 'athletelist':
+        return <Table props={props} headers={headers} tableContent={registeredAthletes} outSideProps={outSideProps} />;
+      case 'athleteregistration':
+        return <AthleteRegistration />;
+      default:
+        return <h1>Something went wrong...</h1>;
+    }
+  };
 
-	const renderNav = (role) => {
-		switch(role) {
-			case 'admin': 
-				return <AdminNav />
-			case 'coach':
-				return <CoachNav />
-			case 'judge':
-				if (status === 'started') {
-					return <Result />
-				}
-				return <Link to={routes.competitionselection.path} onClick={() => setRole('')} className="f6 tc underline pointer center">Exit</Link>
-			default:
-				return <Link to={routes.competitionselection.path} className="f6 tc underline pointer center">Exit</Link>
-		}
-	}
+  const renderNav = role => {
+    switch (role) {
+      case 'admin':
+        return <AdminNav />;
+      case 'coach':
+        return <CoachNav />;
+      case 'judge':
+        if (status === 'started') {
+          return <Result />;
+        }
+        return (
+          <Link
+            to={routes.competitionselection.path}
+            onClick={() => setRole('')}
+            className="f6 tc underline pointer center"
+          >
+            Exit
+          </Link>
+        );
+      default:
+        return (
+          <Link to={routes.competitionselection.path} className="f6 tc underline pointer center">
+            Exit
+          </Link>
+        );
+    }
+  };
 
-	return (
-			<div>
-					{renderNav(role)}
-					{renderCompRoutes(comproute)}
-				</div>
-	)
-
-}
+  return (
+    <div>
+      {renderNav(role)}
+      {renderCompRoutes(comproute)}
+    </div>
+  );
+};
 
 export default HandleCompetition;

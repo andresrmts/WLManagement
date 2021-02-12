@@ -10,40 +10,39 @@ import HandleCompetition from '../../pages/HandleCompetition';
 import { useAuthContext } from '../../AuthContext';
 
 const AppRouter = ({ onSearchChange }) => {
-	const { userName, userId } = useAuthContext();
+  const { userName, userId } = useAuthContext();
 
-	const isSignedIn = !!userId;
+  const isSignedIn = !!userId;
 
   return (
-		<div>
-			{!isSignedIn && (
-				<div>
-					<Route path={routes.home.path}>
-						<SignIn />
-					</Route>
-					<Route path={routes.register.path}>
-						<Register />
-					</Route>
-				</div>
-			)}
-			{isSignedIn && (
-				<div>
-					<Route path={routes.competitionselection.path}>
-						<CompetitionSelection onSearchChange={onSearchChange} />
-					</Route>
-					<Route path={routes.competitioncreation.path}>
-						<CompetitionCreation />
-					</Route>
-					<Route path={routes.competition.path}>
-						<CompetitionProvider userName={userName}>
-							<HandleCompetition />
-						</CompetitionProvider>
-					</Route>
-				</div>
-				)
-			}
-		</div>
-  )
-}
+    <div>
+      {!isSignedIn && (
+        <div>
+          <Route path={routes.home.path}>
+            <SignIn />
+          </Route>
+          <Route path={routes.register.path}>
+            <Register />
+          </Route>
+        </div>
+      )}
+      {isSignedIn && (
+        <div>
+          <Route path={routes.competitionselection.path}>
+            <CompetitionSelection onSearchChange={onSearchChange} />
+          </Route>
+          <Route path={routes.competitioncreation.path}>
+            <CompetitionCreation />
+          </Route>
+          <Route path={routes.competition.path}>
+            <CompetitionProvider userName={userName}>
+              <HandleCompetition />
+            </CompetitionProvider>
+          </Route>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default AppRouter;

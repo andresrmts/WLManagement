@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import { routes } from '../../../Router/routes';
 import { useAuthContext } from '../../../AuthContext';
 
 const Competition = ({
@@ -32,7 +31,7 @@ const Competition = ({
           <hr className="mw3 bb bw1 b--black-10" />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <Link
-              to="/competition"
+              to={`/competition/${date}`}
               onClick={() => {
                 setIsAdmin(userEmail === email);
               }}
@@ -96,7 +95,7 @@ const Competition = ({
         <hr className="mw3 bb bw1 b--black-10" />
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Link
-            to="/competition"
+            to={`/competition/${date}`}
             className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer no-underline black-90"
           >
             Select Role

@@ -36,7 +36,7 @@ const AppRouter = ({ onSearchChange }) => {
             <Route path="/competitioncreation">
               <CompetitionCreation />
             </Route>
-            <Route path="/competition">
+            <Route path="/competition/:compId">
               <CompetitionProvider userName={userName}>
                 <HandleCompetition />
               </CompetitionProvider>

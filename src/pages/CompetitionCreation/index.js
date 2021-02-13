@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useAuthContext } from '../../AuthContext';
 import { Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 
 const CompetitionCreation = () => {
-  // const { changecompetition } = React.useContext(RouterContext);
   const { setIsAdmin } = useAuthContext();
   const [competitionName, setCompetitionname] = useState('');
   const createCompetition = compname => {
     setIsAdmin(true);
-    // changecompetition(compname);
   };
 
   return (
@@ -53,7 +52,7 @@ const CompetitionCreation = () => {
         </div>
         <div className="measure center">
           <Link
-            to="/competition"
+            to={`/competition/${uuidv4()}`}
             onClick={() => createCompetition(competitionName)}
             className="b ph3 pv2 input-reset ba b--black black-90 bg-transparent grow pointer f6 m14 dib no-underline"
           >

@@ -77,52 +77,6 @@ const HandleCompetition = () => {
 
   const outSideProps = { functions: { weight: editAthleteWeight } };
 
-  // <Switch>
-  //   {isAdmin && status === 'notstarted' && (
-  //     <div>
-  //       <Route path={match.path}>
-  //         <Registrations />
-  //       </Route>
-  //       <Route path={`${match.path}/registeredofficials`}>
-  //         <RegisteredOfficials />
-  //       </Route>
-  //       <Route path={`${match.path}/athletelist`}>
-  //         <Table props={props} headers={headers} tableContent={registeredAthletes} outSideProps={outSideProps} />
-  //       </Route>
-  //     </div>
-  //   )}
-  //   {role === 'coach' && status === 'notstarted' && (
-  //     <div>
-  //       <Route path={match.path}>
-  //         <MyAthletes />
-  //       </Route>
-  //       <Route path={`${match.path}/athleteregistration`}>
-  //         <AthleteRegistration />
-  //       </Route>
-  //     </div>
-  //   )}
-  //   {role === 'judge' && (
-  //     <Route path={match.path}>
-  //       <Judge />
-  //     </Route>
-  //   )}
-  //   {isAdmin && (
-  //     <Route path={match.path}>
-  //       <CompetitionAdmin />
-  //     </Route>
-  //   )}
-  //   {role === 'coach' && (
-  //     <Route path={match.path}>
-  //       <CoachInCompetition />
-  //     </Route>
-  //   )}
-  //   {status === 'notstarted' && (
-  //     <Route path={match.path}>
-  //       <RoleSelection />
-  //     </Route>
-  //   )}
-  // </Switch>
-
   // const renderCompRoutes = route => {
   //   const headers = [
   //     {

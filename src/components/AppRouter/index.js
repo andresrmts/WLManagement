@@ -2,9 +2,10 @@ import React from 'react';
 // import { Route } from '../../Router';
 import { Switch, Route } from 'react-router-dom';
 import { CompetitionProvider } from '../../pages/HandleCompetition/CompetitionContext';
+import { CompsProvider } from '../../CompetitionsContext';
 // import { routes } from '../../Router/routes';
 import SignIn from '../../pages/SignIn';
-import CompetitionSelection from '../../pages/CompetitionSelection';
+import Competitions from '../../pages/Competitions';
 import Register from '../../pages/Register';
 import CompetitionCreation from '../../pages/CompetitionCreation';
 import HandleCompetition from '../../pages/HandleCompetition';
@@ -30,17 +31,19 @@ const AppRouter = ({ onSearchChange }) => {
         )}
         {isSignedIn && (
           <div>
-            <Route path="/competitionselection">
-              <CompetitionSelection onSearchChange={onSearchChange} />
-            </Route>
-            <Route path="/competitioncreation">
-              <CompetitionCreation />
-            </Route>
-            <Route path="/competition/:compId">
-              <CompetitionProvider userName={userName}>
-                <HandleCompetition />
-              </CompetitionProvider>
-            </Route>
+            <CompsProvider>
+              <Route path="/competitionselection">
+                <Competitions onSearchChange={onSearchChange} />
+              </Route>
+              <Route path="/competitioncreation">
+                <CompetitionCreation />
+              </Route>
+              <Route path="/competition/:compId">
+                <CompetitionProvider userName={userName}>
+                  <HandleCompetition />
+                </CompetitionProvider>
+              </Route>
+            </CompsProvider>
           </div>
         )}
       </div>

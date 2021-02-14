@@ -2,19 +2,13 @@ import React, { useState, useEffect } from 'react';
 import CompetitionList from '../../components/CompetitionList';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../AuthContext';
+import { useCompsContext } from '../../CompetitionsContext';
 
 const CompetitionSelection = ({ adminToggle, onSearchChange }) => {
-  const [competitions, setCompetitions] = useState([]);
-  const { userName } = useAuthContext();
-
-  useEffect(() => {
-    fetch('https://jsonplaceholder.typicode.com/users')
-      .then(res => res.json())
-      .then(comp => setCompetitions(comp));
-  }, []);
-
-  const yourComps = competitions.filter(competition => competition.id < 4);
-  const availableComps = competitions.filter(competition => !yourComps.some(comp => competition.name === comp.name));
+  const { userName, userId } = useAuthContext();
+  const { getMyCompetitions, getActiveCompetitions } = useCompsContext();
+  const [yourComps] = useState(getMyCompetitions(userId));
+  const [activeComps] = useState(getActiveCompetitions(userId));
 
   return (
     <div>
@@ -50,7 +44,7 @@ const CompetitionSelection = ({ adminToggle, onSearchChange }) => {
       </div>
       <div className="fl w-100 w-50-ns pa2 tc">
         <h1>Available Competitions</h1>
-        <CompetitionList competitions={availableComps} />
+        <CompetitionList competitions={activeComps} />
       </div>
     </div>
   );

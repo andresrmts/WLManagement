@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import AdminNav from './components/AdminNav';
 import Registrations from './components/Registrations';
 import CoachNav from './components/CoachNav';
@@ -13,175 +13,117 @@ import CoachInCompetition from './components/CoachInCompetition';
 import CompetitionAdmin from './components/CompetitionAdmin';
 import Table from '../../components/Table';
 import { useCompetitionContext } from './CompetitionContext';
-import { Link, Switch, Route, useRouteMatch } from 'react-router-dom';
+import { Link, Switch, Route, useRouteMatch, useParams } from 'react-router-dom';
 import { useAuthContext } from '../../AuthContext';
+import { useCompsContext } from '../../CompetitionsContext';
 
 const HandleCompetition = () => {
-  const {
-    status,
-    acceptedRegistrations,
-    registeredAthletes,
-    editAthleteWeight,
-    registrations,
-  } = useCompetitionContext();
-  const { userName, isAdmin, role, setRole } = useAuthContext();
-  const filteredName = acceptedRegistrations.filter(reg => reg.name === userName);
+  // const {
+  //   status,
+  //   acceptedRegistrations,
+  //   registeredAthletes,
+  //   editAthleteWeight,
+  //   registrations,
+  // } = useCompetitionContext();
+  // const { userName, isAdmin, role, setRole } = useAuthContext();
+  // const filteredName = acceptedRegistrations.filter(reg => reg.name === userName);
+  const { getCompetition } = useCompsContext();
+  const { compId } = useParams();
+  const [competition] = useState(getCompetition(compId));
   const match = useRouteMatch();
 
-  useEffect(() => {
-    if (isAdmin) {
-      setRole('admin');
-      return;
-    }
-    if (filteredName[0]) {
-      setRole(filteredName[0].role);
-      return;
-    }
-  });
+  // useEffect(() => {
+  //   setCompetition(getCompetition(compId));
+  // });
 
-  const headers = [
-    {
-      header: 'Name',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Age',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Weight',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Snatch',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'CNJ',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Coachname',
-      styles: 'fw6 pa3 bg-white',
-    },
-  ];
+  // useEffect(() => console.log(competition.name))
 
-  const props = {
-    name: '',
-    age: '',
-    weight: '',
-    snatch: '',
-    cnj: '',
-    coachname: '',
-  };
+  // useEffect(() => {
+  //   if (isAdmin) {
+  //     setRole('admin');
+  //     return;
+  //   }
+  //   if (filteredName[0]) {
+  //     setRole(filteredName[0].role);
+  //     return;
+  //   }
+  // });
 
-  const outSideProps = { functions: { weight: editAthleteWeight } };
+  // const headers = [
+  //   {
+  //     header: 'Name',
+  //     styles: 'fw6 pa3 bg-white',
+  //   },
+  //   {
+  //     header: 'Age',
+  //     styles: 'fw6 pa3 bg-white',
+  //   },
+  //   {
+  //     header: 'Weight',
+  //     styles: 'fw6 pa3 bg-white',
+  //   },
+  //   {
+  //     header: 'Snatch',
+  //     styles: 'fw6 pa3 bg-white',
+  //   },
+  //   {
+  //     header: 'CNJ',
+  //     styles: 'fw6 pa3 bg-white',
+  //   },
+  //   {
+  //     header: 'Coachname',
+  //     styles: 'fw6 pa3 bg-white',
+  //   },
+  // ];
 
-  // const renderCompRoutes = route => {
-  //   const headers = [
-  //     {
-  //       header: 'Name',
-  //       styles: 'fw6 pa3 bg-white',
-  //     },
-  //     {
-  //       header: 'Age',
-  //       styles: 'fw6 pa3 bg-white',
-  //     },
-  //     {
-  //       header: 'Weight',
-  //       styles: 'fw6 pa3 bg-white',
-  //     },
-  //     {
-  //       header: 'Snatch',
-  //       styles: 'fw6 pa3 bg-white',
-  //     },
-  //     {
-  //       header: 'CNJ',
-  //       styles: 'fw6 pa3 bg-white',
-  //     },
-  //     {
-  //       header: 'Coachname',
-  //       styles: 'fw6 pa3 bg-white',
-  //     },
-  //   ];
-  //   const props = {
-  //     name: '',
-  //     age: '',
-  //     weight: '',
-  //     snatch: '',
-  //     cnj: '',
-  //     coachname: '',
-  //   };
-  //   const outSideProps = { functions: { weight: editAthleteWeight } };
-  //   switch (route) {
-  //     case 'home':
-  //       if (status === 'notstarted') {
-  //         if (isAdmin) {
-  //           return <Registrations />;
-  //         } else if (filteredName[0] && filteredName[0].role === 'coach') {
-  //           return <MyAthletes />;
-  //         } else if (filteredName[0] && filteredName[0].role === 'judge') {
-  //           return <Judge />;
-  //         } else if (filteredName[0] && filteredName[0].role === 'changetable') {
-  //           return <ChangeTable />;
-  //         } else if (registrations.find(reg => reg.name === userName) !== undefined) {
-  //           return <h1>Your registration hasn't been accepted yet by the admin!</h1>;
-  //         } else {
-  //           return <RoleSelection />;
-  //         }
-  //       } else {
-  //         if (isAdmin) {
-  //           return <CompetitionAdmin />;
-  //         } else if (filteredName[0] && filteredName[0].role === 'coach') {
-  //           return <CoachInCompetition />;
-  //         } else if (filteredName[0] && filteredName[0].role === 'judge') {
-  //           return <Judge />;
-  //         } else if (filteredName[0] && filteredName[0].role === 'changetable') {
-  //           return <ChangeTable />;
-  //         }
+  // const props = {
+  //   name: '',
+  //   age: '',
+  //   weight: '',
+  //   snatch: '',
+  //   cnj: '',
+  //   coachname: '',
+  // };
+
+  // const outSideProps = { functions: { weight: editAthleteWeight } };
+
+  // const renderNav = role => {
+  //   switch (role) {
+  //     case 'admin':
+  //       return <AdminNav />;
+  //     case 'coach':
+  //       return <CoachNav />;
+  //     case 'judge':
+  //       if (status === 'started') {
+  //         return <Result />;
   //       }
-  //       break;
-  //     case 'registered':
-  //       return <RegisteredOfficials />;
-  //     case 'athletelist':
-  //       return <Table props={props} headers={headers} tableContent={registeredAthletes} outSideProps={outSideProps} />;
-  //     case 'athleteregistration':
-  //       return <AthleteRegistration />;
+  //       return (
+  //         <Link to="/competitionselection" onClick={() => setRole('')} className="f6 tc underline pointer center">
+  //           Exit
+  //         </Link>
+  //       );
   //     default:
-  //       return <h1>Something went wrong...</h1>;
+  //       return (
+  //         <Link to="/competitionselection" className="f6 tc underline pointer center">
+  //           Exit
+  //         </Link>
+  //       );
   //   }
   // };
 
-  const renderNav = role => {
-    switch (role) {
-      case 'admin':
-        return <AdminNav />;
-      case 'coach':
-        return <CoachNav />;
-      case 'judge':
-        if (status === 'started') {
-          return <Result />;
-        }
-        return (
-          <Link to="/competitionselection" onClick={() => setRole('')} className="f6 tc underline pointer center">
-            Exit
-          </Link>
-        );
-      default:
-        return (
-          <Link to="/competitionselection" className="f6 tc underline pointer center">
-            Exit
-          </Link>
-        );
-    }
-  };
-
   return (
     <div>
-      {renderNav(role)}
+      {/* {renderNav(role)} */}
       {/* {renderCompRoutes(comproute)} */}
       <Switch>
-        {isAdmin && status === 'notstarted' && (
+        <Route path={match.path}>
+          <div>
+            <h1>{competition.id}</h1>
+            <h1>{competition.name}</h1>
+            <h1>{competition.athletes[0].name}</h1>
+          </div>
+        </Route>
+        {/* {isAdmin && status === 'notstarted' && (
           <div>
             <Route exact path={match.path}>
               <Registrations />
@@ -228,7 +170,7 @@ const HandleCompetition = () => {
           <Route path={match.path}>
             <RoleSelection />
           </Route>
-        )}
+        )} */}
       </Switch>
     </div>
   );

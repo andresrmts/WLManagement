@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../../AuthContext';
 
 const Competition = ({
-  email,
   name,
   location,
-  date,
+  id,
   attempt,
   cnj,
   snatch,
@@ -17,27 +16,26 @@ const Competition = ({
   lift,
   toggleTimer,
   time,
+  authorId,
+  officials,
 }) => {
   const [weight, setWeight] = useState(lift === 'snatch' ? snatch : cnj);
-  const { userEmail, setIsAdmin } = useAuthContext();
+  const { userId } = useAuthContext();
 
-  if (date < 4) {
+  if (userId === authorId || officials.find(official => official.id === userId)) {
     return (
       <article className="mw5 tc dib bg-white br3 pa3 ma3 ba b--black-10">
         <div className="tc">
           <h1 className="tc f4">{name}</h1>
           <h2 className="tc f5">{location}</h2>
-          <h3 className="tc f6">{date}</h3>
+          <h3 className="tc f6">{id}</h3>
           <hr className="mw3 bb bw1 b--black-10" />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <Link
-              to={`/competition/${date}`}
-              onClick={() => {
-                setIsAdmin(userEmail === email);
-              }}
+              to={`/competition/${id}`}
               className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer no-underline black-90"
             >
-              {userEmail === email ? 'Admin' : 'Handle'}
+              {userId === authorId ? 'Admin' : 'Handle'}
             </Link>
           </div>
         </div>
@@ -89,13 +87,13 @@ const Competition = ({
   return (
     <article className="mw5 tc dib bg-white br3 pa3 ma3 ba b--black-10">
       <div className="tc">
-        <h1 className="tc f4 flex flex-wrap">{name}</h1>
+        <h1 className="tc center f4 flex flex-wrap">{name}</h1>
         <h2 className="tc f5">{location}</h2>
-        <h3 className="tc f6">{date}</h3>
+        <h3 className="tc f6">{id}</h3>
         <hr className="mw3 bb bw1 b--black-10" />
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Link
-            to={`/competition/${date}`}
+            to={`/competition/${id}`}
             className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer no-underline black-90"
           >
             Select Role

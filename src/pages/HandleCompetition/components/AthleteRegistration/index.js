@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAuthContext } from '../../../../AuthContext';
 import { useCompetitionContext } from '../../CompetitionContext';
 
-const AthleteRegistration = () => {
-  const { addAthlete } = useCompetitionContext();
+const AthleteRegistration = ({ onAdd }) => {
+  // const { addAthlete } = useCompetitionContext();
+  const { compId } = useParams();
+  const { userId, userName } = useAuthContext();
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [snatch, setSnatch] = useState('');
@@ -72,7 +76,7 @@ const AthleteRegistration = () => {
         </div>
         <div className="measure center">
           <input
-            onClick={() => addAthlete(name, age, snatch, cnj)}
+            onClick={() => onAdd(compId, name, age, snatch, cnj, userName, userId)}
             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
             type="submit"
             value="Register"

@@ -266,7 +266,37 @@ const CompsProvider = ({ children }) => {
     );
   };
 
-  const contextValue = { getCompetition, getMyCompetitions, getActiveCompetitions, createCompetition, editWeight };
+  const addAthlete = (compId, name, age, snatch, cnj, coachname, coachid) => {
+    const index = competitions.findIndex(comp => comp.id === compId);
+    if (age < 1 || age > 99 || snatch < 10 || snatch > 230 || cnj < 10 || cnj > 300) {
+      alert('Please enter valid info!');
+      return;
+    }
+    competitions[index].athletes.push({
+      name,
+      attempt: 0,
+      weight: '',
+      age,
+      snatch,
+      cnj,
+      coachid,
+      coachname,
+      result: { snatch: [], cnj: [] },
+    });
+    document.getElementById('name').value = '';
+    document.getElementById('age').value = '';
+    document.getElementById('snatch').value = '';
+    document.getElementById('cnj').value = '';
+  };
+
+  const contextValue = {
+    getCompetition,
+    getMyCompetitions,
+    getActiveCompetitions,
+    createCompetition,
+    editWeight,
+    addAthlete,
+  };
 
   return <CompsContext.Provider value={contextValue}>{children}</CompsContext.Provider>;
 };

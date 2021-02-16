@@ -17,10 +17,9 @@ import { useAuthContext } from '../../AuthContext';
 import { useCompsContext } from '../../CompetitionsContext';
 
 const HandleCompetition = () => {
-  const { editAthleteWeight } = useCompetitionContext();
   const [status, setStatus] = useState('notstarted');
   const { userName, userId, role, setRole } = useAuthContext();
-  const { getCompetition, editWeight } = useCompsContext();
+  const { getCompetition, editWeight, addAthlete } = useCompsContext();
   const { compId } = useParams();
   const competition = getCompetition(compId);
   const match = useRouteMatch();
@@ -124,7 +123,7 @@ const HandleCompetition = () => {
               <MyAthletes athletes={competition.athletes} onWeightUpdate={editWeight} />
             </Route>
             <Route path={`${match.path}/athleteregistration`}>
-              <AthleteRegistration />
+              <AthleteRegistration onAdd={addAthlete} />
             </Route>
           </div>
         )}

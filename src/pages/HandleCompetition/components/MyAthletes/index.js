@@ -6,7 +6,7 @@ import { useCompetitionContext } from '../../CompetitionContext';
 const MyAthletes = ({ athletes, onWeightUpdate }) => {
   // const { registeredAthletes, editAthleteWeight } = useCompetitionContext();
   const { userId } = useAuthContext();
-  const onlyCoachAthletes = athletes.filter(athlete => athlete.coachname === userId);
+  const onlyCoachAthletes = athletes.filter(athlete => athlete.coachid === userId);
   const headers = [
     {
       header: 'Name',

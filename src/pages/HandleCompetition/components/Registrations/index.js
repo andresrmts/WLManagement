@@ -2,8 +2,8 @@ import React from 'react';
 import Table from '../../../../components/Table';
 import { useCompetitionContext } from '../../CompetitionContext';
 
-const Registrations = () => {
-  const { approveRemove, registrations } = useCompetitionContext();
+const Registrations = ({ registrations }) => {
+  const { approveRemove } = useCompetitionContext();
 
   const headers = [
     {

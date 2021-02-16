@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { useAuthContext } from '../../AuthContext';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { useCompsContext } from '../../CompetitionsContext';
 
 const CompetitionCreation = () => {
-  const { setIsAdmin } = useAuthContext();
+  const { userId } = useAuthContext();
+  const { createCompetition } = useCompsContext();
   const [competitionName, setCompetitionname] = useState('');
-  const createCompetition = compname => {
-    setIsAdmin(true);
-  };
+  const [location, setLocation] = useState('');
+  const [date, setDate] = useState('');
+  const id = uuidv4();
 
   return (
     <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
@@ -33,6 +35,7 @@ const CompetitionCreation = () => {
                 Location
               </label>
               <input
+                onChange={e => setLocation(e.target.value)}
                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                 type="text"
                 name="location"
@@ -42,6 +45,7 @@ const CompetitionCreation = () => {
             <div className="mv3">
               <label className="db fw6 lh-copy f6">Date</label>
               <input
+                onChange={e => e.target.value}
                 className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                 type="date"
                 name="date"
@@ -52,8 +56,8 @@ const CompetitionCreation = () => {
         </div>
         <div className="measure center">
           <Link
-            to={`/competition/${uuidv4()}`}
-            onClick={() => createCompetition(competitionName)}
+            to={`/competition/${id}`}
+            onClick={() => createCompetition(id, userId, competitionName, location, date)}
             className="b ph3 pv2 input-reset ba b--black black-90 bg-transparent grow pointer f6 m14 dib no-underline"
           >
             Create

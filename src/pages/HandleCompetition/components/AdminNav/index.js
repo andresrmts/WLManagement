@@ -3,13 +3,11 @@ import { Link, useRouteMatch } from 'react-router-dom';
 import { useCompetitionContext } from '../../CompetitionContext';
 import { useAuthContext } from '../../../../AuthContext';
 
-const AdminNav = () => {
-  const { status, setstatus } = useCompetitionContext();
-  const { setIsAdmin, setRole } = useAuthContext();
+const AdminNav = ({ status, setStatus }) => {
+  const { setRole } = useAuthContext();
   const match = useRouteMatch();
 
   const exitComp = () => {
-    setIsAdmin(false);
     setRole('');
   };
 
@@ -18,7 +16,7 @@ const AdminNav = () => {
       <h1>You are currently working on COMPETITIONNAME</h1>
       {status === 'started' ? (
         <nav style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to={match.url} onClick={() => setstatus('paused')} className="f6 pa3 underline pointer red ba">
+          <Link to={match.url} onClick={() => setStatus('paused')} className="f6 pa3 underline pointer red ba">
             PAUSE COMPETITION
           </Link>
           <Link to={match.url} className="f6 pa3 underline pointer black-90">
@@ -27,7 +25,7 @@ const AdminNav = () => {
         </nav>
       ) : status === 'paused' ? (
         <nav style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to={match.url} onClick={() => setstatus('started')} className="f6 pa3 underline pointer red ba">
+          <Link to={match.url} onClick={() => setStatus('started')} className="f6 pa3 underline pointer red ba">
             START COMPETITION
           </Link>
           <Link to={match.url} className="f6 pa3 underline pointer black-90">
@@ -36,7 +34,7 @@ const AdminNav = () => {
         </nav>
       ) : (
         <nav style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to={match.url} onClick={() => setstatus('started')} className="f6 pa3 underline pointer red ba">
+          <Link to={match.url} onClick={() => setStatus('started')} className="f6 pa3 underline pointer red ba">
             START COMPETITION
           </Link>
           <Link to={match.url} className="f6 pa3 underline pointer black-90">

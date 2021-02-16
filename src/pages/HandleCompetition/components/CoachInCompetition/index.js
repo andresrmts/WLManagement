@@ -5,36 +5,46 @@ import Table from '../../../../components/Table';
 import { useCompetitionContext } from '../../CompetitionContext';
 import { useAuthContext } from '../../../../AuthContext';
 
-const CoachInCompetition = () => {
+const CoachInCompetition = ({ athletes }) => {
   const { registeredAthletes, lift, changeWeight, toggleTimer, time } = useCompetitionContext();
   const { userName } = useAuthContext();
-  const [myAthletes] = useState(registeredAthletes.filter(athlete => athlete.coachname === userName));
-  const [onTheClock, setOnTheClock] = useState(
-    registeredAthletes
-      .filter(athlete => athlete.attempt < 3)
-      .sort((a, b) => {
-        if (a[lift] === b[lift]) {
-          return a.attempt - b.attempt;
-        } else {
-          return a[lift] - b[lift];
-        }
-      }),
-  );
+  const myAthletes = athletes.filter(athlete => athlete.coachname === userName);
+  // const [onTheClock, setOnTheClock] = useState(
+  //   registeredAthletes
+  //     .filter(athlete => athlete.attempt < 3)
+  //     .sort((a, b) => {
+  //       if (a[lift] === b[lift]) {
+  //         return a.attempt - b.attempt;
+  //       } else {
+  //         return a[lift] - b[lift];
+  //       }
+  //     }),
+  // );
   const [currentChangeCounter, setCurrentChangeCounter] = useState(0);
 
-  useEffect(() => {
-    setOnTheClock(
-      registeredAthletes
-        .filter(athlete => athlete.attempt < 3)
-        .sort((a, b) => {
-          if (a[lift] === b[lift]) {
-            return a.attempt - b.attempt;
-          } else {
-            return a[lift] - b[lift];
-          }
-        }),
-    );
-  }, [registeredAthletes, lift]);
+  const onTheClock = athletes
+    .filter(athlete => athlete.attempt < 3)
+    .sort((a, b) => {
+      if (a[lift] === b[lift]) {
+        return a.attempt - b.attempt;
+      } else {
+        return a[lift] - b[lift];
+      }
+    });
+
+  // useEffect(() => {
+  //   setOnTheClock(
+  //     registeredAthletes
+  //       .filter(athlete => athlete.attempt < 3)
+  //       .sort((a, b) => {
+  //         if (a[lift] === b[lift]) {
+  //           return a.attempt - b.attempt;
+  //         } else {
+  //           return a[lift] - b[lift];
+  //         }
+  //       }),
+  //   );
+  // }, [registeredAthletes, lift]);
 
   useEffect(() => {
     setCurrentChangeCounter(0);

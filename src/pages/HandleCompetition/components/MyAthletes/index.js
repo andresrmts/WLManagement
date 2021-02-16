@@ -3,10 +3,10 @@ import { useAuthContext } from '../../../../AuthContext';
 import Table from '../../../../components/Table';
 import { useCompetitionContext } from '../../CompetitionContext';
 
-const MyAthletes = () => {
-  const { registeredAthletes, editAthleteWeight } = useCompetitionContext();
-  const { userName } = useAuthContext();
-  const onlyCoachAthletes = registeredAthletes.filter(athlete => athlete.coachname === userName);
+const MyAthletes = ({ athletes, onWeightUpdate }) => {
+  // const { registeredAthletes, editAthleteWeight } = useCompetitionContext();
+  const { userId } = useAuthContext();
+  const onlyCoachAthletes = athletes.filter(athlete => athlete.coachname === userId);
   const headers = [
     {
       header: 'Name',
@@ -42,7 +42,7 @@ const MyAthletes = () => {
     cnj: '',
     coachname: '',
   };
-  const outSideProps = { functions: { weight: editAthleteWeight } };
+  const outSideProps = { functions: { weight: onWeightUpdate } };
   return <Table props={props} headers={headers} tableContent={onlyCoachAthletes} outSideProps={outSideProps} />;
 };
 

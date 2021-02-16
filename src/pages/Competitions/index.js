@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import CompetitionList from '../../components/CompetitionList';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../AuthContext';

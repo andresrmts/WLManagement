@@ -10,13 +10,13 @@ const usePrevious = value => {
   return ref.current;
 };
 
-const Judge = () => {
+const Judge = ({ status }) => {
   const [voted, setVoted] = useState(false);
   const [athlete, setAthlete] = useState('');
   const [weight, setWeight] = useState('');
   const [attempt, setAttempt] = useState(0);
   const [timedOut, setTimedOut] = useState(false);
-  const { status, castVote, goToNextAttempt } = useCompetitionContext();
+  const { castVote, goToNextAttempt } = useCompetitionContext();
 
   const prevAthlete = usePrevious(athlete); // Stores the previous athlete name so timer rules could be followed
 

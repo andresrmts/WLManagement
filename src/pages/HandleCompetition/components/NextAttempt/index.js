@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Timer from '../Timer';
 import { useCompetitionContext } from '../../CompetitionContext';
+import { useCompsContext } from '../../../../CompetitionsContext';
+import { useParams } from 'react-router-dom';
 
 const NextAttempt = ({ setAthlete, setWeight, setAttempt, setTimedOut, prevAthlete }) => {
-  const { registeredAthletes, lift, changeTime, toggleTimer } = useCompetitionContext();
+  const { compId } = useParams();
+  const { getCompetition } = useCompsContext();
+  const competition = getCompetition(compId);
+  const { lift, changeTime } = useCompetitionContext();
   const [next, setNext] = useState(
-    registeredAthletes
+    competition.athletes
       .filter(athlete => athlete.attempt < 3)
       .sort((a, b) => {
         if (a[lift] === b[lift]) {
@@ -36,7 +41,7 @@ const NextAttempt = ({ setAthlete, setWeight, setAttempt, setTimedOut, prevAthle
 
   useEffect(() => {
     setNext(
-      registeredAthletes
+      competition.athletes
         .filter(athlete => athlete.attempt < 3)
         .sort((a, b) => {
           if (a[lift] === b[lift]) {
@@ -46,7 +51,7 @@ const NextAttempt = ({ setAthlete, setWeight, setAttempt, setTimedOut, prevAthle
           }
         }),
     );
-  }, [registeredAthletes]);
+  }, [competition.athletes]);
 
   if (next.length > 0) {
     return (

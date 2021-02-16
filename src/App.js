@@ -17,15 +17,6 @@ class App extends Component {
     this.setState({ searchBox: e.target.value });
   };
 
-  // notFound = () => {
-  //   return (
-  //     <div>
-  //       <p>404 - Not Found</p>
-  //       <Link to={routes.home.path}>Back to home</Link>
-  //     </div>
-  //   );
-  // };
-
   render() {
     return (
       <AuthProvider>

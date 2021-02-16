@@ -7,7 +7,6 @@ import RegisteredOfficials from './components/RegisteredOfficials';
 import AthleteRegistration from './components/AthleteRegistration';
 import Judge from './components/Judge';
 import Result from './components/Result';
-import ChangeTable from './components/ChangeTable';
 import RoleSelection from './components/RoleSelection';
 import CoachInCompetition from './components/CoachInCompetition';
 import CompetitionAdmin from './components/CompetitionAdmin';
@@ -18,128 +17,111 @@ import { useAuthContext } from '../../AuthContext';
 import { useCompsContext } from '../../CompetitionsContext';
 
 const HandleCompetition = () => {
-  // const {
-  //   status,
-  //   acceptedRegistrations,
-  //   registeredAthletes,
-  //   editAthleteWeight,
-  //   registrations,
-  // } = useCompetitionContext();
-  // const { userName, isAdmin, role, setRole } = useAuthContext();
-  // const filteredName = acceptedRegistrations.filter(reg => reg.name === userName);
-  const { getCompetition } = useCompsContext();
+  const { editAthleteWeight } = useCompetitionContext();
+  const [status, setStatus] = useState('notstarted');
+  const { userName, userId, role, setRole } = useAuthContext();
+  const { getCompetition, editWeight } = useCompsContext();
   const { compId } = useParams();
-  const [competition] = useState(getCompetition(compId));
+  const competition = getCompetition(compId);
   const match = useRouteMatch();
 
-  // useEffect(() => {
-  //   setCompetition(getCompetition(compId));
-  // });
+  const isAdmin = userId === competition.authorId;
+  const filteredUser = competition.officials.filter(reg => reg.id === userId);
 
-  // useEffect(() => console.log(competition.name))
+  useEffect(() => {
+    if (isAdmin) {
+      setRole('admin');
+      return;
+    }
+    if (filteredUser[0]) {
+      setRole(filteredUser[0].role);
+      return;
+    }
+  });
 
-  // useEffect(() => {
-  //   if (isAdmin) {
-  //     setRole('admin');
-  //     return;
-  //   }
-  //   if (filteredName[0]) {
-  //     setRole(filteredName[0].role);
-  //     return;
-  //   }
-  // });
+  const headers = [
+    {
+      header: 'Name',
+      styles: 'fw6 pa3 bg-white',
+    },
+    {
+      header: 'Age',
+      styles: 'fw6 pa3 bg-white',
+    },
+    {
+      header: 'Weight',
+      styles: 'fw6 pa3 bg-white',
+    },
+    {
+      header: 'Snatch',
+      styles: 'fw6 pa3 bg-white',
+    },
+    {
+      header: 'CNJ',
+      styles: 'fw6 pa3 bg-white',
+    },
+    {
+      header: 'Coachname',
+      styles: 'fw6 pa3 bg-white',
+    },
+  ];
 
-  // const headers = [
-  //   {
-  //     header: 'Name',
-  //     styles: 'fw6 pa3 bg-white',
-  //   },
-  //   {
-  //     header: 'Age',
-  //     styles: 'fw6 pa3 bg-white',
-  //   },
-  //   {
-  //     header: 'Weight',
-  //     styles: 'fw6 pa3 bg-white',
-  //   },
-  //   {
-  //     header: 'Snatch',
-  //     styles: 'fw6 pa3 bg-white',
-  //   },
-  //   {
-  //     header: 'CNJ',
-  //     styles: 'fw6 pa3 bg-white',
-  //   },
-  //   {
-  //     header: 'Coachname',
-  //     styles: 'fw6 pa3 bg-white',
-  //   },
-  // ];
+  const props = {
+    name: '',
+    age: '',
+    weight: '',
+    snatch: '',
+    cnj: '',
+    coachname: '',
+  };
 
-  // const props = {
-  //   name: '',
-  //   age: '',
-  //   weight: '',
-  //   snatch: '',
-  //   cnj: '',
-  //   coachname: '',
-  // };
+  const outSideProps = { functions: { weight: editWeight } };
 
-  // const outSideProps = { functions: { weight: editAthleteWeight } };
-
-  // const renderNav = role => {
-  //   switch (role) {
-  //     case 'admin':
-  //       return <AdminNav />;
-  //     case 'coach':
-  //       return <CoachNav />;
-  //     case 'judge':
-  //       if (status === 'started') {
-  //         return <Result />;
-  //       }
-  //       return (
-  //         <Link to="/competitionselection" onClick={() => setRole('')} className="f6 tc underline pointer center">
-  //           Exit
-  //         </Link>
-  //       );
-  //     default:
-  //       return (
-  //         <Link to="/competitionselection" className="f6 tc underline pointer center">
-  //           Exit
-  //         </Link>
-  //       );
-  //   }
-  // };
+  const renderNav = role => {
+    switch (role) {
+      case 'admin':
+        return <AdminNav status={status} setStatus={setStatus} />;
+      case 'coach':
+        return <CoachNav status={status} />;
+      case 'judge':
+        if (status === 'started') {
+          return <Result />;
+        }
+        return (
+          <Link to="/competitionselection" onClick={() => setRole('')} className="f6 tc underline pointer center">
+            Exit
+          </Link>
+        );
+      default:
+        return (
+          <Link to="/competitionselection" className="f6 tc underline pointer center">
+            Exit
+          </Link>
+        );
+    }
+  };
 
   return (
     <div>
-      {/* {renderNav(role)} */}
-      {/* {renderCompRoutes(comproute)} */}
+      {renderNav(role)}
       <Switch>
-        <Route path={match.path}>
-          <div>
-            <h1>{competition.id}</h1>
-            <h1>{competition.name}</h1>
-            <h1>{competition.athletes[0].name}</h1>
-          </div>
-        </Route>
-        {/* {isAdmin && status === 'notstarted' && (
+        {isAdmin && status === 'notstarted' && (
           <div>
             <Route exact path={match.path}>
-              <Registrations />
+              <Registrations registrations={competition.registrations} />
             </Route>
             <Route path={`${match.path}/registeredofficials`}>
-              <RegisteredOfficials />
+              <RegisteredOfficials officials={competition.officials} />
             </Route>
             <Route path={`${match.path}/athletelist`}>
-              <Table props={props} headers={headers} tableContent={registeredAthletes} outSideProps={outSideProps} />
+              <Table props={props} headers={headers} tableContent={competition.athletes} outSideProps={outSideProps} />
             </Route>
           </div>
         )}
         {role === 'coach' && status === 'notstarted' && (
           <div>
             <Route exact path={match.path}>
-              <MyAthletes />
+              <MyAthletes athletes={competition.athletes} onWeightUpdate={editWeight} />
             </Route>
             <Route path={`${match.path}/athleteregistration`}>
               <AthleteRegistration />
@@ -148,20 +130,20 @@ const HandleCompetition = () => {
         )}
         {role === 'judge' && (
           <Route path={match.path}>
-            <Judge />
+            <Judge status={status} />
           </Route>
         )}
         {isAdmin && (
           <Route path={match.path}>
-            <CompetitionAdmin />
+            <CompetitionAdmin athletes={competition.athletes} />
           </Route>
         )}
         {role === 'coach' && (
           <Route path={match.path}>
-            <CoachInCompetition />
+            <CoachInCompetition athletes={competition.athletes} />
           </Route>
         )}
-        {registrations.find(reg => reg.name === userName) !== undefined && (
+        {competition.registrations.find(reg => reg.name === userName) !== undefined && (
           <Route path={match.path}>
             <h1>Your application hasn't been accepted yet!</h1>
           </Route>
@@ -170,7 +152,7 @@ const HandleCompetition = () => {
           <Route path={match.path}>
             <RoleSelection />
           </Route>
-        )} */}
+        )}
       </Switch>
     </div>
   );

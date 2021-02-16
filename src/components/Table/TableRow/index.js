@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useParams } from 'react-router-dom';
 
 const TableRow = ({ rowProps, outSideProps }) => {
   const [athleteName, setAthleteName] = useState('');
+
+  const { compId } = useParams();
 
   useEffect(() => {
     setAthleteName(rowProps.name);
@@ -9,7 +12,7 @@ const TableRow = ({ rowProps, outSideProps }) => {
 
   const callFunction = prop => {
     if (outSideProps.functions && outSideProps.functions[prop] && typeof outSideProps.functions[prop] === 'function') {
-      outSideProps.functions[prop](athleteName);
+      outSideProps.functions[prop](compId, athleteName);
     }
   };
 

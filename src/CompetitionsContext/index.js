@@ -3,7 +3,7 @@ import React, { useState, useContext, createContext } from 'react';
 const CompsContext = createContext();
 
 const CompsProvider = ({ children }) => {
-  const [competitions] = useState([
+  const [competitions, setCompetitions] = useState([
     {
       id: '0',
       authorId: 12,
@@ -39,7 +39,12 @@ const CompsProvider = ({ children }) => {
           age: 22,
           snatch: 30,
           cnj: 40,
-          coachname: 'Coach1',
+          coachid: 73,
+          coachname: 'Külli',
+          result: {
+            snatch: [],
+            cnj: [],
+          },
         },
         {
           name: 'Athlete2',
@@ -48,7 +53,12 @@ const CompsProvider = ({ children }) => {
           age: 22,
           snatch: 30,
           cnj: 40,
+          coachid: 222,
           coachname: 'Coach1',
+          result: {
+            snatch: [],
+            cnj: [],
+          },
         },
         {
           name: 'Athlete3',
@@ -57,7 +67,12 @@ const CompsProvider = ({ children }) => {
           age: 22,
           snatch: 30,
           cnj: 40,
-          coachname: 'Coach1',
+          coachid: 73,
+          coachname: 'Külli',
+          result: {
+            snatch: [],
+            cnj: [],
+          },
         },
       ],
     },
@@ -96,7 +111,12 @@ const CompsProvider = ({ children }) => {
           age: 22,
           snatch: 30,
           cnj: 40,
+          coachid: 27,
           coachname: 'Coach2',
+          result: {
+            snatch: [],
+            cnj: [],
+          },
         },
         {
           name: 'Athletex2',
@@ -105,7 +125,12 @@ const CompsProvider = ({ children }) => {
           age: 22,
           snatch: 30,
           cnj: 40,
+          coachid: 21,
           coachname: 'Coach2',
+          result: {
+            snatch: [],
+            cnj: [],
+          },
         },
         {
           name: 'Athletex3',
@@ -114,7 +139,12 @@ const CompsProvider = ({ children }) => {
           age: 22,
           snatch: 30,
           cnj: 40,
+          coachid: 29,
           coachname: 'Coach2',
+          result: {
+            snatch: [],
+            cnj: [],
+          },
         },
       ],
     },
@@ -153,7 +183,12 @@ const CompsProvider = ({ children }) => {
           age: 22,
           snatch: 30,
           cnj: 40,
+          coachid: 90,
           coachname: 'Coach3',
+          result: {
+            snatch: [],
+            cnj: [],
+          },
         },
         {
           name: 'Athletez2',
@@ -162,7 +197,12 @@ const CompsProvider = ({ children }) => {
           age: 22,
           snatch: 30,
           cnj: 40,
+          coachid: 26,
           coachname: 'Coach3',
+          result: {
+            snatch: [],
+            cnj: [],
+          },
         },
         {
           name: 'Athletez3',
@@ -171,7 +211,12 @@ const CompsProvider = ({ children }) => {
           age: 22,
           snatch: 30,
           cnj: 40,
+          coachid: 23,
           coachname: 'Coach3',
+          result: {
+            snatch: [],
+            cnj: [],
+          },
         },
       ],
     },
@@ -196,7 +241,32 @@ const CompsProvider = ({ children }) => {
     return comps;
   };
 
-  const contextValue = { getCompetition, getMyCompetitions, getActiveCompetitions };
+  const createCompetition = (id, authorId, compName, location, date) => {
+    competitions.push({
+      id,
+      authorId,
+      compName,
+      location,
+      date,
+      officials: [],
+      registrations: [],
+      athletes: [],
+    });
+  };
+
+  const editWeight = (id, athleteName) => {
+    const weight = prompt('Enter athlete weight');
+    setCompetitions(pS =>
+      pS.map(
+        comp =>
+          (comp.id = id
+            ? { ...comp, athletes: comp.athletes.map(ath => (athleteName === ath.name ? { ...ath, weight } : ath)) }
+            : comp),
+      ),
+    );
+  };
+
+  const contextValue = { getCompetition, getMyCompetitions, getActiveCompetitions, createCompetition, editWeight };
 
   return <CompsContext.Provider value={contextValue}>{children}</CompsContext.Provider>;
 };

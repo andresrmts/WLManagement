@@ -22,7 +22,7 @@ const Competition = ({
   const [weight, setWeight] = useState(lift === 'snatch' ? snatch : cnj);
   const { userId } = useAuthContext();
 
-  if (userId === authorId || officials.find(official => official.id === userId)) {
+  if (officials && (userId === authorId || officials.find(official => official.id === userId))) {
     return (
       <article className="mw5 tc dib bg-white br3 pa3 ma3 ba b--black-10">
         <div className="tc">

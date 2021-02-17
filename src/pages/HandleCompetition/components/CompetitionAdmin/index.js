@@ -3,8 +3,8 @@ import NextAttempt from '../NextAttempt';
 import Table from '../../../../components/Table';
 import { useCompetitionContext } from '../../CompetitionContext';
 
-const CompetitionAdmin = ({ athletes }) => {
-  const { lift, toggleTimer, nextLift, timer } = useCompetitionContext();
+const CompetitionAdmin = ({ athletes, toggleTimer, timer, lift, time, changeTime, nextLift }) => {
+  // const { nextLift } = useCompetitionContext();
   // const [onTheClock, setOnTheClock] = useState(
   //   athletes
   //     .filter(athlete => athlete.attempt < 3)
@@ -73,7 +73,7 @@ const CompetitionAdmin = ({ athletes }) => {
       </div>
       <div className="fl w-100 w-60-ns pa2 tc">
         Next Attempt
-        <NextAttempt />
+        <NextAttempt timer={timer} changeTime={changeTime} time={time} lift={lift} />
       </div>
       <div className="fl w-100 w-40-ns pa2">
         <div className="tc outline bg-white pv4">

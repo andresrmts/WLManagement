@@ -5,8 +5,8 @@ import Table from '../../../../components/Table';
 import { useCompetitionContext } from '../../CompetitionContext';
 import { useAuthContext } from '../../../../AuthContext';
 
-const CoachInCompetition = ({ athletes }) => {
-  const { registeredAthletes, lift, changeWeight, toggleTimer, time } = useCompetitionContext();
+const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, timer }) => {
+  const { changeWeight } = useCompetitionContext();
   const { userName } = useAuthContext();
   const myAthletes = athletes.filter(athlete => athlete.coachname === userName);
   // const [onTheClock, setOnTheClock] = useState(
@@ -70,7 +70,7 @@ const CoachInCompetition = ({ athletes }) => {
   return (
     <div className="cf ph2-ns">
       <div className="fl w-100 w-60-ns pa2">
-        <NextAttempt />
+        <NextAttempt lift={lift} timer={timer} time={time} changeTime={changeTime} />
       </div>
       <div className="fl w-100 w-40-ns pa2 mv4">
         <div className="tc outline bg-white pv4">

@@ -10,7 +10,7 @@ const usePrevious = value => {
   return ref.current;
 };
 
-const Judge = ({ status }) => {
+const Judge = ({ status, time, changeTime, timer, lift }) => {
   const [voted, setVoted] = useState(false);
   const [athlete, setAthlete] = useState('');
   const [weight, setWeight] = useState('');
@@ -45,12 +45,16 @@ const Judge = ({ status }) => {
       <div className="w-100">
         <div className="flex center pa2">
           <NextAttempt
+            time={time}
+            changeTime={changeTime}
             athlete={athlete}
             prevAthlete={prevAthlete}
             setTimedOut={setTimedOut}
             setAttempt={setAttempt}
             setWeight={setWeight}
             setAthlete={setAthlete}
+            timer={timer}
+            lift={lift}
           />
         </div>
         <div className="flex center pa2">

@@ -1,14 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import Timer from '../Timer';
-import { useCompetitionContext } from '../../CompetitionContext';
+// import { useCompetitionContext } from '../../CompetitionContext';
 import { useCompsContext } from '../../../../CompetitionsContext';
 import { useParams } from 'react-router-dom';
 
-const NextAttempt = ({ setAthlete, setWeight, setAttempt, setTimedOut, prevAthlete }) => {
+const NextAttempt = ({
+  setAthlete,
+  setWeight,
+  setAttempt,
+  setTimedOut,
+  prevAthlete,
+  changeTime,
+  time,
+  timer,
+  lift,
+}) => {
   const { compId } = useParams();
   const { getCompetition } = useCompsContext();
   const competition = getCompetition(compId);
-  const { lift, changeTime } = useCompetitionContext();
+  // const { lift } = useCompetitionContext();
   const [next, setNext] = useState(
     competition.athletes
       .filter(athlete => athlete.attempt < 3)
@@ -59,7 +69,7 @@ const NextAttempt = ({ setAthlete, setWeight, setAttempt, setTimedOut, prevAthle
         <div className="pa2 ph3-ns pb3-ns">
           <div className="mt1">
             <div className="flex flex-column justify-around">
-              <Timer setTimedOut={setTimedOut} />
+              <Timer timer={timer} time={time} changeTime={changeTime} setTimedOut={setTimedOut} />
               <h1 className="f2 pa2">{next[0].name}</h1>
               <h1 className="f2 pa2">Attempt: {next[0].attempt + 1}</h1>
             </div>

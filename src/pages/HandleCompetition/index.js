@@ -17,15 +17,33 @@ import { useAuthContext } from '../../AuthContext';
 import { useCompsContext } from '../../CompetitionsContext';
 
 const HandleCompetition = () => {
-  const [status, setStatus] = useState('notstarted');
+  const [status, setStatus] = useState('started');
+  const [time, setTime] = useState({ minutes: 1, seconds: 0 + '0' });
+  const [timer, setTimer] = useState(true);
+  const [lift, setLift] = useState('snatch');
   const { userName, userId, role, setRole } = useAuthContext();
-  const { getCompetition, editWeight, addAthlete } = useCompsContext();
+  const { getCompetition, editWeight, addAthlete, setNilAttempt } = useCompsContext();
   const { compId } = useParams();
   const competition = getCompetition(compId);
   const match = useRouteMatch();
 
   const isAdmin = userId === competition.authorId;
   const filteredUser = competition.officials.filter(reg => reg.id === userId);
+
+  const changeTime = (minutes, seconds) => {
+    setTime({ minutes, seconds });
+  };
+
+  const toggleTimer = () => {
+    setTimer(pS => !pS);
+  };
+
+  const nextLift = () => {
+    setLift('cnj');
+    setNilAttempt(compId);
+    setTime({ minutes: 1, seconds: 0 + '0' });
+    setTimer(false);
+  };
 
   useEffect(() => {
     if (isAdmin) {
@@ -129,17 +147,32 @@ const HandleCompetition = () => {
         )}
         {role === 'judge' && (
           <Route path={match.path}>
-            <Judge status={status} />
+            <Judge timer={timer} time={time} changeTime={changeTime} status={status} lift={lift} />
           </Route>
         )}
         {isAdmin && (
           <Route path={match.path}>
-            <CompetitionAdmin athletes={competition.athletes} />
+            <CompetitionAdmin
+              nextLift={nextLift}
+              lift={lift}
+              toggleTimer={toggleTimer}
+              time={time}
+              timer={timer}
+              changeTime={changeTime}
+              athletes={competition.athletes}
+            />
           </Route>
         )}
         {role === 'coach' && (
           <Route path={match.path}>
-            <CoachInCompetition athletes={competition.athletes} />
+            <CoachInCompetition
+              timer={timer}
+              changeTime={changeTime}
+              lift={lift}
+              toggleTimer={toggleTimer}
+              time={time}
+              athletes={competition.athletes}
+            />
           </Route>
         )}
         {competition.registrations.find(reg => reg.name === userName) !== undefined && (

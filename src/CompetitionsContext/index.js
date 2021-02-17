@@ -6,7 +6,7 @@ const CompsProvider = ({ children }) => {
   const [competitions, setCompetitions] = useState([
     {
       id: '0',
-      authorId: 12,
+      authorId: 73,
       name: 'Comp1',
       location: 'Eesti',
       officials: [
@@ -16,7 +16,7 @@ const CompsProvider = ({ children }) => {
           role: 'judge',
         },
         {
-          id: 73,
+          id: 72,
           name: 'Coach1',
           role: 'coach',
         },
@@ -266,6 +266,21 @@ const CompsProvider = ({ children }) => {
     );
   };
 
+  const setNilAttempt = id => {
+    const comp = competitions.map(competition =>
+      competition.id === id
+        ? { ...competition, athletes: competition.athletes.map(ath => Object.assign(ath, { attempt: 0 })) }
+        : competition,
+    );
+    console.log(comp);
+    // setCompetitions(pS => {
+    //   pS.map(comp =>
+    //     comp.id === id
+    //       ? { ...comp, athletes: comp.athletes.map(ath => Object.assign(ath, { attempt: 0 })) } : comp,
+    //   );
+    // });
+  };
+
   const addAthlete = (compId, name, age, snatch, cnj, coachname, coachid) => {
     const index = competitions.findIndex(comp => comp.id === compId);
     if (age < 1 || age > 99 || snatch < 10 || snatch > 230 || cnj < 10 || cnj > 300) {
@@ -296,6 +311,7 @@ const CompsProvider = ({ children }) => {
     createCompetition,
     editWeight,
     addAthlete,
+    setNilAttempt,
   };
 
   return <CompsContext.Provider value={contextValue}>{children}</CompsContext.Provider>;

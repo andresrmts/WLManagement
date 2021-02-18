@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAuthContext } from '../../../AuthContext';
 
 const Competition = ({
@@ -20,6 +20,7 @@ const Competition = ({
   officials,
 }) => {
   const [weight, setWeight] = useState(lift === 'snatch' ? snatch : cnj);
+  const { compId } = useParams();
   const { userId } = useAuthContext();
 
   if (officials && (userId === authorId || officials.find(official => official.id === userId))) {
@@ -65,7 +66,7 @@ const Competition = ({
             onClick={() => {
               if (onTheClock.name === name) {
                 if (currentChangeCounter < 2 && time.seconds > 30) {
-                  changeWeight({ name }, weight);
+                  changeWeight(compId, { name }, weight, lift);
                   toggleTimer();
                   setCurrentChangeCounter(prev => prev + 1);
                   return;
@@ -74,7 +75,7 @@ const Competition = ({
                 setWeight(lift === 'snatch' ? snatch : cnj);
                 return;
               }
-              changeWeight({ name }, weight);
+              changeWeight(compId, { name }, weight, lift);
             }}
           >
             Approve

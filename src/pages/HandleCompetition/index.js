@@ -103,7 +103,7 @@ const HandleCompetition = () => {
       case 'admin':
         return <AdminNav status={status} setStatus={setStatus} />;
       case 'coach':
-        return <CoachNav status={status} />;
+        return <CoachNav />;
       case 'judge':
         if (status === 'started') {
           return <Result />;

@@ -302,17 +302,6 @@ const CompsProvider = ({ children }) => {
     const correctAthlete = competition.athletes.find(ath => ath.name === athlete);
     if (verdict.result > 0 && verdict.votes === 3 && correctAthlete.attempt < 3) {
       correctAthlete.result[lift].push(weight);
-      // const comp = competitions.map(competition =>
-      //   compId === competition.id
-      //     ? {
-      //         ...competition,
-      //         athletes: competition.athletes.map(ath =>
-      //           ath.name === athlete ? Object.assign(ath, { [lift]: weight + 1, attempt: attempt + 1 }) : ath,
-      //         ),
-      //       }
-      //     : competition,
-      // );
-      // console.log(comp);
       setCompetitions(pS =>
         pS.map(comp =>
           compId === comp.id
@@ -342,6 +331,21 @@ const CompsProvider = ({ children }) => {
     }
   };
 
+  const changeWeight = (compId, athlete, weight, lift) => {
+    setCompetitions(pS =>
+      pS.map(comp =>
+        compId === comp.id
+          ? {
+              ...comp,
+              athletes: comp.athletes.map(ath =>
+                ath.name === athlete.name ? Object.assign(ath, { [lift]: weight }) : ath,
+              ),
+            }
+          : comp,
+      ),
+    );
+  };
+
   const contextValue = {
     getCompetition,
     getMyCompetitions,
@@ -351,6 +355,7 @@ const CompsProvider = ({ children }) => {
     addAthlete,
     setNilAttempt,
     setLiftResult,
+    changeWeight,
   };
 
   return <CompsContext.Provider value={contextValue}>{children}</CompsContext.Provider>;

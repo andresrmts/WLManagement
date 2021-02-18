@@ -2,24 +2,14 @@ import React, { useState, useEffect } from 'react';
 import CompetitionList from '../../../../components/CompetitionList';
 import NextAttempt from '../NextAttempt';
 import Table from '../../../../components/Table';
-import { useCompetitionContext } from '../../CompetitionContext';
+// import { useCompetitionContext } from '../../CompetitionContext';
 import { useAuthContext } from '../../../../AuthContext';
+import { useCompsContext } from '../../../../CompetitionsContext';
 
 const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, timer }) => {
-  const { changeWeight } = useCompetitionContext();
+  const { changeWeight } = useCompsContext();
   const { userName } = useAuthContext();
   const myAthletes = athletes.filter(athlete => athlete.coachname === userName);
-  // const [onTheClock, setOnTheClock] = useState(
-  //   registeredAthletes
-  //     .filter(athlete => athlete.attempt < 3)
-  //     .sort((a, b) => {
-  //       if (a[lift] === b[lift]) {
-  //         return a.attempt - b.attempt;
-  //       } else {
-  //         return a[lift] - b[lift];
-  //       }
-  //     }),
-  // );
   const [currentChangeCounter, setCurrentChangeCounter] = useState(0);
 
   const onTheClock = athletes
@@ -31,20 +21,6 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, tim
         return a[lift] - b[lift];
       }
     });
-
-  // useEffect(() => {
-  //   setOnTheClock(
-  //     registeredAthletes
-  //       .filter(athlete => athlete.attempt < 3)
-  //       .sort((a, b) => {
-  //         if (a[lift] === b[lift]) {
-  //           return a.attempt - b.attempt;
-  //         } else {
-  //           return a[lift] - b[lift];
-  //         }
-  //       }),
-  //   );
-  // }, [registeredAthletes, lift]);
 
   useEffect(() => {
     setCurrentChangeCounter(0);

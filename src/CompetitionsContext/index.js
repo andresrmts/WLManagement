@@ -267,18 +267,11 @@ const CompsProvider = ({ children }) => {
   };
 
   const setNilAttempt = id => {
-    const comp = competitions.map(competition =>
-      competition.id === id
-        ? { ...competition, athletes: competition.athletes.map(ath => Object.assign(ath, { attempt: 0 })) }
-        : competition,
+    setCompetitions(pS =>
+      pS.map(comp =>
+        comp.id === id ? { ...comp, athletes: comp.athletes.map(ath => Object.assign(ath, { attempt: 0 })) } : comp,
+      ),
     );
-    console.log(comp);
-    // setCompetitions(pS => {
-    //   pS.map(comp =>
-    //     comp.id === id
-    //       ? { ...comp, athletes: comp.athletes.map(ath => Object.assign(ath, { attempt: 0 })) } : comp,
-    //   );
-    // });
   };
 
   const addAthlete = (compId, name, age, snatch, cnj, coachname, coachid) => {
@@ -304,6 +297,51 @@ const CompsProvider = ({ children }) => {
     document.getElementById('cnj').value = '';
   };
 
+  const setLiftResult = (compId, verdict, athlete, weight, attempt, lift) => {
+    const competition = competitions.find(comp => compId === comp.id);
+    const correctAthlete = competition.athletes.find(ath => ath.name === athlete);
+    if (verdict.result > 0 && verdict.votes === 3 && correctAthlete.attempt < 3) {
+      correctAthlete.result[lift].push(weight);
+      // const comp = competitions.map(competition =>
+      //   compId === competition.id
+      //     ? {
+      //         ...competition,
+      //         athletes: competition.athletes.map(ath =>
+      //           ath.name === athlete ? Object.assign(ath, { [lift]: weight + 1, attempt: attempt + 1 }) : ath,
+      //         ),
+      //       }
+      //     : competition,
+      // );
+      // console.log(comp);
+      setCompetitions(pS =>
+        pS.map(comp =>
+          compId === comp.id
+            ? {
+                ...comp,
+                athletes: comp.athletes.map(ath =>
+                  ath.name === athlete ? Object.assign(ath, { [lift]: weight + 1, attempt: attempt + 1 }) : ath,
+                ),
+              }
+            : comp,
+        ),
+      );
+    } else if (verdict.result < 0 && verdict.votes === 3 && correctAthlete.attempt < 3) {
+      correctAthlete.result[lift].push(weight + 'x');
+      setCompetitions(pS =>
+        pS.map(comp =>
+          compId === comp.id
+            ? {
+                ...comp,
+                athletes: comp.athletes.map(ath =>
+                  ath.name === athlete ? Object.assign(ath, { attempt: attempt + 1 }) : ath,
+                ),
+              }
+            : comp,
+        ),
+      );
+    }
+  };
+
   const contextValue = {
     getCompetition,
     getMyCompetitions,
@@ -312,6 +350,7 @@ const CompsProvider = ({ children }) => {
     editWeight,
     addAthlete,
     setNilAttempt,
+    setLiftResult,
   };
 
   return <CompsContext.Provider value={contextValue}>{children}</CompsContext.Provider>;

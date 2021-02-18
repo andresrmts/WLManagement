@@ -21,8 +21,12 @@ const HandleCompetition = () => {
   const [time, setTime] = useState({ minutes: 1, seconds: 0 + '0' });
   const [timer, setTimer] = useState(true);
   const [lift, setLift] = useState('snatch');
+  const [verdict, setVerdict] = useState({
+    result: 0,
+    votes: 0,
+  });
   const { userName, userId, role, setRole } = useAuthContext();
-  const { getCompetition, editWeight, addAthlete, setNilAttempt } = useCompsContext();
+  const { getCompetition, editWeight, addAthlete, setNilAttempt, setLiftResult } = useCompsContext();
   const { compId } = useParams();
   const competition = getCompetition(compId);
   const match = useRouteMatch();
@@ -118,6 +122,19 @@ const HandleCompetition = () => {
     }
   };
 
+  const castVote = decision => {
+    if (decision === 'yes') {
+      setVerdict({ result: 1, votes: 3 });
+      return;
+    }
+    setVerdict({ result: -1, votes: 3 });
+  };
+
+  const goToNextAttempt = (athlete, weight, attempt) => {
+    setLiftResult(compId, verdict, athlete, weight, attempt, lift);
+    setVerdict({ result: 0, votes: 0 });
+  };
+
   return (
     <div>
       {renderNav(role)}
@@ -147,7 +164,15 @@ const HandleCompetition = () => {
         )}
         {role === 'judge' && (
           <Route path={match.path}>
-            <Judge timer={timer} time={time} changeTime={changeTime} status={status} lift={lift} />
+            <Judge
+              goToNextAttempt={goToNextAttempt}
+              castVote={castVote}
+              timer={timer}
+              time={time}
+              changeTime={changeTime}
+              status={status}
+              lift={lift}
+            />
           </Route>
         )}
         {isAdmin && (

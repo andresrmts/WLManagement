@@ -3,17 +3,7 @@ import Timer from '../Timer';
 import { useCompsContext } from '../../../../CompetitionsContext';
 import { useParams } from 'react-router-dom';
 
-const NextAttempt = ({
-  setAthlete,
-  setWeight,
-  setAttempt,
-  setTimedOut,
-  prevAthlete,
-  changeTime,
-  time,
-  timer,
-  lift,
-}) => {
+const NextAttempt = ({ setTimedOut, changeTime, time, timer, lift }) => {
   const { compId } = useParams();
   const { getCompetition } = useCompsContext();
   const competition = getCompetition(compId);
@@ -28,24 +18,6 @@ const NextAttempt = ({
         }
       }),
   );
-
-  useEffect(() => {
-    if (setAthlete) {
-      setAthlete(next.length > 0 ? next[0].name : '');
-      setWeight(next.length > 0 ? next[0][lift] : '');
-      setAttempt(next.length > 0 ? next[0].attempt : '');
-    }
-  });
-
-  useEffect(() => {
-    if (next.length > 0) {
-      if (prevAthlete === next[0].name) {
-        changeTime(2, 0 + '0');
-        return;
-      }
-      changeTime(1, 0 + '0');
-    }
-  }, [next[0]]);
 
   useEffect(() => {
     setNext(

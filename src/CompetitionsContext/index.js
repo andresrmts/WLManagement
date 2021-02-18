@@ -39,7 +39,7 @@ const CompsProvider = ({ children }) => {
           attempt: 0,
           weight: '-',
           age: 22,
-          snatch: 30,
+          snatch: 22,
           cnj: 40,
           coachid: 73,
           coachname: 'Külli',

@@ -16,7 +16,7 @@ import { useAuthContext } from '../../AuthContext';
 import { useCompsContext } from '../../CompetitionsContext';
 
 const HandleCompetition = () => {
-  const [status, setStatus] = useState('notstarted');
+  const [status, setStatus] = useState('started');
   const [time, setTime] = useState({ minutes: 1, seconds: 0 + '0' });
   const [timer, setTimer] = useState(true);
   const [lift, setLift] = useState('snatch');
@@ -164,6 +164,7 @@ const HandleCompetition = () => {
         {role === 'judge' && (
           <Route path={match.path}>
             <Judge
+              athletes={competition.athletes}
               goToNextAttempt={goToNextAttempt}
               castVote={castVote}
               timer={timer}

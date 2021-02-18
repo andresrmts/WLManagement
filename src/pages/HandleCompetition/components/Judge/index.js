@@ -9,11 +9,20 @@ const usePrevious = value => {
   return ref.current;
 };
 
-const Judge = ({ status, time, changeTime, timer, lift, castVote, goToNextAttempt }) => {
+const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goToNextAttempt }) => {
+  const next = athletes
+    .filter(athlete => athlete.attempt < 3)
+    .sort((a, b) => {
+      if (a[lift] === b[lift]) {
+        return a.attempt - b.attempt;
+      } else {
+        return a[lift] - b[lift];
+      }
+    });
   const [voted, setVoted] = useState(false);
   const [athlete, setAthlete] = useState('');
   const [weight, setWeight] = useState('');
-  const [attempt, setAttempt] = useState(0);
+  const [attempt, setAttempt] = useState('');
   const [timedOut, setTimedOut] = useState(false);
 
   const prevAthlete = usePrevious(athlete); // Stores the previous athlete name so timer rules could be followed
@@ -36,26 +45,33 @@ const Judge = ({ status, time, changeTime, timer, lift, castVote, goToNextAttemp
     }
   }, [voted]);
 
+  useEffect(() => {
+    setAthlete(next.length > 0 ? next[0].name : '');
+    setWeight(next.length > 0 ? next[0][lift] : '');
+    setAttempt(next.length > 0 ? next[0].attempt : '');
+  }, [next[0].attempt, next[0].name]);
+
+  useEffect(() => {
+    if (next.length > 0) {
+      if (prevAthlete === athlete) {
+        changeTime(2, 0 + '0');
+        return;
+      }
+      changeTime(1, 0 + '0');
+    }
+  }, [attempt, athlete]);
+
   if (status === 'notstarted') {
     return <h1>The competition hasnt started yet. It will start in TIMER</h1>;
   } else if (status === 'started' && voted === false && attempt !== '') {
     return (
       <div className="w-100">
         <div className="flex center pa2">
-          <NextAttempt
-            time={time}
-            changeTime={changeTime}
-            athlete={athlete}
-            prevAthlete={prevAthlete}
-            setTimedOut={setTimedOut}
-            setAttempt={setAttempt}
-            setWeight={setWeight}
-            setAthlete={setAthlete}
-            timer={timer}
-            lift={lift}
-          />
+          <NextAttempt time={time} changeTime={changeTime} setTimedOut={setTimedOut} timer={timer} lift={lift} />
         </div>
         <div className="flex center pa2">
+          {prevAthlete}
+          {athlete}
           <p
             id="yes"
             onClick={() => {

@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react';
-import { useCompetitionContext } from '../../CompetitionContext';
 
 const Timer = ({ setTimedOut, time, changeTime, timer }) => {
-  // const { timer } = useCompetitionContext();
-
   const updateTime = () => {
     if (time.minutes === 0 && time.seconds === 0) {
       if (setTimedOut) {

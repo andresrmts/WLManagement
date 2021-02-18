@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Timer from '../Timer';
-// import { useCompetitionContext } from '../../CompetitionContext';
 import { useCompsContext } from '../../../../CompetitionsContext';
 import { useParams } from 'react-router-dom';
 
@@ -18,7 +17,6 @@ const NextAttempt = ({
   const { compId } = useParams();
   const { getCompetition } = useCompsContext();
   const competition = getCompetition(compId);
-  // const { lift } = useCompetitionContext();
   const [next, setNext] = useState(
     competition.athletes
       .filter(athlete => athlete.attempt < 3)

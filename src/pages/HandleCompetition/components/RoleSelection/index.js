@@ -1,14 +1,15 @@
 import React from 'react';
-import { useRouteMatch, Link } from 'react-router-dom';
+import { useRouteMatch, Link, useParams } from 'react-router-dom';
 import { useAuthContext } from '../../../../AuthContext';
-import { useCompetitionContext } from '../../CompetitionContext';
+import { useCompsContext } from '../../../../CompetitionsContext';
 
 const RoleSelection = () => {
+  const { compId } = useParams();
   const match = useRouteMatch();
-  const { userName } = useAuthContext();
-  const { joinComp } = useCompetitionContext();
+  const { userName, userId } = useAuthContext();
+  const { joinComp } = useCompsContext();
   const joinCompetition = role => {
-    joinComp(userName, role);
+    joinComp(compId, userId, userName, role);
   };
 
   return (
@@ -26,13 +27,6 @@ const RoleSelection = () => {
         className="f2 link dim br-pill ba ph3 pv2 ma2 dib mid-gray pointer"
       >
         Judge
-      </Link>
-      <Link
-        to={match.url}
-        onClick={() => joinCompetition('changetable')}
-        className="f2 link dim br-pill ba ph3 pv2 ma2 dib mid-gray pointer"
-      >
-        Change Table
       </Link>
     </div>
   );

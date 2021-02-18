@@ -1,7 +1,6 @@
 import React from 'react';
 import { useAuthContext } from '../../../../AuthContext';
 import Table from '../../../../components/Table';
-import { useCompetitionContext } from '../../CompetitionContext';
 
 const MyAthletes = ({ athletes, onWeightUpdate }) => {
   const { userId } = useAuthContext();

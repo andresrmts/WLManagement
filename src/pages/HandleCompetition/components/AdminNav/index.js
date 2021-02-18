@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
-import { useCompetitionContext } from '../../CompetitionContext';
 import { useAuthContext } from '../../../../AuthContext';
 
 const AdminNav = ({ status, setStatus }) => {

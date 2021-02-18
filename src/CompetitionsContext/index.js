@@ -23,10 +23,12 @@ const CompsProvider = ({ children }) => {
       ],
       registrations: [
         {
+          id: 110,
           name: 'Judge2',
           role: 'judge',
         },
         {
+          id: 232,
           name: 'Coach2',
           role: 'coach',
         },
@@ -346,6 +348,11 @@ const CompsProvider = ({ children }) => {
     );
   };
 
+  const joinComp = (compId, userId, name, role) => {
+    const correctCompetition = competitions.find(comp => comp.id === compId);
+    correctCompetition.registrations.push({ id: userId, name, role });
+  };
+
   const contextValue = {
     getCompetition,
     getMyCompetitions,
@@ -356,6 +363,7 @@ const CompsProvider = ({ children }) => {
     setNilAttempt,
     setLiftResult,
     changeWeight,
+    joinComp,
   };
 
   return <CompsContext.Provider value={contextValue}>{children}</CompsContext.Provider>;

@@ -1,21 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import NextAttempt from '../NextAttempt';
 import Table from '../../../../components/Table';
-import { useCompetitionContext } from '../../CompetitionContext';
 
 const CompetitionAdmin = ({ athletes, toggleTimer, timer, lift, time, changeTime, nextLift }) => {
-  // const { nextLift } = useCompetitionContext();
-  // const [onTheClock, setOnTheClock] = useState(
-  //   athletes
-  //     .filter(athlete => athlete.attempt < 3)
-  //     .sort((a, b) => {
-  //       if (a[lift] === b[lift]) {
-  //         return a.attempt - b.attempt;
-  //       } else {
-  //         return a[lift] - b[lift];
-  //       }
-  //     }),
-  // );
   const onTheClock = athletes
     .filter(athlete => athlete.attempt < 3)
     .sort((a, b) => {
@@ -25,20 +12,6 @@ const CompetitionAdmin = ({ athletes, toggleTimer, timer, lift, time, changeTime
         return a[lift] - b[lift];
       }
     });
-
-  // useEffect(() => {
-  //   setOnTheClock(
-  //     registeredAthletes
-  //       .filter(athlete => athlete.attempt < 3)
-  //       .sort((a, b) => {
-  //         if (a[lift] === b[lift]) {
-  //           return a.attempt - b.attempt;
-  //         } else {
-  //           return a[lift] - b[lift];
-  //         }
-  //       }),
-  //   );
-  // }, [registeredAthletes, lift]);
 
   const headers = [
     {

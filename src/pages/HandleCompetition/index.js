@@ -11,13 +11,12 @@ import RoleSelection from './components/RoleSelection';
 import CoachInCompetition from './components/CoachInCompetition';
 import CompetitionAdmin from './components/CompetitionAdmin';
 import Table from '../../components/Table';
-import { useCompetitionContext } from './CompetitionContext';
 import { Link, Switch, Route, useRouteMatch, useParams } from 'react-router-dom';
 import { useAuthContext } from '../../AuthContext';
 import { useCompsContext } from '../../CompetitionsContext';
 
 const HandleCompetition = () => {
-  const [status, setStatus] = useState('started');
+  const [status, setStatus] = useState('notstarted');
   const [time, setTime] = useState({ minutes: 1, seconds: 0 + '0' });
   const [timer, setTimer] = useState(true);
   const [lift, setLift] = useState('snatch');
@@ -106,7 +105,7 @@ const HandleCompetition = () => {
         return <CoachNav />;
       case 'judge':
         if (status === 'started') {
-          return <Result />;
+          return <Result verdict={verdict} />;
         }
         return (
           <Link to="/competitionselection" onClick={() => setRole('')} className="f6 tc underline pointer center">

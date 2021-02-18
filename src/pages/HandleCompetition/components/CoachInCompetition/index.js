@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import CompetitionList from '../../../../components/CompetitionList';
 import NextAttempt from '../NextAttempt';
 import Table from '../../../../components/Table';
-// import { useCompetitionContext } from '../../CompetitionContext';
 import { useAuthContext } from '../../../../AuthContext';
 import { useCompsContext } from '../../../../CompetitionsContext';
 

@@ -1,6 +1,5 @@
 import React from 'react';
 import Table from '../../../../components/Table';
-// import { useCompetitionContext } from '../../CompetitionContext';
 
 const RegisteredOfficials = ({ officials }) => {
   const headers = [

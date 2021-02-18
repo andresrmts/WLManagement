@@ -1,8 +1,6 @@
 import React from 'react';
-import { useCompetitionContext } from '../../CompetitionContext';
 
-const Result = () => {
-  const { verdict } = useCompetitionContext();
+const Result = ({ verdict }) => {
   if (verdict.result < 0 && verdict.votes === 3) {
     return <div className="flex flex-column center tc bg-red vh-25">NO LIFT</div>;
   } else if (verdict.result > 0 && verdict.votes === 3) {

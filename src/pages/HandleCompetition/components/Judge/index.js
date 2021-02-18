@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import NextAttempt from '../NextAttempt';
-import { useCompetitionContext } from '../../CompetitionContext';
 
 const usePrevious = value => {
   const ref = useRef(null);
@@ -16,7 +15,6 @@ const Judge = ({ status, time, changeTime, timer, lift, castVote, goToNextAttemp
   const [weight, setWeight] = useState('');
   const [attempt, setAttempt] = useState(0);
   const [timedOut, setTimedOut] = useState(false);
-  // const { goToNextAttempt } = useCompetitionContext();
 
   const prevAthlete = usePrevious(athlete); // Stores the previous athlete name so timer rules could be followed
 

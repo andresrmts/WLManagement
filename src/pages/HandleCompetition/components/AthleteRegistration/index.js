@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAuthContext } from '../../../../AuthContext';
-import { useCompetitionContext } from '../../CompetitionContext';
 
 const AthleteRegistration = ({ onAdd }) => {
-  // const { addAthlete } = useCompetitionContext();
   const { compId } = useParams();
   const { userId, userName } = useAuthContext();
   const [name, setName] = useState('');

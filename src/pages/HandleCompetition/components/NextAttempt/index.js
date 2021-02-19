@@ -3,7 +3,7 @@ import Timer from '../Timer';
 import { useCompsContext } from '../../../../CompetitionsContext';
 import { useParams } from 'react-router-dom';
 
-const NextAttempt = ({ setTimedOut, changeTime, time, timer, lift }) => {
+const NextAttempt = ({ changeTime, time, timer, lift }) => {
   const { compId } = useParams();
   const { getCompetition } = useCompsContext();
   const competition = getCompetition(compId);
@@ -39,7 +39,7 @@ const NextAttempt = ({ setTimedOut, changeTime, time, timer, lift }) => {
         <div className="pa2 ph3-ns pb3-ns">
           <div className="mt1">
             <div className="flex flex-column justify-around">
-              <Timer timer={timer} time={time} changeTime={changeTime} setTimedOut={setTimedOut} />
+              <Timer timer={timer} time={time} changeTime={changeTime} />
               <h1 className="f2 pa2">{next[0].name}</h1>
               <h1 className="f2 pa2">Attempt: {next[0].attempt + 1}</h1>
             </div>

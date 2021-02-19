@@ -28,6 +28,12 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
   const prevAthlete = usePrevious(athlete); // Stores the previous athlete name so timer rules could be followed
 
   useEffect(() => {
+    if (time.minutes === 0 && time.seconds === 0) {
+      setTimedOut(true);
+    }
+  }, [time]);
+
+  useEffect(() => {
     setTimeout(() => setVoted(false), 5000);
   }, [voted]);
 
@@ -67,11 +73,9 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
     return (
       <div className="w-100">
         <div className="flex center pa2">
-          <NextAttempt time={time} changeTime={changeTime} setTimedOut={setTimedOut} timer={timer} lift={lift} />
+          <NextAttempt time={time} changeTime={changeTime} timer={timer} lift={lift} />
         </div>
         <div className="flex center pa2">
-          {prevAthlete}
-          {athlete}
           <p
             id="yes"
             onClick={() => {

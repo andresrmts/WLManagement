@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuthContext } from '../../../../AuthContext';
 import Table from '../../../../components/Table';
 
-const MyAthletes = ({ athletes, onWeightUpdate }) => {
+const MyAthletes = ({ athletes, updateTable }) => {
   const { userId } = useAuthContext();
   const onlyCoachAthletes = athletes.filter(athlete => athlete.coachid === userId);
   const headers = [
@@ -40,8 +40,8 @@ const MyAthletes = ({ athletes, onWeightUpdate }) => {
     cnj: '',
     coachname: '',
   };
-  const outSideProps = { functions: { weight: onWeightUpdate } };
-  return <Table props={props} headers={headers} tableContent={onlyCoachAthletes} outSideProps={outSideProps} />;
+  // const outSideProps = { functions: { weight: onWeightUpdate } };
+  return <Table props={props} headers={headers} tableContent={onlyCoachAthletes} updateTable={updateTable} />;
 };
 
 export default MyAthletes;

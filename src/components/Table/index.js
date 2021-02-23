@@ -1,7 +1,7 @@
 import React from 'react';
 import TableRow from './TableRow';
 
-const Table = ({ headers, tableContent, props, outSideProps }) => {
+const Table = ({ headers, tableContent, props, updateTable }) => {
   return (
     <div className="pa4">
       <div className="center overflow-auto">
@@ -20,7 +20,7 @@ const Table = ({ headers, tableContent, props, outSideProps }) => {
           <tbody className="lh-copy">
             {tableContent.map((row, i) => {
               const rowProps = Object.fromEntries(Object.entries(props).map(([key, val]) => [key, `${row[key]}`]));
-              return <TableRow key={i} rowProps={rowProps} outSideProps={outSideProps} />;
+              return <TableRow key={i} rowProps={rowProps} updateTable={updateTable} />;
             })}
           </tbody>
         </table>

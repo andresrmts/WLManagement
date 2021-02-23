@@ -25,7 +25,7 @@ const HandleCompetition = () => {
     votes: 0,
   });
   const { userName, userId, role, setRole } = useAuthContext();
-  const { getCompetition, editWeight, addAthlete, setNilAttempt, setLiftResult } = useCompsContext();
+  const { getCompetition, editWeight, addAthlete, setNilAttempt, setLiftResult, updateTable } = useCompsContext();
   const { compId } = useParams();
   const competition = getCompetition(compId);
   const match = useRouteMatch();
@@ -147,14 +147,14 @@ const HandleCompetition = () => {
               <RegisteredOfficials officials={competition.officials} />
             </Route>
             <Route path={`${match.path}/athletelist`}>
-              <Table props={props} headers={headers} tableContent={competition.athletes} outSideProps={outSideProps} />
+              <Table props={props} headers={headers} tableContent={competition.athletes} updateTable={updateTable} />
             </Route>
           </div>
         )}
         {role === 'coach' && status === 'notstarted' && (
           <div>
             <Route exact path={match.path}>
-              <MyAthletes athletes={competition.athletes} onWeightUpdate={editWeight} />
+              <MyAthletes athletes={competition.athletes} updateTable={updateTable} />
             </Route>
             <Route path={`${match.path}/athleteregistration`}>
               <AthleteRegistration onAdd={addAthlete} />

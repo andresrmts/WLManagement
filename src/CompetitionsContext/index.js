@@ -41,7 +41,7 @@ const CompsProvider = ({ children }) => {
           age: 22,
           snatch: 22,
           cnj: 40,
-          coachid: 73,
+          coachid: 72,
           coachname: 'Külli',
           result: {
             snatch: [],
@@ -69,7 +69,7 @@ const CompsProvider = ({ children }) => {
           age: 22,
           snatch: 30,
           cnj: 40,
-          coachid: 73,
+          coachid: 72,
           coachname: 'Külli',
           result: {
             snatch: [],
@@ -223,6 +223,29 @@ const CompsProvider = ({ children }) => {
       ],
     },
   ]);
+
+  const updateTable = (compId, athleteName, prop, value) => {
+    const comp = competitions.map(competition =>
+      competition.id === compId
+        ? {
+            ...competition,
+            athletes: competition.athletes.map(ath => (ath.name === athleteName ? { ...ath, [prop]: value } : ath)),
+          }
+        : competition,
+    );
+    console.log(comp);
+    setCompetitions(comp);
+    // setCompetitions(pS => {
+    //   pS.map(comp =>
+    //     comp.id === compId
+    //       ? {
+    //           ...comp,
+    //           athletes: comp.athletes.map(ath => (ath.name === athleteName ? { ...ath, [prop]: value } : ath)),
+    //         }
+    //       : comp,
+    //   );
+    // });
+  };
 
   const getCompetition = id => {
     const comp = competitions.find(competition => competition.id === id);
@@ -396,6 +419,7 @@ const CompsProvider = ({ children }) => {
     changeWeight,
     joinComp,
     approveRemove,
+    updateTable,
   };
 
   return <CompsContext.Provider value={contextValue}>{children}</CompsContext.Provider>;

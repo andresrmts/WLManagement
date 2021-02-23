@@ -1,12 +1,31 @@
 import React, { useState } from 'react';
-import { useCompetitionContext } from '../../CompetitionContext';
+import { useParams } from 'react-router-dom';
+import { useAuthContext } from '../../../../AuthContext';
 
-const AthleteRegistration = () => {
-  const { addAthlete } = useCompetitionContext();
+const AthleteRegistration = ({ onAdd }) => {
+  const { compId } = useParams();
+  const { userId, userName } = useAuthContext();
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [snatch, setSnatch] = useState('');
   const [cnj, setCnj] = useState('');
+  const athlete = {
+    compId,
+    name,
+    age,
+    snatch,
+    cnj,
+    coachname: userName,
+    coachid: userId,
+  };
+
+  const addAthlete = () => {
+    onAdd(athlete);
+    document.getElementById('name').value = '';
+    document.getElementById('age').value = '';
+    document.getElementById('snatch').value = '';
+    document.getElementById('cnj').value = '';
+  };
 
   return (
     <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
@@ -72,7 +91,7 @@ const AthleteRegistration = () => {
         </div>
         <div className="measure center">
           <input
-            onClick={() => addAthlete(name, age, snatch, cnj)}
+            onClick={() => addAthlete()}
             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
             type="submit"
             value="Register"

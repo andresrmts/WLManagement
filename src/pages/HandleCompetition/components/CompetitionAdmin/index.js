@@ -1,35 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import NextAttempt from '../NextAttempt';
 import Table from '../../../../components/Table';
-import { useCompetitionContext } from '../../CompetitionContext';
 
-const CompetitionAdmin = () => {
-  const { registeredAthletes, lift, toggleTimer, nextLift, timer } = useCompetitionContext();
-  const [onTheClock, setOnTheClock] = useState(
-    registeredAthletes
-      .filter(athlete => athlete.attempt < 3)
-      .sort((a, b) => {
-        if (a[lift] === b[lift]) {
-          return a.attempt - b.attempt;
-        } else {
-          return a[lift] - b[lift];
-        }
-      }),
-  );
-
-  useEffect(() => {
-    setOnTheClock(
-      registeredAthletes
-        .filter(athlete => athlete.attempt < 3)
-        .sort((a, b) => {
-          if (a[lift] === b[lift]) {
-            return a.attempt - b.attempt;
-          } else {
-            return a[lift] - b[lift];
-          }
-        }),
-    );
-  }, [registeredAthletes, lift]);
+const CompetitionAdmin = ({ athletes, toggleTimer, timer, lift, time, changeTime, nextLift }) => {
+  const onTheClock = athletes
+    .filter(athlete => athlete.attempt < 3)
+    .sort((a, b) => {
+      if (a[lift] === b[lift]) {
+        return a.attempt - b.attempt;
+      } else {
+        return a[lift] - b[lift];
+      }
+    });
 
   const headers = [
     {
@@ -64,7 +46,7 @@ const CompetitionAdmin = () => {
       </div>
       <div className="fl w-100 w-60-ns pa2 tc">
         Next Attempt
-        <NextAttempt />
+        <NextAttempt timer={timer} changeTime={changeTime} time={time} lift={lift} />
       </div>
       <div className="fl w-100 w-40-ns pa2">
         <div className="tc outline bg-white pv4">

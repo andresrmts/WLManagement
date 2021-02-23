@@ -2,39 +2,24 @@ import React, { useState, useEffect } from 'react';
 import CompetitionList from '../../../../components/CompetitionList';
 import NextAttempt from '../NextAttempt';
 import Table from '../../../../components/Table';
-import { useCompetitionContext } from '../../CompetitionContext';
 import { useAuthContext } from '../../../../AuthContext';
+import { useCompsContext } from '../../../../CompetitionsContext';
 
-const CoachInCompetition = () => {
-  const { registeredAthletes, lift, changeWeight, toggleTimer, time } = useCompetitionContext();
+const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, timer }) => {
+  const { changeWeight } = useCompsContext();
   const { userName } = useAuthContext();
-  const [myAthletes] = useState(registeredAthletes.filter(athlete => athlete.coachname === userName));
-  const [onTheClock, setOnTheClock] = useState(
-    registeredAthletes
-      .filter(athlete => athlete.attempt < 3)
-      .sort((a, b) => {
-        if (a[lift] === b[lift]) {
-          return a.attempt - b.attempt;
-        } else {
-          return a[lift] - b[lift];
-        }
-      }),
-  );
+  const myAthletes = athletes.filter(athlete => athlete.coachname === userName);
   const [currentChangeCounter, setCurrentChangeCounter] = useState(0);
 
-  useEffect(() => {
-    setOnTheClock(
-      registeredAthletes
-        .filter(athlete => athlete.attempt < 3)
-        .sort((a, b) => {
-          if (a[lift] === b[lift]) {
-            return a.attempt - b.attempt;
-          } else {
-            return a[lift] - b[lift];
-          }
-        }),
-    );
-  }, [registeredAthletes, lift]);
+  const onTheClock = athletes
+    .filter(athlete => athlete.attempt < 3)
+    .sort((a, b) => {
+      if (a[lift] === b[lift]) {
+        return a.attempt - b.attempt;
+      } else {
+        return a[lift] - b[lift];
+      }
+    });
 
   useEffect(() => {
     setCurrentChangeCounter(0);
@@ -60,7 +45,7 @@ const CoachInCompetition = () => {
   return (
     <div className="cf ph2-ns">
       <div className="fl w-100 w-60-ns pa2">
-        <NextAttempt />
+        <NextAttempt lift={lift} timer={timer} time={time} changeTime={changeTime} />
       </div>
       <div className="fl w-100 w-40-ns pa2 mv4">
         <div className="tc outline bg-white pv4">

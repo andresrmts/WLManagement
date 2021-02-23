@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuthContext } from '../../AuthContext';
-import { Link } from '../../Router';
-import { routes } from '../../Router/routes';
+import { Link } from 'react-router-dom';
+// import { routes } from '../../Router/routes';
 
 const SignIn = () => {
   const { setUserId } = useAuthContext();
@@ -37,9 +37,9 @@ const SignIn = () => {
         </div>
         <div className="measure center">
           <Link
-            to={routes.competitionselection.path}
+            to="/competitions"
             onClick={() => setUserId(Math.random() * 10)}
-            className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+            className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib no-underline black-90"
           >
             Sign In
           </Link>

@@ -3,8 +3,7 @@ import React, { useState, useContext, createContext } from 'react';
 const CompetitionContext = createContext();
 
 const CompetitionProvider = ({ children, userName }) => {
-  const [status, setStatus] = useState('notstarted');
-  const [comproute, setCompRoute] = useState('home');
+  const [status, setStatus] = useState('started');
   const [timer, setTimer] = useState(true);
   const [time, setTime] = useState({ minutes: 1, seconds: 0 + '0' });
   const [lift, setLift] = useState('snatch');
@@ -81,10 +80,6 @@ const CompetitionProvider = ({ children, userName }) => {
   const editAthleteWeight = athleteName => {
     const weight = prompt('Enter athlete weight:');
     setRegisteredAthletes(pS => pS.map(ath => (athleteName === ath.name ? { ...ath, weight } : ath)));
-  };
-
-  const changeCompRoute = route => {
-    setCompRoute(route);
   };
 
   const changeTime = (minutes, seconds) => {
@@ -191,8 +186,6 @@ const CompetitionProvider = ({ children, userName }) => {
   const contextValue = {
     status,
     setstatus: setStatus,
-    comproute,
-    changeCompRoute,
     timer,
     time,
     setTimer,

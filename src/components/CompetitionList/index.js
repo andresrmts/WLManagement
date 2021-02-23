@@ -2,7 +2,6 @@ import React from 'react';
 import Competition from './Competition';
 
 const CompetitionList = ({
-  onRouteChange,
   competitions,
   myAthletes,
   changeWeight,
@@ -20,11 +19,12 @@ const CompetitionList = ({
           return (
             <Competition
               key={i}
+              id={comp.id}
               name={comp.name}
               email={comp.email}
-              location={comp.address.city}
-              date={comp.id}
-              onRouteChange={onRouteChange}
+              location={comp.location}
+              authorId={comp.authorId}
+              officials={comp.officials}
             />
           );
         })}

@@ -4,21 +4,18 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [userName, setUserName] = useState('Külli');
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState(72);
   const [userEmail, setUserEmail] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [role, setRole] = useState('');
 
   const contextValue = {
     userName,
     userId,
     userEmail,
-    isAdmin,
     role,
     setUserName,
     setUserEmail,
     setUserId,
-    setIsAdmin,
     setRole,
   };
 

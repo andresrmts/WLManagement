@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
-import { Link, RouterContext } from '../../../Router';
-import { routes } from '../../../Router/routes';
+import { Link, useParams } from 'react-router-dom';
 import { useAuthContext } from '../../../AuthContext';
 
 const Competition = ({
-  email,
   name,
   location,
-  date,
+  id,
   attempt,
   cnj,
   snatch,
@@ -18,29 +16,41 @@ const Competition = ({
   lift,
   toggleTimer,
   time,
+  authorId,
+  officials,
 }) => {
   const [weight, setWeight] = useState(lift === 'snatch' ? snatch : cnj);
-  const { changecompetition } = React.useContext(RouterContext);
-  const { userEmail, setIsAdmin } = useAuthContext();
+  const { compId } = useParams();
+  const { userId } = useAuthContext();
+  const changeAttemptWeight = () => {
+    if (onTheClock.name === name) {
+      if (currentChangeCounter < 2 && time.seconds > 30) {
+        changeWeight(compId, { name }, weight, lift);
+        toggleTimer();
+        setCurrentChangeCounter(prev => prev + 1);
+        return;
+      }
+      alert('You are only allowed 2 changes when athlete is on the clock!');
+      setWeight(lift === 'snatch' ? snatch : cnj);
+      return;
+    }
+    changeWeight(compId, { name }, weight, lift);
+  };
 
-  if (date < 4) {
+  if (officials && (userId === authorId || officials.find(official => official.id === userId))) {
     return (
       <article className="mw5 tc dib bg-white br3 pa3 ma3 ba b--black-10">
         <div className="tc">
           <h1 className="tc f4">{name}</h1>
           <h2 className="tc f5">{location}</h2>
-          <h3 className="tc f6">{date}</h3>
+          <h3 className="tc f6">{id}</h3>
           <hr className="mw3 bb bw1 b--black-10" />
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <Link
-              to={routes.competition.path}
-              onClick={() => {
-                setIsAdmin(userEmail === email);
-                changecompetition(name);
-              }}
-              className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer"
+              to={`/competition/${id}`}
+              className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer no-underline black-90"
             >
-              {userEmail === email ? 'Admin' : 'Handle'}
+              {userId === authorId ? 'Admin' : 'Handle'}
             </Link>
           </div>
         </div>
@@ -65,23 +75,7 @@ const Competition = ({
           >
             +
           </p>
-          <p
-            className="pointer ba pa4 w-50 flex center"
-            onClick={() => {
-              if (onTheClock.name === name) {
-                if (currentChangeCounter < 2 && time.seconds > 30) {
-                  changeWeight({ name }, weight);
-                  toggleTimer();
-                  setCurrentChangeCounter(prev => prev + 1);
-                  return;
-                }
-                alert('You are only allowed 2 changes when athlete is on the clock!');
-                setWeight(lift === 'snatch' ? snatch : cnj);
-                return;
-              }
-              changeWeight({ name }, weight);
-            }}
-          >
+          <p className="pointer ba pa4 w-50 flex center" onClick={() => changeAttemptWeight()}>
             Approve
           </p>
           <hr className="mw3 bb bw1 b--black-10" />
@@ -92,12 +86,15 @@ const Competition = ({
   return (
     <article className="mw5 tc dib bg-white br3 pa3 ma3 ba b--black-10">
       <div className="tc">
-        <h1 className="tc f4 flex flex-wrap">{name}</h1>
+        <h1 className="tc center f4 flex flex-wrap">{name}</h1>
         <h2 className="tc f5">{location}</h2>
-        <h3 className="tc f6">{date}</h3>
+        <h3 className="tc f6">{id}</h3>
         <hr className="mw3 bb bw1 b--black-10" />
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to={routes.competition.path} className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer">
+          <Link
+            to={`/competition/${id}`}
+            className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer no-underline black-90"
+          >
             Select Role
           </Link>
         </div>

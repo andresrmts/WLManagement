@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useAuthContext } from '../../AuthContext';
-import { Link } from '../../Router';
-import { routes } from '../../Router/routes';
+import { Link } from 'react-router-dom';
 
 const Register = () => {
   const { setUserName, setUserId, setUserEmail } = useAuthContext();
@@ -57,9 +56,9 @@ const Register = () => {
         </div>
         <div className="measure center">
           <Link
-            to={routes.competitionselection.path}
+            to="/competitions"
             onClick={() => registeruser(username, email)}
-            className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+            className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib no-underline black-90"
           >
             Register
           </Link>

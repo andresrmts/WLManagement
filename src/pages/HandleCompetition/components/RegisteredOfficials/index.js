@@ -1,9 +1,7 @@
 import React from 'react';
 import Table from '../../../../components/Table';
-import { useCompetitionContext } from '../../CompetitionContext';
 
-const RegisteredOfficials = () => {
-  const { acceptedRegistrations } = useCompetitionContext();
+const RegisteredOfficials = ({ officials }) => {
   const headers = [
     {
       header: 'Name',
@@ -20,7 +18,8 @@ const RegisteredOfficials = () => {
   ];
 
   const props = { name: '', role: '', delete: '' };
-  return <Table props={props} headers={headers} tableContent={acceptedRegistrations} />;
+  const outSideProps = { rows: { content: ['Delete'] } };
+  return <Table props={props} headers={headers} tableContent={officials} outSideProps={outSideProps} />;
 };
 
 export default RegisteredOfficials;

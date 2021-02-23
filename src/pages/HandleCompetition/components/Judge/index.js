@@ -46,7 +46,7 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
   }, [timedOut]);
 
   useEffect(() => {
-    if (status === 'started') {
+    if (status === 'started' && voted) {
       setTimeout(() => goToNextAttempt(athlete, weight, attempt), 3000);
     }
   }, [voted]);

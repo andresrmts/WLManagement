@@ -56,7 +56,7 @@ const Register = () => {
         </div>
         <div className="measure center">
           <Link
-            to="/competitionselection"
+            to="/competitions"
             onClick={() => registeruser(username, email)}
             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib no-underline black-90"
           >

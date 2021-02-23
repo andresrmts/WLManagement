@@ -18,7 +18,8 @@ const RegisteredOfficials = ({ officials }) => {
   ];
 
   const props = { name: '', role: '', delete: '' };
-  return <Table props={props} headers={headers} tableContent={officials} />;
+  const outSideProps = { rows: { content: ['Delete'] } };
+  return <Table props={props} headers={headers} tableContent={officials} outSideProps={outSideProps} />;
 };
 
 export default RegisteredOfficials;

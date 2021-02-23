@@ -1,9 +1,10 @@
 import React from 'react';
+import { useCompsContext } from '../../../../CompetitionsContext';
 import Table from '../../../../components/Table';
 import { useCompetitionContext } from '../../CompetitionContext';
 
 const Registrations = ({ registrations }) => {
-  const { approveRemove } = useCompetitionContext();
+  const { approveRemove } = useCompsContext();
 
   const headers = [
     {
@@ -21,7 +22,7 @@ const Registrations = ({ registrations }) => {
   ];
 
   const props = { name: '', role: '', approve: '' };
-  const outSideProps = { rows: { content: ['Yes', 'No'] } };
+  const outSideProps = { rows: { content: ['Yes', 'No'] }, functions: { approve: approveRemove } };
   return <Table props={props} headers={headers} tableContent={registrations} outSideProps={outSideProps} />;
 };
 

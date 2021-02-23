@@ -45,7 +45,7 @@ const AdminNav = ({ status, setStatus }) => {
           <Link to={`${match.url}/athletelist`} className="f6 pa3 underline pointer black-90">
             Competitor List
           </Link>
-          <Link to="/competitionselection" onClick={() => exitComp()} className="f6 pa3 underline pointer black-90">
+          <Link to="/competitions" onClick={() => exitComp()} className="f6 pa3 underline pointer black-90">
             Exit
           </Link>
         </nav>

@@ -16,7 +16,7 @@ import { useAuthContext } from '../../AuthContext';
 import { useCompsContext } from '../../CompetitionsContext';
 
 const HandleCompetition = () => {
-  const [status, setStatus] = useState('started');
+  const [status, setStatus] = useState('notstarted');
   const [time, setTime] = useState({ minutes: 1, seconds: 0 + '0' });
   const [timer, setTimer] = useState(true);
   const [lift, setLift] = useState('snatch');
@@ -58,6 +58,19 @@ const HandleCompetition = () => {
       return;
     }
   });
+
+  const castVote = decision => {
+    if (decision === 'yes') {
+      setVerdict({ result: 1, votes: 3 });
+      return;
+    }
+    setVerdict({ result: -1, votes: 3 });
+  };
+
+  const goToNextAttempt = (athlete, weight, attempt) => {
+    setLiftResult(compId, verdict, athlete, weight, attempt, lift);
+    setVerdict({ result: 0, votes: 0 });
+  };
 
   const headers = [
     {
@@ -108,30 +121,17 @@ const HandleCompetition = () => {
           return <Result verdict={verdict} />;
         }
         return (
-          <Link to="/competitionselection" onClick={() => setRole('')} className="f6 tc underline pointer center">
+          <Link to="/competitions" onClick={() => setRole('')} className="f6 tc underline pointer center">
             Exit
           </Link>
         );
       default:
         return (
-          <Link to="/competitionselection" className="f6 tc underline pointer center">
+          <Link to="/competitions" className="f6 tc underline pointer center">
             Exit
           </Link>
         );
     }
-  };
-
-  const castVote = decision => {
-    if (decision === 'yes') {
-      setVerdict({ result: 1, votes: 3 });
-      return;
-    }
-    setVerdict({ result: -1, votes: 3 });
-  };
-
-  const goToNextAttempt = (athlete, weight, attempt) => {
-    setLiftResult(compId, verdict, athlete, weight, attempt, lift);
-    setVerdict({ result: 0, votes: 0 });
   };
 
   return (

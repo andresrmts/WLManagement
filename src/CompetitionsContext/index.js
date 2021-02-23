@@ -243,7 +243,8 @@ const CompsProvider = ({ children }) => {
     return comps;
   };
 
-  const createCompetition = (id, authorId, compName, location, date) => {
+  const createCompetition = competition => {
+    const { id, authorId, compName, location, date } = competition;
     competitions.push({
       id,
       authorId,
@@ -271,12 +272,13 @@ const CompsProvider = ({ children }) => {
   const setNilAttempt = id => {
     setCompetitions(pS =>
       pS.map(comp =>
-        comp.id === id ? { ...comp, athletes: comp.athletes.map(ath => Object.assign(ath, { attempt: 0 })) } : comp,
+        comp.id === id ? { ...comp, athletes: comp.athletes.map(ath => ({ ...ath, attempt: 0 })) } : comp,
       ),
     );
   };
 
-  const addAthlete = (compId, name, age, snatch, cnj, coachname, coachid) => {
+  const addAthlete = data => {
+    const { compId, name, age, snatch, cnj, coachname, coachid } = data;
     const index = competitions.findIndex(comp => comp.id === compId);
     if (age < 1 || age > 99 || snatch < 10 || snatch > 230 || cnj < 10 || cnj > 300) {
       alert('Please enter valid info!');
@@ -293,10 +295,6 @@ const CompsProvider = ({ children }) => {
       coachname,
       result: { snatch: [], cnj: [] },
     });
-    document.getElementById('name').value = '';
-    document.getElementById('age').value = '';
-    document.getElementById('snatch').value = '';
-    document.getElementById('cnj').value = '';
   };
 
   const setLiftResult = (compId, verdict, athlete, weight, attempt, lift) => {
@@ -310,7 +308,7 @@ const CompsProvider = ({ children }) => {
             ? {
                 ...comp,
                 athletes: comp.athletes.map(ath =>
-                  ath.name === athlete ? Object.assign(ath, { [lift]: weight + 1, attempt: attempt + 1 }) : ath,
+                  ath.name === athlete ? { ...ath, [lift]: weight + 1, attempt: attempt + 1 } : ath,
                 ),
               }
             : comp,
@@ -323,9 +321,7 @@ const CompsProvider = ({ children }) => {
           compId === comp.id
             ? {
                 ...comp,
-                athletes: comp.athletes.map(ath =>
-                  ath.name === athlete ? Object.assign(ath, { attempt: attempt + 1 }) : ath,
-                ),
+                athletes: comp.athletes.map(ath => (ath.name === athlete ? { ...ath, attempt: attempt + 1 } : ath)),
               }
             : comp,
         ),
@@ -339,9 +335,7 @@ const CompsProvider = ({ children }) => {
         compId === comp.id
           ? {
               ...comp,
-              athletes: comp.athletes.map(ath =>
-                ath.name === athlete.name ? Object.assign(ath, { [lift]: weight }) : ath,
-              ),
+              athletes: comp.athletes.map(ath => (ath.name === athlete.name ? { ...ath, [lift]: weight } : ath)),
             }
           : comp,
       ),
@@ -351,6 +345,43 @@ const CompsProvider = ({ children }) => {
   const joinComp = (compId, userId, name, role) => {
     const correctCompetition = competitions.find(comp => comp.id === compId);
     correctCompetition.registrations.push({ id: userId, name, role });
+  };
+
+  const approveRemove = (compId, name, decision, role) => {
+    const competition = competitions.find(comp => compId === comp.id);
+    let splicedArray;
+    if (decision === 'Yes' && role === 'judge') {
+      if (competition.officials.filter(official => official.role === 'judge').length < 3) {
+        splicedArray = competition.registrations.splice(
+          competition.registrations.findIndex(participant => participant.name === name),
+          1,
+        );
+        competition.officials.push(splicedArray[0]);
+        setCompetitions(pS =>
+          pS.map(comp => (comp.id === compId ? { ...comp, registrations: competition.registrations } : comp)),
+        );
+        return;
+      }
+      alert('There already are 3 judges in the competition');
+      return;
+    } else if (decision === 'Yes') {
+      splicedArray = competition.registrations.splice(
+        competition.registrations.findIndex(participant => participant.name === name),
+        1,
+      );
+      competition.officials.push(splicedArray[0]);
+      setCompetitions(pS =>
+        pS.map(comp => (comp.id === compId ? { ...comp, registrations: competition.registrations } : comp)),
+      );
+      return;
+    }
+    competition.registrations.splice(
+      competition.registrations.findIndex(participant => participant.name === name),
+      1,
+    );
+    setCompetitions(pS =>
+      pS.map(comp => (comp.id === compId ? { ...comp, registrations: competition.registrations } : comp)),
+    );
   };
 
   const contextValue = {
@@ -364,6 +395,7 @@ const CompsProvider = ({ children }) => {
     setLiftResult,
     changeWeight,
     joinComp,
+    approveRemove,
   };
 
   return <CompsContext.Provider value={contextValue}>{children}</CompsContext.Provider>;

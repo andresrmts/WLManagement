@@ -37,7 +37,7 @@ const SignIn = () => {
         </div>
         <div className="measure center">
           <Link
-            to="/competitionselection"
+            to="/competitions"
             onClick={() => setUserId(Math.random() * 10)}
             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib no-underline black-90"
           >

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../AuthContext';
 import { useCompsContext } from '../../CompetitionsContext';
 
-const CompetitionSelection = ({ adminToggle, onSearchChange }) => {
+const competitions = ({ adminToggle, onSearchChange }) => {
   const { userName, userId } = useAuthContext();
   const { getMyCompetitions, getActiveCompetitions } = useCompsContext();
   const [yourComps] = useState(getMyCompetitions(userId));
@@ -50,4 +50,4 @@ const CompetitionSelection = ({ adminToggle, onSearchChange }) => {
   );
 };
 
-export default CompetitionSelection;
+export default competitions;

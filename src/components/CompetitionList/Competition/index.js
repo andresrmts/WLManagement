@@ -22,6 +22,20 @@ const Competition = ({
   const [weight, setWeight] = useState(lift === 'snatch' ? snatch : cnj);
   const { compId } = useParams();
   const { userId } = useAuthContext();
+  const changeAttemptWeight = () => {
+    if (onTheClock.name === name) {
+      if (currentChangeCounter < 2 && time.seconds > 30) {
+        changeWeight(compId, { name }, weight, lift);
+        toggleTimer();
+        setCurrentChangeCounter(prev => prev + 1);
+        return;
+      }
+      alert('You are only allowed 2 changes when athlete is on the clock!');
+      setWeight(lift === 'snatch' ? snatch : cnj);
+      return;
+    }
+    changeWeight(compId, { name }, weight, lift);
+  };
 
   if (officials && (userId === authorId || officials.find(official => official.id === userId))) {
     return (
@@ -61,23 +75,7 @@ const Competition = ({
           >
             +
           </p>
-          <p
-            className="pointer ba pa4 w-50 flex center"
-            onClick={() => {
-              if (onTheClock.name === name) {
-                if (currentChangeCounter < 2 && time.seconds > 30) {
-                  changeWeight(compId, { name }, weight, lift);
-                  toggleTimer();
-                  setCurrentChangeCounter(prev => prev + 1);
-                  return;
-                }
-                alert('You are only allowed 2 changes when athlete is on the clock!');
-                setWeight(lift === 'snatch' ? snatch : cnj);
-                return;
-              }
-              changeWeight(compId, { name }, weight, lift);
-            }}
-          >
+          <p className="pointer ba pa4 w-50 flex center" onClick={() => changeAttemptWeight()}>
             Approve
           </p>
           <hr className="mw3 bb bw1 b--black-10" />

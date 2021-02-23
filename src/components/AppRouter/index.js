@@ -32,7 +32,7 @@ const AppRouter = ({ onSearchChange }) => {
         {isSignedIn && (
           <div>
             <CompsProvider>
-              <Route path="/competitionselection">
+              <Route path="/competitions">
                 <Competitions onSearchChange={onSearchChange} />
               </Route>
               <Route path="/competitioncreation">

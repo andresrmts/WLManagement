@@ -16,7 +16,7 @@ const CoachNav = () => {
         <Link to={`${match.url}/athleteregistration`} className="f3 pa3 underline pointer black-90">
           Register Athlete
         </Link>
-        <Link to="/competitionselection" onClick={() => setRole('')} className="f3 pa3 underline pointer black-90">
+        <Link to="/competitions" onClick={() => setRole('')} className="f3 pa3 underline pointer black-90">
           Exit
         </Link>
       </nav>

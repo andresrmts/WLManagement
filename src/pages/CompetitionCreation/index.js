@@ -11,6 +11,13 @@ const CompetitionCreation = () => {
   const [location, setLocation] = useState('');
   const [date, setDate] = useState('');
   const id = uuidv4();
+  const competition = {
+    id,
+    authorId: userId,
+    compName: competitionName,
+    location,
+    date,
+  };
 
   return (
     <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
@@ -45,7 +52,7 @@ const CompetitionCreation = () => {
             <div className="mv3">
               <label className="db fw6 lh-copy f6">Date</label>
               <input
-                onChange={e => e.target.value}
+                onChange={e => setDate(e.target.value)}
                 className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                 type="date"
                 name="date"
@@ -57,13 +64,13 @@ const CompetitionCreation = () => {
         <div className="measure center">
           <Link
             to={`/competition/${id}`}
-            onClick={() => createCompetition(id, userId, competitionName, location, date)}
+            onClick={() => createCompetition(competition)}
             className="b ph3 pv2 input-reset ba b--black black-90 bg-transparent grow pointer f6 m14 dib no-underline"
           >
             Create
           </Link>
           <Link
-            to="/competitionselection"
+            to="/competitions"
             className="b ph3 pv2 input-reset ba b--black black-90 bg-transparent grow pointer f6 m14 dib no-underline"
           >
             Back

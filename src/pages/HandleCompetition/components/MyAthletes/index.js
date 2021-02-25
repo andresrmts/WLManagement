@@ -40,7 +40,6 @@ const MyAthletes = ({ athletes, updateTable }) => {
     cnj: '',
     coachname: '',
   };
-  // const outSideProps = { functions: { weight: onWeightUpdate } };
   return <Table props={props} headers={headers} tableContent={onlyCoachAthletes} updateTable={updateTable} />;
 };
 

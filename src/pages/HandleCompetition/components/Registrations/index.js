@@ -1,7 +1,6 @@
 import React from 'react';
 import { useCompsContext } from '../../../../CompetitionsContext';
 import Table from '../../../../components/Table';
-import { useCompetitionContext } from '../../CompetitionContext';
 
 const Registrations = ({ registrations }) => {
   const { approveRemove } = useCompsContext();

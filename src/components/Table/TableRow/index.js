@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const TableRow = ({ rowProps, updateTable, specificProps, approveRemove }) => {
@@ -15,17 +15,9 @@ const TableRow = ({ rowProps, updateTable, specificProps, approveRemove }) => {
     }
   };
 
-  const setInputType = prop => {
-    if (prop === 'weight' || prop === 'snatch' || prop === 'cnj') {
-      return 'number';
-    } else {
-      return 'text';
-    }
-  };
-
-  const isEditableCell = (i, prop) => {
-    if (editCell === i && (prop === 'weight' || prop === 'snatch' || prop === 'cnj')) {
-      return <input placeholder={`${prop}`} onKeyPress={e => onSubmit(e, prop)} type={setInputType(prop)}></input>;
+  const isEditableCell = prop => {
+    if (editCell === prop && (prop === 'weight' || prop === 'snatch' || prop === 'cnj')) {
+      return <input placeholder={`${prop}`} onKeyPress={e => onSubmit(e, prop)} type="number"></input>;
     } else if (rowProps[prop] === 'undefined' && specificProps) {
       return specificProps.map(prop => (
         <p className="pointer" onClick={() => approveRemove(compId, rowProps, prop)}>
@@ -39,8 +31,8 @@ const TableRow = ({ rowProps, updateTable, specificProps, approveRemove }) => {
   return (
     <tr className="stripe-dark">
       {Object.keys(rowProps).map((prop, i) => (
-        <td key={i} headers={`${prop}`} onClick={() => setEditCell(i)} className="tc pa3">
-          {isEditableCell(i, prop)}
+        <td key={i} headers={`${prop}`} onClick={() => setEditCell(prop)} className="tc pa3">
+          {isEditableCell(prop)}
         </td>
       ))}
     </tr>

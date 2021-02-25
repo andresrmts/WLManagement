@@ -25,7 +25,7 @@ const HandleCompetition = () => {
     votes: 0,
   });
   const { userName, userId, role, setRole } = useAuthContext();
-  const { getCompetition, editWeight, addAthlete, setNilAttempt, setLiftResult, updateTable } = useCompsContext();
+  const { getCompetition, addAthlete, setNilAttempt, setLiftResult, updateTable } = useCompsContext();
   const { compId } = useParams();
   const competition = getCompetition(compId);
   const match = useRouteMatch();
@@ -107,8 +107,6 @@ const HandleCompetition = () => {
     cnj: '',
     coachname: '',
   };
-
-  const outSideProps = { functions: { weight: editWeight } };
 
   const renderNav = role => {
     switch (role) {

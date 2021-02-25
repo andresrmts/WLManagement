@@ -225,7 +225,7 @@ const CompsProvider = ({ children }) => {
   ]);
 
   const updateTable = (compId, athleteName, prop, value) => {
-    const comp = competitions.map(competition =>
+    const updatedAthletes = competitions.map(competition =>
       competition.id === compId
         ? {
             ...competition,
@@ -233,18 +233,7 @@ const CompsProvider = ({ children }) => {
           }
         : competition,
     );
-    console.log(comp);
-    setCompetitions(comp);
-    // setCompetitions(pS => {
-    //   pS.map(comp =>
-    //     comp.id === compId
-    //       ? {
-    //           ...comp,
-    //           athletes: comp.athletes.map(ath => (ath.name === athleteName ? { ...ath, [prop]: value } : ath)),
-    //         }
-    //       : comp,
-    //   );
-    // });
+    setCompetitions(updatedAthletes);
   };
 
   const getCompetition = id => {
@@ -278,18 +267,6 @@ const CompsProvider = ({ children }) => {
       registrations: [],
       athletes: [],
     });
-  };
-
-  const editWeight = (id, athleteName) => {
-    const weight = prompt('Enter athlete weight');
-    setCompetitions(pS =>
-      pS.map(
-        comp =>
-          (comp.id = id
-            ? { ...comp, athletes: comp.athletes.map(ath => (athleteName === ath.name ? { ...ath, weight } : ath)) }
-            : comp),
-      ),
-    );
   };
 
   const setNilAttempt = id => {
@@ -370,8 +347,9 @@ const CompsProvider = ({ children }) => {
     correctCompetition.registrations.push({ id: userId, name, role });
   };
 
-  const approveRemove = (compId, name, decision, role) => {
+  const approveRemove = (compId, official, decision) => {
     const competition = competitions.find(comp => compId === comp.id);
+    const { name, role } = official;
     let splicedArray;
     if (decision === 'Yes' && role === 'judge') {
       if (competition.officials.filter(official => official.role === 'judge').length < 3) {
@@ -397,6 +375,15 @@ const CompsProvider = ({ children }) => {
         pS.map(comp => (comp.id === compId ? { ...comp, registrations: competition.registrations } : comp)),
       );
       return;
+    } else if (decision === 'Delete') {
+      competition.officials.splice(
+        competition.officials.findIndex(official => official.name === name),
+        1,
+      );
+      setCompetitions(pS =>
+        pS.map(comp => (comp.id === compId ? { ...comp, officials: competition.officials } : comp)),
+      );
+      return;
     }
     competition.registrations.splice(
       competition.registrations.findIndex(participant => participant.name === name),
@@ -412,7 +399,6 @@ const CompsProvider = ({ children }) => {
     getMyCompetitions,
     getActiveCompetitions,
     createCompetition,
-    editWeight,
     addAthlete,
     setNilAttempt,
     setLiftResult,

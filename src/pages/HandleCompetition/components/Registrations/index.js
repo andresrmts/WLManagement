@@ -22,8 +22,16 @@ const Registrations = ({ registrations }) => {
   ];
 
   const props = { name: '', role: '', approve: '' };
-  const outSideProps = { rows: { content: ['Yes', 'No'] }, functions: { approve: approveRemove } };
-  return <Table props={props} headers={headers} tableContent={registrations} outSideProps={outSideProps} />;
+  const specificProps = ['Yes', 'No'];
+  return (
+    <Table
+      props={props}
+      headers={headers}
+      tableContent={registrations}
+      specificProps={specificProps}
+      approveRemove={approveRemove}
+    />
+  );
 };
 
 export default Registrations;

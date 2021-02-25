@@ -1,7 +1,9 @@
 import React from 'react';
+import { useCompsContext } from '../../../../CompetitionsContext';
 import Table from '../../../../components/Table';
 
 const RegisteredOfficials = ({ officials }) => {
+  const { approveRemove } = useCompsContext();
   const headers = [
     {
       header: 'Name',
@@ -18,8 +20,16 @@ const RegisteredOfficials = ({ officials }) => {
   ];
 
   const props = { name: '', role: '', delete: '' };
-  const outSideProps = { rows: { content: ['Delete'] } };
-  return <Table props={props} headers={headers} tableContent={officials} outSideProps={outSideProps} />;
+  const specificProps = ['Delete'];
+  return (
+    <Table
+      props={props}
+      headers={headers}
+      tableContent={officials}
+      specificProps={specificProps}
+      approveRemove={approveRemove}
+    />
+  );
 };
 
 export default RegisteredOfficials;

@@ -16,11 +16,12 @@ const TableRow = ({ row, columns, updateTable, specificProps, approveRemove }) =
   };
 
   const isEditableCell = column => {
-    if (editCell === column.name && column.editable) {
-      return <input placeholder={`${column.name}`} onKeyPress={e => onSubmit(e, column.name)} type="number"></input>;
-    } else if (column.template) {
-      let Component = column.template;
-      return <Component row={row} group={column.templateParams} />;
+    const { name, editable, template, templateParams } = column;
+    if (editCell === name && editable) {
+      return <input placeholder={`${name}`} onKeyPress={e => onSubmit(e, name)} type="number"></input>;
+    } else if (template) {
+      let Component = template;
+      return <Component row={row} group={templateParams} />;
     }
     return row[column.name];
   };

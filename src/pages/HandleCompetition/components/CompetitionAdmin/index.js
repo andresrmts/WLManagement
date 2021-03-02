@@ -28,7 +28,21 @@ const CompetitionAdmin = ({ athletes, toggleTimer, timer, lift, time, changeTime
     },
   ];
 
-  const props = { name: '', attempt: '', [lift]: '' };
+  const props = [
+    {
+      name: 'id',
+      hidden: true,
+    },
+    {
+      name: 'name',
+    },
+    {
+      name: 'attempt',
+    },
+    {
+      name: lift,
+    },
+  ];
 
   return (
     <div className="cf ph2-ns">

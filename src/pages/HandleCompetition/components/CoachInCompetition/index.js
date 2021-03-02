@@ -40,7 +40,18 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, tim
     },
   ];
 
-  const props = { name: '', attempt: '', [lift]: '', coachname: '' };
+  const props = [
+    {
+      name: 'id',
+      hidden: true,
+    },
+    {
+      name: 'attempt',
+    },
+    {
+      name: lift,
+    },
+  ];
 
   return (
     <div className="cf ph2-ns">

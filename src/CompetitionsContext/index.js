@@ -35,6 +35,7 @@ const CompsProvider = ({ children }) => {
       ],
       athletes: [
         {
+          id: 1,
           name: 'Athlete1',
           attempt: 0,
           weight: '-',
@@ -49,6 +50,7 @@ const CompsProvider = ({ children }) => {
           },
         },
         {
+          id: 2,
           name: 'Athlete2',
           attempt: 0,
           weight: '-',
@@ -63,6 +65,7 @@ const CompsProvider = ({ children }) => {
           },
         },
         {
+          id: 3,
           name: 'Athlete3',
           attempt: 0,
           weight: '-',
@@ -347,50 +350,73 @@ const CompsProvider = ({ children }) => {
     correctCompetition.registrations.push({ id: userId, name, role });
   };
 
-  const approveRemove = (compId, official, decision) => {
+  // const approveRemove = (compId, official, decision) => {
+  //   const competition = competitions.find(comp => compId === comp.id);
+  //   const { name, role } = official;
+  //   let splicedArray;
+  //   if (decision === 'Yes' && role === 'judge') {
+  //     if (competition.officials.filter(official => official.role === 'judge').length < 3) {
+  //       splicedArray = competition.registrations.splice(
+  //         competition.registrations.findIndex(participant => participant.name === name),
+  //         1,
+  //       );
+  //       competition.officials.push(splicedArray[0]);
+  //       setCompetitions(pS =>
+  //         pS.map(comp => (comp.id === compId ? { ...comp, registrations: competition.registrations } : comp)),
+  //       );
+  //       return;
+  //     }
+  //     alert('There already are 3 judges in the competition');
+  //     return;
+  //   } else if (decision === 'Yes') {
+  //     splicedArray = competition.registrations.splice(
+  //       competition.registrations.findIndex(participant => participant.name === name),
+  //       1,
+  //     );
+  //     competition.officials.push(splicedArray[0]);
+  //     setCompetitions(pS =>
+  //       pS.map(comp => (comp.id === compId ? { ...comp, registrations: competition.registrations } : comp)),
+  //     );
+  //     return;
+  //   } else if (decision === 'Delete') {
+  //     competition.officials.splice(
+  //       competition.officials.findIndex(official => official.name === name),
+  //       1,
+  //     );
+  //     setCompetitions(pS =>
+  //       pS.map(comp => (comp.id === compId ? { ...comp, officials: competition.officials } : comp)),
+  //     );
+  //     return;
+  //   }
+  //   competition.registrations.splice(
+  //     competition.registrations.findIndex(participant => participant.name === name),
+  //     1,
+  //   );
+  //   setCompetitions(pS =>
+  //     pS.map(comp => (comp.id === compId ? { ...comp, registrations: competition.registrations } : comp)),
+  //   );
+  // };
+
+  const deleteRow = (compId, group, rowId) => {
     const competition = competitions.find(comp => compId === comp.id);
-    const { name, role } = official;
-    let splicedArray;
-    if (decision === 'Yes' && role === 'judge') {
-      if (competition.officials.filter(official => official.role === 'judge').length < 3) {
-        splicedArray = competition.registrations.splice(
-          competition.registrations.findIndex(participant => participant.name === name),
-          1,
-        );
-        competition.officials.push(splicedArray[0]);
-        setCompetitions(pS =>
-          pS.map(comp => (comp.id === compId ? { ...comp, registrations: competition.registrations } : comp)),
-        );
-        return;
-      }
-      alert('There already are 3 judges in the competition');
-      return;
-    } else if (decision === 'Yes') {
-      splicedArray = competition.registrations.splice(
-        competition.registrations.findIndex(participant => participant.name === name),
-        1,
-      );
-      competition.officials.push(splicedArray[0]);
-      setCompetitions(pS =>
-        pS.map(comp => (comp.id === compId ? { ...comp, registrations: competition.registrations } : comp)),
-      );
-      return;
-    } else if (decision === 'Delete') {
-      competition.officials.splice(
-        competition.officials.findIndex(official => official.name === name),
-        1,
-      );
-      setCompetitions(pS =>
-        pS.map(comp => (comp.id === compId ? { ...comp, officials: competition.officials } : comp)),
-      );
-      return;
-    }
-    competition.registrations.splice(
-      competition.registrations.findIndex(participant => participant.name === name),
+    competition[group].splice(
+      competition[group].findIndex(el => el.id === rowId),
       1,
     );
+    setCompetitions(pS => pS.map(comp => (comp.id === compId ? { ...comp, [group]: competition[group] } : comp)));
+  };
+
+  const approveRow = (compId, group, row) => {
+    const competition = competitions.find(comp => compId === comp.id);
+    competition[group].splice(
+      competition[group].findIndex(el => el.id === row.id),
+      1,
+    );
+    competition.officials.push(row);
     setCompetitions(pS =>
-      pS.map(comp => (comp.id === compId ? { ...comp, registrations: competition.registrations } : comp)),
+      pS.map(comp =>
+        comp.id === compId ? { ...comp, officials: competition.officials, [group]: competition[group] } : comp,
+      ),
     );
   };
 
@@ -404,8 +430,10 @@ const CompsProvider = ({ children }) => {
     setLiftResult,
     changeWeight,
     joinComp,
-    approveRemove,
+    // approveRemove,
     updateTable,
+    deleteRow,
+    approveRow,
   };
 
   return <CompsContext.Provider value={contextValue}>{children}</CompsContext.Provider>;

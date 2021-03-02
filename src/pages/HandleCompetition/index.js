@@ -14,6 +14,7 @@ import Table from '../../components/Table';
 import { Link, Switch, Route, useRouteMatch, useParams } from 'react-router-dom';
 import { useAuthContext } from '../../AuthContext';
 import { useCompsContext } from '../../CompetitionsContext';
+import DeleteButton from '../../components/DeleteButton';
 
 const HandleCompetition = () => {
   const [status, setStatus] = useState('notstarted');
@@ -99,14 +100,45 @@ const HandleCompetition = () => {
     },
   ];
 
-  const props = {
-    name: '',
-    age: '',
-    weight: '',
-    snatch: '',
-    cnj: '',
-    coachname: '',
-  };
+  // const props = {
+  //   name: '',
+  //   age: '',
+  //   weight: '',
+  //   snatch: '',
+  //   cnj: '',
+  //   coachname: '',
+  // };
+  const props = [
+    {
+      name: 'id',
+      hidden: true,
+    },
+    {
+      name: 'name',
+    },
+    {
+      name: 'age',
+    },
+    {
+      name: 'weight',
+      editable: true,
+    },
+    {
+      name: 'snatch',
+      editable: true,
+    },
+    {
+      name: 'cnj',
+      editable: true,
+    },
+    {
+      name: 'coachname',
+    },
+    {
+      template: DeleteButton,
+      templateParams: 'athletes',
+    },
+  ];
 
   const renderNav = role => {
     switch (role) {

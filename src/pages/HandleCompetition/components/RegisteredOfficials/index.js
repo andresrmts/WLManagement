@@ -1,9 +1,8 @@
 import React from 'react';
-import { useCompsContext } from '../../../../CompetitionsContext';
 import Table from '../../../../components/Table';
+import DeleteButton from '../../../../components/DeleteButton';
 
 const RegisteredOfficials = ({ officials }) => {
-  const { approveRemove } = useCompsContext();
   const headers = [
     {
       header: 'Name',
@@ -19,17 +18,24 @@ const RegisteredOfficials = ({ officials }) => {
     },
   ];
 
-  const props = { name: '', role: '', delete: '' };
-  const specificProps = ['Delete'];
-  return (
-    <Table
-      props={props}
-      headers={headers}
-      tableContent={officials}
-      specificProps={specificProps}
-      approveRemove={approveRemove}
-    />
-  );
+  const props = [
+    {
+      name: 'id',
+      hidden: true,
+    },
+    {
+      name: 'name',
+    },
+    {
+      name: 'role',
+    },
+    {
+      template: DeleteButton,
+      templateParams: 'officials',
+    },
+  ];
+
+  return <Table props={props} headers={headers} tableContent={officials} />;
 };
 
 export default RegisteredOfficials;

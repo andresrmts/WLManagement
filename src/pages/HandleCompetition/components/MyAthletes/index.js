@@ -1,6 +1,7 @@
 import React from 'react';
 import { useAuthContext } from '../../../../AuthContext';
 import Table from '../../../../components/Table';
+import DeleteButton from '../../../../components/DeleteButton';
 
 const MyAthletes = ({ athletes, updateTable }) => {
   const { userId } = useAuthContext();
@@ -26,20 +27,45 @@ const MyAthletes = ({ athletes, updateTable }) => {
       header: 'CNJ',
       styles: 'fw6 pa3 bg-white',
     },
+  ];
+
+  // const props = {
+  //   name: '',
+  //   age: '',
+  //   weight: '',
+  //   snatch: '',
+  //   cnj: ''
+  // };
+
+  const props = [
     {
-      header: 'Coachname',
-      styles: 'fw6 pa3 bg-white',
+      name: 'id',
+      hidden: true,
+    },
+    {
+      name: 'name',
+    },
+    {
+      name: 'age',
+    },
+    {
+      name: 'weight',
+      editable: true,
+    },
+    {
+      name: 'snatch',
+      editable: true,
+    },
+    {
+      name: 'cnj',
+      editable: true,
+    },
+    {
+      template: DeleteButton,
+      templateParams: 'athletes',
     },
   ];
 
-  const props = {
-    name: '',
-    age: '',
-    weight: '',
-    snatch: '',
-    cnj: '',
-    coachname: '',
-  };
   return <Table props={props} headers={headers} tableContent={onlyCoachAthletes} updateTable={updateTable} />;
 };
 

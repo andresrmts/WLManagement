@@ -1,10 +1,8 @@
 import React from 'react';
-import { useCompsContext } from '../../../../CompetitionsContext';
 import Table from '../../../../components/Table';
+import AddRemove from '../../../../components/AddRemove';
 
 const Registrations = ({ registrations }) => {
-  const { approveRemove } = useCompsContext();
-
   const headers = [
     {
       header: 'Name',
@@ -20,17 +18,24 @@ const Registrations = ({ registrations }) => {
     },
   ];
 
-  const props = { name: '', role: '', approve: '' };
-  const specificProps = ['Yes', 'No'];
-  return (
-    <Table
-      props={props}
-      headers={headers}
-      tableContent={registrations}
-      specificProps={specificProps}
-      approveRemove={approveRemove}
-    />
-  );
+  const props = [
+    {
+      name: 'id',
+      hidden: true,
+    },
+    {
+      name: 'name',
+    },
+    {
+      name: 'role',
+    },
+    {
+      template: AddRemove,
+      templateParams: 'registrations',
+    },
+  ];
+
+  return <Table props={props} headers={headers} tableContent={registrations} />;
 };
 
 export default Registrations;

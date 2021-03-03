@@ -3,70 +3,45 @@ import { useAuthContext } from '../../../../AuthContext';
 import Table from '../../../../components/Table';
 import DeleteButton from '../../../../components/DeleteButton';
 
-const MyAthletes = ({ athletes, updateTable }) => {
+const MyAthletes = ({ athletes, updateTable, onDelete }) => {
   const { userId } = useAuthContext();
   const onlyCoachAthletes = athletes.filter(athlete => athlete.coachid === userId);
-  const headers = [
-    {
-      header: 'Name',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Age',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Weight',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Snatch',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'CNJ',
-      styles: 'fw6 pa3 bg-white',
-    },
-  ];
 
-  // const props = {
-  //   name: '',
-  //   age: '',
-  //   weight: '',
-  //   snatch: '',
-  //   cnj: ''
-  // };
-
-  const props = [
+  const columns = [
     {
       name: 'id',
       hidden: true,
     },
     {
       name: 'name',
+      columnName: 'Athlete Name',
     },
     {
       name: 'age',
+      columnName: 'Age',
     },
     {
       name: 'weight',
+      columnName: 'Weight',
       editable: true,
     },
     {
       name: 'snatch',
+      columnName: 'Snatch',
       editable: true,
     },
     {
       name: 'cnj',
+      columnName: 'Clean & Jerk',
       editable: true,
     },
     {
       template: DeleteButton,
-      templateParams: 'athletes',
+      templateParams: { group: 'athletes', onDelete: onDelete },
     },
   ];
 
-  return <Table props={props} headers={headers} tableContent={onlyCoachAthletes} updateTable={updateTable} />;
+  return <Table columns={columns} tableContent={onlyCoachAthletes} updateTable={updateTable} />;
 };
 
 export default MyAthletes;

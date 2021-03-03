@@ -2,40 +2,27 @@ import React from 'react';
 import Table from '../../../../components/Table';
 import DeleteButton from '../../../../components/DeleteButton';
 
-const RegisteredOfficials = ({ officials }) => {
-  const headers = [
-    {
-      header: 'Name',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Role',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Delete?',
-      styles: 'fw6 pa3 bg-white',
-    },
-  ];
-
-  const props = [
+const RegisteredOfficials = ({ officials, onDelete }) => {
+  const columns = [
     {
       name: 'id',
       hidden: true,
     },
     {
       name: 'name',
+      columnName: 'Name',
     },
     {
       name: 'role',
+      columnName: 'Role',
     },
     {
       template: DeleteButton,
-      templateParams: 'officials',
+      templateParams: { group: 'officials', onDelete: onDelete },
     },
   ];
 
-  return <Table props={props} headers={headers} tableContent={officials} />;
+  return <Table columns={columns} tableContent={officials} />;
 };
 
 export default RegisteredOfficials;

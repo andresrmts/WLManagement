@@ -5,8 +5,8 @@ import ApproveButton from '../ApproveButton';
 const AddRemove = props => {
   return (
     <div>
-      <ApproveButton group={props.group} row={props.row} />
-      <DeleteButton group={props.group} row={props.row} />
+      <ApproveButton params={props.params} row={props.row} />
+      <DeleteButton params={props.params} row={props.row} />
     </div>
   );
 };

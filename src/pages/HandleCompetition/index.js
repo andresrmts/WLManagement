@@ -26,7 +26,15 @@ const HandleCompetition = () => {
     votes: 0,
   });
   const { userName, userId, role, setRole } = useAuthContext();
-  const { getCompetition, addAthlete, setNilAttempt, setLiftResult, updateTable } = useCompsContext();
+  const {
+    getCompetition,
+    addAthlete,
+    setNilAttempt,
+    setLiftResult,
+    updateTable,
+    deleteRow,
+    approveRow,
+  } = useCompsContext();
   const { compId } = useParams();
   const competition = getCompetition(compId);
   const match = useRouteMatch();
@@ -73,70 +81,41 @@ const HandleCompetition = () => {
     setVerdict({ result: 0, votes: 0 });
   };
 
-  const headers = [
-    {
-      header: 'Name',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Age',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Weight',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Snatch',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'CNJ',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Coachname',
-      styles: 'fw6 pa3 bg-white',
-    },
-  ];
-
-  // const props = {
-  //   name: '',
-  //   age: '',
-  //   weight: '',
-  //   snatch: '',
-  //   cnj: '',
-  //   coachname: '',
-  // };
-  const props = [
+  const columns = [
     {
       name: 'id',
       hidden: true,
     },
     {
       name: 'name',
+      columnName: 'Athlete Name',
     },
     {
       name: 'age',
+      columnName: 'Age',
     },
     {
       name: 'weight',
+      columnName: 'Weight',
       editable: true,
     },
     {
       name: 'snatch',
+      columnName: 'Snatch',
       editable: true,
     },
     {
       name: 'cnj',
+      columnName: 'Clean & Jerk',
       editable: true,
     },
     {
       name: 'coachname',
+      columnName: 'Coach',
     },
     {
       template: DeleteButton,
-      templateParams: 'athletes',
+      templateParams: { group: 'athletes', onDelete: deleteRow },
     },
   ];
 
@@ -171,20 +150,20 @@ const HandleCompetition = () => {
         {isAdmin && status === 'notstarted' && (
           <div>
             <Route exact path={match.path}>
-              <Registrations registrations={competition.registrations} />
+              <Registrations registrations={competition.registrations} onDelete={deleteRow} onApprove={approveRow} />
             </Route>
             <Route path={`${match.path}/registeredofficials`}>
               <RegisteredOfficials officials={competition.officials} />
             </Route>
             <Route path={`${match.path}/athletelist`}>
-              <Table props={props} headers={headers} tableContent={competition.athletes} updateTable={updateTable} />
+              <Table columns={columns} tableContent={competition.athletes} updateTable={updateTable} />
             </Route>
           </div>
         )}
         {role === 'coach' && status === 'notstarted' && (
           <div>
             <Route exact path={match.path}>
-              <MyAthletes athletes={competition.athletes} updateTable={updateTable} />
+              <MyAthletes athletes={competition.athletes} updateTable={updateTable} onDelete={deleteRow} />
             </Route>
             <Route path={`${match.path}/athleteregistration`}>
               <AthleteRegistration onAdd={addAthlete} />

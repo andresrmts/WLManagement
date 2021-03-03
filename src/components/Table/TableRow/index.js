@@ -21,7 +21,7 @@ const TableRow = ({ row, columns, updateTable, specificProps, approveRemove }) =
       return <input placeholder={`${name}`} onKeyPress={e => onSubmit(e, name)} type="number"></input>;
     } else if (template) {
       let Component = template;
-      return <Component row={row} group={templateParams} />;
+      return <Component row={row} params={templateParams} />;
     }
     return row[column.name];
   };

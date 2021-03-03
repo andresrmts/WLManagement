@@ -25,31 +25,22 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, tim
     setCurrentChangeCounter(0);
   }, []);
 
-  const headers = [
-    {
-      header: 'Name',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Attempt',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: lift,
-      styles: 'fw6 pa3 bg-white',
-    },
-  ];
-
-  const props = [
+  const columns = [
     {
       name: 'id',
       hidden: true,
     },
     {
+      name: 'name',
+      columnName: 'Athlete Name',
+    },
+    {
       name: 'attempt',
+      columnName: 'Attempt',
     },
     {
       name: lift,
+      columnName: lift,
     },
   ];
 
@@ -76,7 +67,7 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, tim
       <div className="fl w-100 w-100-ns pa2">
         <div className="tc outline bg-white pv4">
           Next Up
-          <Table props={props} headers={headers} tableContent={onTheClock} />
+          <Table columns={columns} tableContent={onTheClock} />
         </div>
       </div>
     </div>

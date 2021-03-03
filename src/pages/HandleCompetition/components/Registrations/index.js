@@ -2,40 +2,27 @@ import React from 'react';
 import Table from '../../../../components/Table';
 import AddRemove from '../../../../components/AddRemove';
 
-const Registrations = ({ registrations }) => {
-  const headers = [
-    {
-      header: 'Name',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Role',
-      styles: 'fw6 pa3 bg-white',
-    },
-    {
-      header: 'Approve?',
-      styles: 'fw6 pa3 bg-white',
-    },
-  ];
-
-  const props = [
+const Registrations = ({ registrations, onDelete, onApprove }) => {
+  const columns = [
     {
       name: 'id',
       hidden: true,
     },
     {
       name: 'name',
+      columnName: 'Name',
     },
     {
       name: 'role',
+      columnName: 'Role',
     },
     {
       template: AddRemove,
-      templateParams: 'registrations',
+      templateParams: { group: 'registrations', onDelete: onDelete, onApprove: onApprove },
     },
   ];
 
-  return <Table props={props} headers={headers} tableContent={registrations} />;
+  return <Table columns={columns} tableContent={registrations} />;
 };
 
 export default Registrations;

@@ -1,9 +1,8 @@
 import React from 'react';
 // import { Route } from '../../Router';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { CompetitionProvider } from '../../pages/HandleCompetition/CompetitionContext';
 import { CompsProvider } from '../../CompetitionsContext';
-// import { routes } from '../../Router/routes';
 import SignIn from '../../pages/SignIn';
 import Competitions from '../../pages/Competitions';
 import Register from '../../pages/Register';
@@ -12,7 +11,7 @@ import HandleCompetition from '../../pages/HandleCompetition';
 import { useAuthContext } from '../../AuthContext';
 
 const AppRouter = ({ onSearchChange }) => {
-  const { userName, userId } = useAuthContext();
+  const { userId } = useAuthContext();
 
   const isSignedIn = !!userId;
 
@@ -39,9 +38,7 @@ const AppRouter = ({ onSearchChange }) => {
                 <CompetitionCreation />
               </Route>
               <Route path="/competition/:compId">
-                <CompetitionProvider userName={userName}>
-                  <HandleCompetition />
-                </CompetitionProvider>
+                <HandleCompetition />
               </Route>
             </CompsProvider>
           </div>

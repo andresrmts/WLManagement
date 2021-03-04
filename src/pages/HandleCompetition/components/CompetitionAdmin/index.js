@@ -13,22 +13,24 @@ const CompetitionAdmin = ({ athletes, toggleTimer, timer, lift, time, changeTime
       }
     });
 
-  const headers = [
+  const columns = [
     {
-      header: 'Name',
-      styles: 'fw6 pa3 bg-white',
+      name: 'id',
+      hidden: true,
     },
     {
-      header: 'Attempt',
-      styles: 'fw6 pa3 bg-white',
+      name: 'name',
+      columnName: 'Athlete Name',
     },
     {
-      header: lift,
-      styles: 'fw6 pa3 bg-white',
+      name: 'attempt',
+      columnName: 'Attempt',
+    },
+    {
+      name: lift,
+      columnName: lift,
     },
   ];
-
-  const props = { name: '', attempt: '', [lift]: '' };
 
   return (
     <div className="cf ph2-ns">
@@ -51,7 +53,7 @@ const CompetitionAdmin = ({ athletes, toggleTimer, timer, lift, time, changeTime
       <div className="fl w-100 w-40-ns pa2">
         <div className="tc outline bg-white pv4">
           Next Up
-          <Table props={props} headers={headers} tableContent={onTheClock} />
+          <Table columns={columns} tableContent={onTheClock} />
         </div>
       </div>
     </div>

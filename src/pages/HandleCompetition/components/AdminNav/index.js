@@ -1,10 +1,15 @@
 import React from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link, useParams, useRouteMatch } from 'react-router-dom';
 import { useAuthContext } from '../../../../AuthContext';
+import { useCompsContext } from '../../../../CompetitionsContext';
 
 const AdminNav = ({ status, setStatus }) => {
+  const { getCompetition } = useCompsContext();
+  const { compId } = useParams();
   const { setRole } = useAuthContext();
   const match = useRouteMatch();
+
+  const competition = getCompetition(compId);
 
   const exitComp = () => {
     setRole('');
@@ -12,7 +17,7 @@ const AdminNav = ({ status, setStatus }) => {
 
   return (
     <div>
-      <h1>You are currently working on COMPETITIONNAME</h1>
+      <h1>You are currently working on {competition.name}</h1>
       {status === 'started' ? (
         <nav style={{ display: 'flex', justifyContent: 'center' }}>
           <Link to={match.url} onClick={() => setStatus('paused')} className="f6 pa3 underline pointer red ba">

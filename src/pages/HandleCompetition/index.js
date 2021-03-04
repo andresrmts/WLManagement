@@ -14,6 +14,7 @@ import Table from '../../components/Table';
 import { Link, Switch, Route, useRouteMatch, useParams } from 'react-router-dom';
 import { useAuthContext } from '../../AuthContext';
 import { useCompsContext } from '../../CompetitionsContext';
+import DeleteButton from '../../components/DeleteButton';
 
 const HandleCompetition = () => {
   const [status, setStatus] = useState('notstarted');
@@ -25,7 +26,15 @@ const HandleCompetition = () => {
     votes: 0,
   });
   const { userName, userId, role, setRole } = useAuthContext();
-  const { getCompetition, editWeight, addAthlete, setNilAttempt, setLiftResult } = useCompsContext();
+  const {
+    getCompetition,
+    addAthlete,
+    setNilAttempt,
+    setLiftResult,
+    updateTable,
+    deleteRow,
+    approveRow,
+  } = useCompsContext();
   const { compId } = useParams();
   const competition = getCompetition(compId);
   const match = useRouteMatch();
@@ -72,43 +81,43 @@ const HandleCompetition = () => {
     setVerdict({ result: 0, votes: 0 });
   };
 
-  const headers = [
+  const columns = [
     {
-      header: 'Name',
-      styles: 'fw6 pa3 bg-white',
+      name: 'id',
+      hidden: true,
     },
     {
-      header: 'Age',
-      styles: 'fw6 pa3 bg-white',
+      name: 'name',
+      columnName: 'Athlete Name',
     },
     {
-      header: 'Weight',
-      styles: 'fw6 pa3 bg-white',
+      name: 'age',
+      columnName: 'Age',
     },
     {
-      header: 'Snatch',
-      styles: 'fw6 pa3 bg-white',
+      name: 'weight',
+      columnName: 'Weight',
+      editable: true,
     },
     {
-      header: 'CNJ',
-      styles: 'fw6 pa3 bg-white',
+      name: 'snatch',
+      columnName: 'Snatch',
+      editable: true,
     },
     {
-      header: 'Coachname',
-      styles: 'fw6 pa3 bg-white',
+      name: 'cnj',
+      columnName: 'Clean & Jerk',
+      editable: true,
+    },
+    {
+      name: 'coachname',
+      columnName: 'Coach',
+    },
+    {
+      template: DeleteButton,
+      templateParams: { group: 'athletes', onDelete: deleteRow },
     },
   ];
-
-  const props = {
-    name: '',
-    age: '',
-    weight: '',
-    snatch: '',
-    cnj: '',
-    coachname: '',
-  };
-
-  const outSideProps = { functions: { weight: editWeight } };
 
   const renderNav = role => {
     switch (role) {
@@ -141,20 +150,20 @@ const HandleCompetition = () => {
         {isAdmin && status === 'notstarted' && (
           <div>
             <Route exact path={match.path}>
-              <Registrations registrations={competition.registrations} />
+              <Registrations registrations={competition.registrations} onDelete={deleteRow} onApprove={approveRow} />
             </Route>
             <Route path={`${match.path}/registeredofficials`}>
               <RegisteredOfficials officials={competition.officials} />
             </Route>
             <Route path={`${match.path}/athletelist`}>
-              <Table props={props} headers={headers} tableContent={competition.athletes} outSideProps={outSideProps} />
+              <Table columns={columns} tableContent={competition.athletes} updateTable={updateTable} />
             </Route>
           </div>
         )}
         {role === 'coach' && status === 'notstarted' && (
           <div>
             <Route exact path={match.path}>
-              <MyAthletes athletes={competition.athletes} onWeightUpdate={editWeight} />
+              <MyAthletes athletes={competition.athletes} updateTable={updateTable} onDelete={deleteRow} />
             </Route>
             <Route path={`${match.path}/athleteregistration`}>
               <AthleteRegistration onAdd={addAthlete} />

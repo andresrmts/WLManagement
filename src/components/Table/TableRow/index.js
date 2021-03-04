@@ -1,38 +1,40 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-const TableRow = ({ rowProps, outSideProps }) => {
-  const [athleteName, setAthleteName] = useState('');
-  const [role, setRole] = useState('');
+const TableRow = ({ row, columns, updateTable, specificProps, approveRemove }) => {
+  const [editCell, setEditCell] = useState(null);
 
   const { compId } = useParams();
 
-  useEffect(() => {
-    setAthleteName(rowProps.name);
-    if (rowProps.role) {
-      setRole(rowProps.role);
+  const onSubmit = (e, prop) => {
+    if (e.key === 'Enter' && e.target.value !== '') {
+      updateTable(compId, row.name, prop, e.target.value);
+      setEditCell('');
+    } else if (e.key === 'Enter') {
+      setEditCell('');
     }
-  }, [rowProps]);
+  };
 
-  const callFunction = prop => {
-    if (outSideProps.functions && outSideProps.functions[prop] && typeof outSideProps.functions[prop] === 'function') {
-      outSideProps.functions[prop](compId, athleteName);
+  const isEditableCell = column => {
+    const { name, editable, template, templateParams } = column;
+    if (editCell === name && editable) {
+      return <input placeholder={`${name}`} onKeyPress={e => onSubmit(e, name)} type="number"></input>;
+    } else if (template) {
+      let Component = template;
+      return <Component row={row} params={templateParams} />;
     }
+    return row[column.name];
   };
 
   return (
     <tr className="stripe-dark">
-      {Object.keys(rowProps).map((prop, i) => (
-        <td key={i} headers={`${prop}`} onClick={() => callFunction(prop)} className="tc pa3">
-          {rowProps[prop] === 'undefined'
-            ? outSideProps.rows.content.map(word => (
-                <p onClick={() => outSideProps.functions[prop](compId, athleteName, word, role)} className="pointer">
-                  {word}
-                </p>
-              ))
-            : rowProps[prop]}
-        </td>
-      ))}
+      {columns.map(column =>
+        !column.hidden ? (
+          <td key={column.name} headers={`${column.name}`} onClick={() => setEditCell(column.name)} className="tc pa3">
+            {isEditableCell(column)}
+          </td>
+        ) : null,
+      )}
     </tr>
   );
 };

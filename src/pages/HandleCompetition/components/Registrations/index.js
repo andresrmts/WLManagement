@@ -1,29 +1,28 @@
 import React from 'react';
-import { useCompsContext } from '../../../../CompetitionsContext';
 import Table from '../../../../components/Table';
-import { useCompetitionContext } from '../../CompetitionContext';
+import AddRemove from '../../../../components/AddRemove';
 
-const Registrations = ({ registrations }) => {
-  const { approveRemove } = useCompsContext();
-
-  const headers = [
+const Registrations = ({ registrations, onDelete, onApprove }) => {
+  const columns = [
     {
-      header: 'Name',
-      styles: 'fw6 pa3 bg-white',
+      name: 'id',
+      hidden: true,
     },
     {
-      header: 'Role',
-      styles: 'fw6 pa3 bg-white',
+      name: 'name',
+      columnName: 'Name',
     },
     {
-      header: 'Approve?',
-      styles: 'fw6 pa3 bg-white',
+      name: 'role',
+      columnName: 'Role',
+    },
+    {
+      template: AddRemove,
+      templateParams: { group: 'registrations', onDelete: onDelete, onApprove: onApprove },
     },
   ];
 
-  const props = { name: '', role: '', approve: '' };
-  const outSideProps = { rows: { content: ['Yes', 'No'] }, functions: { approve: approveRemove } };
-  return <Table props={props} headers={headers} tableContent={registrations} outSideProps={outSideProps} />;
+  return <Table columns={columns} tableContent={registrations} />;
 };
 
 export default Registrations;

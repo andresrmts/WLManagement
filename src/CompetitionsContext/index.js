@@ -35,13 +35,14 @@ const CompsProvider = ({ children }) => {
       ],
       athletes: [
         {
+          id: 1,
           name: 'Athlete1',
           attempt: 0,
           weight: '-',
           age: 22,
           snatch: 22,
           cnj: 40,
-          coachid: 73,
+          coachid: 72,
           coachname: 'Külli',
           result: {
             snatch: [],
@@ -49,6 +50,7 @@ const CompsProvider = ({ children }) => {
           },
         },
         {
+          id: 2,
           name: 'Athlete2',
           attempt: 0,
           weight: '-',
@@ -63,13 +65,14 @@ const CompsProvider = ({ children }) => {
           },
         },
         {
+          id: 3,
           name: 'Athlete3',
           attempt: 0,
           weight: '-',
           age: 22,
           snatch: 30,
           cnj: 40,
-          coachid: 73,
+          coachid: 72,
           coachname: 'Külli',
           result: {
             snatch: [],
@@ -224,6 +227,18 @@ const CompsProvider = ({ children }) => {
     },
   ]);
 
+  const updateTable = (compId, athleteName, prop, value) => {
+    const updatedAthletes = competitions.map(competition =>
+      competition.id === compId
+        ? {
+            ...competition,
+            athletes: competition.athletes.map(ath => (ath.name === athleteName ? { ...ath, [prop]: value } : ath)),
+          }
+        : competition,
+    );
+    setCompetitions(updatedAthletes);
+  };
+
   const getCompetition = id => {
     const comp = competitions.find(competition => competition.id === id);
     return comp;
@@ -255,18 +270,6 @@ const CompsProvider = ({ children }) => {
       registrations: [],
       athletes: [],
     });
-  };
-
-  const editWeight = (id, athleteName) => {
-    const weight = prompt('Enter athlete weight');
-    setCompetitions(pS =>
-      pS.map(
-        comp =>
-          (comp.id = id
-            ? { ...comp, athletes: comp.athletes.map(ath => (athleteName === ath.name ? { ...ath, weight } : ath)) }
-            : comp),
-      ),
-    );
   };
 
   const setNilAttempt = id => {
@@ -347,40 +350,26 @@ const CompsProvider = ({ children }) => {
     correctCompetition.registrations.push({ id: userId, name, role });
   };
 
-  const approveRemove = (compId, name, decision, role) => {
+  const deleteRow = (compId, group, rowId) => {
     const competition = competitions.find(comp => compId === comp.id);
-    let splicedArray;
-    if (decision === 'Yes' && role === 'judge') {
-      if (competition.officials.filter(official => official.role === 'judge').length < 3) {
-        splicedArray = competition.registrations.splice(
-          competition.registrations.findIndex(participant => participant.name === name),
-          1,
-        );
-        competition.officials.push(splicedArray[0]);
-        setCompetitions(pS =>
-          pS.map(comp => (comp.id === compId ? { ...comp, registrations: competition.registrations } : comp)),
-        );
-        return;
-      }
-      alert('There already are 3 judges in the competition');
-      return;
-    } else if (decision === 'Yes') {
-      splicedArray = competition.registrations.splice(
-        competition.registrations.findIndex(participant => participant.name === name),
-        1,
-      );
-      competition.officials.push(splicedArray[0]);
-      setCompetitions(pS =>
-        pS.map(comp => (comp.id === compId ? { ...comp, registrations: competition.registrations } : comp)),
-      );
-      return;
-    }
-    competition.registrations.splice(
-      competition.registrations.findIndex(participant => participant.name === name),
+    competition[group].splice(
+      competition[group].findIndex(el => el.id === rowId),
       1,
     );
+    setCompetitions(pS => pS.map(comp => (comp.id === compId ? { ...comp, [group]: competition[group] } : comp)));
+  };
+
+  const approveRow = (compId, group, row) => {
+    const competition = competitions.find(comp => compId === comp.id);
+    competition[group].splice(
+      competition[group].findIndex(el => el.id === row.id),
+      1,
+    );
+    competition.officials.push(row);
     setCompetitions(pS =>
-      pS.map(comp => (comp.id === compId ? { ...comp, registrations: competition.registrations } : comp)),
+      pS.map(comp =>
+        comp.id === compId ? { ...comp, officials: competition.officials, [group]: competition[group] } : comp,
+      ),
     );
   };
 
@@ -389,13 +378,14 @@ const CompsProvider = ({ children }) => {
     getMyCompetitions,
     getActiveCompetitions,
     createCompetition,
-    editWeight,
     addAthlete,
     setNilAttempt,
     setLiftResult,
     changeWeight,
     joinComp,
-    approveRemove,
+    updateTable,
+    deleteRow,
+    approveRow,
   };
 
   return <CompsContext.Provider value={contextValue}>{children}</CompsContext.Provider>;

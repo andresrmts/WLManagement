@@ -1,47 +1,47 @@
 import React from 'react';
 import { useAuthContext } from '../../../../AuthContext';
 import Table from '../../../../components/Table';
+import DeleteButton from '../../../../components/DeleteButton';
 
-const MyAthletes = ({ athletes, onWeightUpdate }) => {
+const MyAthletes = ({ athletes, updateTable, onDelete }) => {
   const { userId } = useAuthContext();
   const onlyCoachAthletes = athletes.filter(athlete => athlete.coachid === userId);
-  const headers = [
+
+  const columns = [
     {
-      header: 'Name',
-      styles: 'fw6 pa3 bg-white',
+      name: 'id',
+      hidden: true,
     },
     {
-      header: 'Age',
-      styles: 'fw6 pa3 bg-white',
+      name: 'name',
+      columnName: 'Athlete Name',
     },
     {
-      header: 'Weight',
-      styles: 'fw6 pa3 bg-white',
+      name: 'age',
+      columnName: 'Age',
     },
     {
-      header: 'Snatch',
-      styles: 'fw6 pa3 bg-white',
+      name: 'weight',
+      columnName: 'Weight',
+      editable: true,
     },
     {
-      header: 'CNJ',
-      styles: 'fw6 pa3 bg-white',
+      name: 'snatch',
+      columnName: 'Snatch',
+      editable: true,
     },
     {
-      header: 'Coachname',
-      styles: 'fw6 pa3 bg-white',
+      name: 'cnj',
+      columnName: 'Clean & Jerk',
+      editable: true,
+    },
+    {
+      template: DeleteButton,
+      templateParams: { group: 'athletes', onDelete: onDelete },
     },
   ];
 
-  const props = {
-    name: '',
-    age: '',
-    weight: '',
-    snatch: '',
-    cnj: '',
-    coachname: '',
-  };
-  const outSideProps = { functions: { weight: onWeightUpdate } };
-  return <Table props={props} headers={headers} tableContent={onlyCoachAthletes} outSideProps={outSideProps} />;
+  return <Table columns={columns} tableContent={onlyCoachAthletes} updateTable={updateTable} />;
 };
 
 export default MyAthletes;

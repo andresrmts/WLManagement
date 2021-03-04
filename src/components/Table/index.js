@@ -1,26 +1,25 @@
 import React from 'react';
 import TableRow from './TableRow';
 
-const Table = ({ headers, tableContent, props, outSideProps }) => {
+const Table = ({ tableContent, columns, updateTable }) => {
   return (
     <div className="pa4">
       <div className="center overflow-auto">
         <table className="f6 w-100 mw8" cellSpacing="0">
           <thead>
             <tr className="stripe-dark">
-              {headers.map((header, i) => {
-                return (
-                  <th key={i} id={`${header.header}`} className={`${header.styles}`}>
-                    {header.header}
+              {columns.map((column, i) =>
+                !column.hidden ? (
+                  <th key={i} id={`${column.columnName}`} className="fw6 pa3 bg-white">
+                    {column.columnName}
                   </th>
-                );
-              })}
+                ) : null,
+              )}
             </tr>
           </thead>
           <tbody className="lh-copy">
-            {tableContent.map((row, i) => {
-              const rowProps = Object.fromEntries(Object.entries(props).map(([key, val]) => [key, `${row[key]}`]));
-              return <TableRow key={i} rowProps={rowProps} outSideProps={outSideProps} />;
+            {tableContent.map(row => {
+              return <TableRow key={row.id} row={row} columns={columns} updateTable={updateTable} />;
             })}
           </tbody>
         </table>

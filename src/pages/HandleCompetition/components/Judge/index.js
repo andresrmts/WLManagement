@@ -60,10 +60,10 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
   useEffect(() => {
     if (next.length > 0) {
       if (prevAthlete === athlete) {
-        changeTime(2, 0 + '0');
+        changeTime(2, 0);
         return;
       }
-      changeTime(1, 0 + '0');
+      changeTime(1, 0);
     }
   }, [attempt, athlete]);
 

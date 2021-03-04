@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CompetitionList from '../../../../components/CompetitionList';
+import CardList from '../../../../components/CardList';
 import NextAttempt from '../NextAttempt';
 import Table from '../../../../components/Table';
 import { useAuthContext } from '../../../../AuthContext';
@@ -52,7 +52,7 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, tim
       <div className="fl w-100 w-40-ns pa2 mv4">
         <div className="tc outline bg-white pv4">
           Your Competitors
-          <CompetitionList
+          <CardList
             toggleTimer={toggleTimer}
             onTheClock={onTheClock[0]}
             time={time}

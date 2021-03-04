@@ -3,7 +3,7 @@ import { Link, useParams, useRouteMatch } from 'react-router-dom';
 import { useAuthContext } from '../../../../AuthContext';
 import { useCompsContext } from '../../../../CompetitionsContext';
 
-const AdminNav = ({ status, setStatus }) => {
+const AdminNav = ({ status, setStatus, toggleTimer }) => {
   const { getCompetition } = useCompsContext();
   const { compId } = useParams();
   const { setRole } = useAuthContext();
@@ -15,12 +15,17 @@ const AdminNav = ({ status, setStatus }) => {
     setRole('');
   };
 
+  const changeCompStatus = status => {
+    setStatus(status);
+    toggleTimer();
+  };
+
   return (
     <div>
       <h1>You are currently working on {competition.name}</h1>
       {status === 'started' ? (
         <nav style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to={match.url} onClick={() => setStatus('paused')} className="f6 pa3 underline pointer red ba">
+          <Link to={match.url} onClick={() => changeCompStatus('paused')} className="f6 pa3 underline pointer red ba">
             PAUSE COMPETITION
           </Link>
           <Link to={match.url} className="f6 pa3 underline pointer black-90">
@@ -29,7 +34,7 @@ const AdminNav = ({ status, setStatus }) => {
         </nav>
       ) : status === 'paused' ? (
         <nav style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to={match.url} onClick={() => setStatus('started')} className="f6 pa3 underline pointer red ba">
+          <Link to={match.url} onClick={() => changeCompStatus('started')} className="f6 pa3 underline pointer red ba">
             START COMPETITION
           </Link>
           <Link to={match.url} className="f6 pa3 underline pointer black-90">
@@ -38,7 +43,7 @@ const AdminNav = ({ status, setStatus }) => {
         </nav>
       ) : (
         <nav style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to={match.url} onClick={() => setStatus('started')} className="f6 pa3 underline pointer red ba">
+          <Link to={match.url} onClick={() => changeCompStatus('started')} className="f6 pa3 underline pointer red ba">
             START COMPETITION
           </Link>
           <Link to={match.url} className="f6 pa3 underline pointer black-90">

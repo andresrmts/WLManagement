@@ -1,7 +1,8 @@
 import React from 'react';
-import Competition from './Competition';
+import CompetitionCard from './CompetitionCard';
+import AthleteCard from './AthleteCard';
 
-const CompetitionList = ({
+const CardList = ({
   competitions,
   myAthletes,
   changeWeight,
@@ -17,14 +18,15 @@ const CompetitionList = ({
       <div>
         {competitions.map((comp, i) => {
           return (
-            <Competition
-              key={i}
+            <CompetitionCard
+              key={comp.id}
               id={comp.id}
               name={comp.name}
               email={comp.email}
               location={comp.location}
               authorId={comp.authorId}
               officials={comp.officials}
+              date={comp.date}
             />
           );
         })}
@@ -35,8 +37,8 @@ const CompetitionList = ({
       <div>
         {myAthletes.map((athlete, i) => {
           return (
-            <Competition
-              key={i}
+            <AthleteCard
+              key={athlete.id}
               name={athlete.name}
               attempt={athlete.attempt}
               snatch={athlete.snatch}
@@ -56,4 +58,4 @@ const CompetitionList = ({
   }
 };
 
-export default CompetitionList;
+export default CardList;

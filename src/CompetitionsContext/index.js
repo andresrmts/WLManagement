@@ -260,16 +260,18 @@ const CompsProvider = ({ children }) => {
 
   const createCompetition = competition => {
     const { id, authorId, compName, location, date } = competition;
-    competitions.push({
+    const comps = competitions;
+    comps.push({
       id,
       authorId,
-      compName,
+      name: compName,
       location,
       date,
       officials: [],
       registrations: [],
       athletes: [],
     });
+    setCompetitions(comps);
   };
 
   const setNilAttempt = id => {

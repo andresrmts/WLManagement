@@ -17,8 +17,8 @@ import { useCompsContext } from '../../CompetitionsContext';
 import DeleteButton from '../../components/DeleteButton';
 
 const HandleCompetition = () => {
-  const [status, setStatus] = useState('notstarted');
-  const [time, setTime] = useState({ minutes: 1, seconds: 0 + '0' });
+  const [status, setStatus] = useState('started');
+  const [time, setTime] = useState({ minutes: 1, seconds: 0 });
   const [timer, setTimer] = useState(true);
   const [lift, setLift] = useState('snatch');
   const [verdict, setVerdict] = useState({
@@ -122,9 +122,9 @@ const HandleCompetition = () => {
   const renderNav = role => {
     switch (role) {
       case 'admin':
-        return <AdminNav status={status} setStatus={setStatus} />;
+        return <AdminNav toggleTimer={toggleTimer} status={status} setStatus={setStatus} />;
       case 'coach':
-        return <CoachNav />;
+        return <CoachNav status={status} />;
       case 'judge':
         if (status === 'started') {
           return <Result verdict={verdict} />;

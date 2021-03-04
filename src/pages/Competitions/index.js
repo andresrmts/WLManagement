@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import CompetitionList from '../../components/CompetitionList';
+import CardList from '../../components/CardList';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../../AuthContext';
 import { useCompsContext } from '../../CompetitionsContext';
 
-const Competitions = ({ adminToggle, onSearchChange }) => {
+const Competitions = ({ onSearchChange }) => {
   const { userName, userId } = useAuthContext();
   const { getMyCompetitions, getActiveCompetitions } = useCompsContext();
   const [yourComps] = useState(getMyCompetitions(userId));
@@ -38,13 +38,13 @@ const Competitions = ({ adminToggle, onSearchChange }) => {
         <div className="fl w-100 w-50-ns pa2 tc">
           <h1>Your Competitions</h1>
           <div>
-            <CompetitionList competitions={yourComps} />
+            <CardList competitions={yourComps} />
           </div>
         </div>
       </div>
       <div className="fl w-100 w-50-ns pa2 tc">
         <h1>Available Competitions</h1>
-        <CompetitionList competitions={activeComps} />
+        <CardList competitions={activeComps} />
       </div>
     </div>
   );

@@ -16,13 +16,12 @@ const CardList = ({
   if (competitions) {
     return (
       <div>
-        {competitions.map((comp, i) => {
+        {competitions.map(comp => {
           return (
             <CompetitionCard
               key={comp.id}
               id={comp.id}
               name={comp.name}
-              email={comp.email}
               location={comp.location}
               authorId={comp.authorId}
               officials={comp.officials}
@@ -35,7 +34,7 @@ const CardList = ({
   } else {
     return (
       <div>
-        {myAthletes.map((athlete, i) => {
+        {myAthletes.map(athlete => {
           return (
             <AthleteCard
               key={athlete.id}

@@ -12,16 +12,16 @@ const Competitions = ({ onSearchChange }) => {
 
   return (
     <div>
-      <p className="pa4 tc" style={{ display: 'flex', justifyContent: 'center' }}>
+      <p className="flex justify-center pa1 tc">
         You are signed in as {userName}. Please Create a new Competition or join an existing competition.
       </p>
       <div>
-        <div className="fl w-100 w-50-ns pa2 tc" style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to="/competitioncreation" className="pointer f6 link dim br-pill ba ph3 pv2 mb2 mid-gray no-underline">
+        <div className="flex justify-center fl w-100 w-50-ns pa2 tc">
+          <Link to="/competitioncreation" className="pointer f5 link dim br-pill ba ph3 pv2 mb2 mid-gray no-underline">
             New Competition
           </Link>
         </div>
-        <div className="fl w-100 w-50-ns pa1 black-80" style={{ display: 'flex', justifyContent: 'center' }}>
+        <div className="flex justify-center fl w-100 w-50-ns pa1 black-80">
           <div className="measure">
             <label htmlFor="competition" className="f6 b db mb2">
               Search for a competition
@@ -36,14 +36,14 @@ const Competitions = ({ onSearchChange }) => {
           </div>
         </div>
         <div className="fl w-100 w-50-ns pa2 tc">
-          <h1>Your Competitions</h1>
+          <h1 className="f4">Your Competitions</h1>
           <div>
             <CardList competitions={yourComps} />
           </div>
         </div>
       </div>
       <div className="fl w-100 w-50-ns pa2 tc">
-        <h1>Available Competitions</h1>
+        <h1 className="f4">Available Competitions</h1>
         <CardList competitions={activeComps} />
       </div>
     </div>

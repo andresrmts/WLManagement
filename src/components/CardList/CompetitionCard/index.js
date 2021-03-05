@@ -13,13 +13,13 @@ const CompetitionCard = ({ name, location, id, authorId, officials, date }) => {
   };
 
   return (
-    <article className="mw5 tc dib bg-white br3 pa3 ma3 ba b--black-10">
+    <article className="mw5 tc dib bg-white br3 pa3 ma3 ba b--black-10 w-auto">
       <div className="tc">
-        <h1 className="tc f4">{name}</h1>
+        <h1 className="tc f4 mt0">{name}</h1>
         <h2 className="tc f5">{location}</h2>
-        <h3 className="tc f6">{date}</h3>
+        <h3 className="tc f5">{date}</h3>
         <hr className="mw3 bb bw1 b--black-10" />
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <div className="flex justify-center">
           <Link
             to={`/competition/${id}`}
             className="f6 link dim br-pill ba ph3 pv2 mb2 dib mid-gray pointer no-underline black-90"

@@ -35,17 +35,19 @@ const NextAttempt = ({ changeTime, time, timer, lift }) => {
 
   if (next.length > 0) {
     return (
-      <article className="br2 ba dark-gray b--black-10 mv4 w-80 center">
+      <article className="h-auto br2 ba dark-gray b--black-10 mv4 w-auto center">
         <div className="pa2 ph3-ns pb3-ns">
           <div className="mt1">
-            <div className="flex flex-column justify-around">
+            <div className="flex flex-column justify-center">
               <Timer timer={timer} time={time} changeTime={changeTime} />
-              <h1 className="f2 pa2">{next[0].name}</h1>
-              <h1 className="f2 pa2">Attempt: {next[0].attempt + 1}</h1>
             </div>
             <div className="flex justify-around">
-              <h1 className="f2-m pa3">{lift === 'snatch' ? 'Snatch' : 'Clean and Jerk'}</h1>
-              <h1 className="f2-m pa3">Weight: {next[0][lift]}</h1>
+              <h1 className="f3 pa2">{next[0].name}</h1>
+              <h1 className="f3 pa2">Attempt: {next[0].attempt + 1}</h1>
+            </div>
+            <div className="flex justify-around">
+              <h1 className="f2 pa3">{lift === 'snatch' ? 'Snatch' : 'Clean and Jerk'}</h1>
+              <h1 className="f2 pa3">Weight: {next[0][lift]}</h1>
             </div>
           </div>
         </div>

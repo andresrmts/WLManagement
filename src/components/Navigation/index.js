@@ -13,7 +13,7 @@ const Navigation = () => {
 
   if (userId) {
     return (
-      <nav style={{ display: 'flex', justifyContent: 'center' }}>
+      <nav className="flex justify-center mv0">
         <Link to="/" onClick={() => signOut()} className="f3 pa3 underline pointer black-90">
           Sign Out
         </Link>
@@ -21,7 +21,7 @@ const Navigation = () => {
     );
   } else {
     return (
-      <nav style={{ display: 'flex', justifyContent: 'center' }}>
+      <nav className="flex justify-center">
         <Link to="/" className="f3 pa3 underline pointer black-90">
           Sign In
         </Link>

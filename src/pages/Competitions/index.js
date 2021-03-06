@@ -17,7 +17,7 @@ const Competitions = ({ onSearchChange }) => {
       </p>
       <div>
         <div className="flex justify-center fl w-100 w-50-ns pa2 tc">
-          <Link to="/competitioncreation" className="pointer f5 link dim br-pill ba ph3 pv2 mb2 mid-gray no-underline">
+          <Link to="/competitioncreation" className="pointer f6 link dim br-pill ba ph3 pv2 mb2 mid-gray no-underline">
             New Competition
           </Link>
         </div>

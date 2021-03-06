@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ErrorPopup from '../../ErrorPopup';
+// import './style.css';
 
 const AthleteCard = ({
   name,
@@ -35,9 +36,10 @@ const AthleteCard = ({
   };
 
   return (
-    <article className="w-auto tc dib bg-white br3 pa3 ma3 mh4 ba b--black-10">
+    <article className="h-inherit mw-100 tc dib bg-white br3 pa3 ma3 mh4 ba b--black-10">
       {showError ? <ErrorPopup closeError={setShowError} message={showError} /> : null}
       <div className="tc">
+        {/* {showError ? <ErrorPopup closeError={setShowError} message={showError} /> : null} */}
         <h1 className={`tc center f4 flex flex-wrap ${onTheClock.name === name ? 'red' : ''}`}>{name}</h1>
         <h2 className="tc f5">Attempt: {attempt + 1}</h2>
         <h3 className="tc f6">Next weight: {weight}</h3>

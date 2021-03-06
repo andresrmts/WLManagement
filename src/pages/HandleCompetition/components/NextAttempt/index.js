@@ -35,7 +35,7 @@ const NextAttempt = ({ changeTime, time, timer, lift }) => {
 
   if (next.length > 0) {
     return (
-      <article className="h-auto br2 ba dark-gray b--black-10 mv4 w-auto center">
+      <article className="flex items-center vh-75 vh-50-l br2 ba dark-gray b--black-10 mv4 w-auto center">
         <div className="pa2 ph3-ns pb3-ns">
           <div className="mt1">
             <div className="flex flex-column justify-center">

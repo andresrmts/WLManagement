@@ -13,7 +13,7 @@ const CoachNav = ({ status }) => {
 
   return (
     <div>
-      <h1>
+      <h1 className="f5">
         You are currently coach {userName} in {competition.name}
       </h1>
       <nav style={{ display: 'flex', justifyContent: 'center' }}>

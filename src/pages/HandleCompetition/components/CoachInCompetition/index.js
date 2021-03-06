@@ -51,7 +51,7 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, tim
           <NextAttempt lift={lift} timer={timer} time={time} changeTime={changeTime} />
         </div>
         <div className="fl w-auto w-40-ns pa2 mv4">
-          <div className="flex items-center-l justify-center tc w-auto outline bg-white pv4 vh-50-l vh-75 overflow-y-scroll">
+          <div className="flex justify-center tc w-auto outline bg-white pv4 vh-50-l vh-75 overflow-y-scroll">
             <CardList
               toggleTimer={toggleTimer}
               onTheClock={onTheClock[0]}
@@ -66,7 +66,7 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, tim
         </div>
       </div>
       <div className="flex justify-center justify-center-l vh-50 fl w-100 pa2">
-        <div className="vh-75 vh-50-l w-75 w-75-l tc outline bg-white pv4 overflow-y-scroll">
+        <div className="vh-50-ns vh-50-l w-75-m w-75-l tc outline bg-white pv4 overflow-y-scroll">
           Next Up
           <Table columns={columns} tableContent={onTheClock} />
         </div>

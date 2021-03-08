@@ -53,7 +53,7 @@ const HandleCompetition = () => {
   const nextLift = () => {
     setLift('cnj');
     setNilAttempt(compId);
-    setTime({ minutes: 1, seconds: 0 + '0' });
+    setTime({ minutes: 1, seconds: 0 });
     setTimer(false);
   };
 

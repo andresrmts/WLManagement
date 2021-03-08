@@ -1,6 +1,7 @@
 import React from 'react';
 import NextAttempt from '../NextAttempt';
 import Table from '../../../../components/Table';
+import Button from '../../../../components/StartStopButton';
 
 const CompetitionAdmin = ({ athletes, toggleTimer, timer, lift, time, changeTime, nextLift }) => {
   const onTheClock = athletes
@@ -28,30 +29,31 @@ const CompetitionAdmin = ({ athletes, toggleTimer, timer, lift, time, changeTime
     },
     {
       name: lift,
-      columnName: lift,
+      columnName: lift === 'snatch' ? 'Snatch' : 'CNJ',
     },
   ];
 
   return (
     <div className="cf ph2-ns">
-      <div className="flex">
-        <div className="pointer ba tc w-20 center" onClick={() => toggleTimer()}>
-          {timer === true ? <p className="pointer">Stop</p> : <p className="pointer">Start</p>}
+      <div className="flex center">
+        <div>
+          <Button
+            styles={`f6 pointer br1 ba bw1 ph3 pv2 ma2 ${timer ? 'red' : 'dark-green'}`}
+            onClick={toggleTimer}
+            text={timer ? 'STOP' : 'START'}
+          />
         </div>
-        {lift === 'snatch' ? (
-          <div onClick={() => nextLift()} className="ba tc w-20 center">
-            <p>Go to CNJ</p>
-          </div>
-        ) : (
-          ''
-        )}
+        <div>
+          {lift === 'snatch' ? (
+            <Button styles={'f6 pointer br1 ba bw1 ph3 pv2 ma2 near-black'} onClick={nextLift} text={'Go to CNJ'} />
+          ) : null}
+        </div>
       </div>
-      <div className="fl w-100 w-60-ns pa2 tc">
-        Next Attempt
+      <div className="flex items-center fl w-100 pa2 tc">
         <NextAttempt timer={timer} changeTime={changeTime} time={time} lift={lift} />
       </div>
-      <div className="fl w-100 w-40-ns pa2">
-        <div className="tc outline bg-white pv4">
+      <div className="flex justify-center justify-center-l fl w-100 pa2">
+        <div className="tc w-80 outline bg-white pv4">
           Next Up
           <Table columns={columns} tableContent={onTheClock} />
         </div>

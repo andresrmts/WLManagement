@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useParams, useRouteMatch } from 'react-router-dom';
 import { useAuthContext } from '../../../../AuthContext';
 import { useCompsContext } from '../../../../CompetitionsContext';
+import Button from '../../../../components/StartStopButton';
 
 const AdminNav = ({ status, setStatus, toggleTimer }) => {
   const { getCompetition } = useCompsContext();
@@ -22,30 +23,39 @@ const AdminNav = ({ status, setStatus, toggleTimer }) => {
 
   return (
     <div>
-      <h1>You are currently working on {competition.name}</h1>
       {status === 'started' ? (
-        <nav style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to={match.url} onClick={() => changeCompStatus('paused')} className="f6 pa3 underline pointer red ba">
-            PAUSE COMPETITION
-          </Link>
+        <nav className="flex justify-center">
+          <Button
+            styles={'f6 pointer br1 ba bw1 ph3 pv2 ma2 near-black'}
+            text={'PAUSE COMPETITION'}
+            params={'paused'}
+            onClick={changeCompStatus}
+          />
           <Link to={match.url} className="f6 pa3 underline pointer black-90">
             Competition Home
           </Link>
         </nav>
       ) : status === 'paused' ? (
-        <nav style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to={match.url} onClick={() => changeCompStatus('started')} className="f6 pa3 underline pointer red ba">
-            START COMPETITION
-          </Link>
+        <nav className="flex justify-center">
+          <Button
+            styles={'f6 pointer br1 ba bw1 ph3 pv2 ma2 near-black'}
+            text={'START COMPETITION'}
+            params={'started'}
+            onClick={changeCompStatus}
+          />
           <Link to={match.url} className="f6 pa3 underline pointer black-90">
             Competition Home
           </Link>
         </nav>
       ) : (
-        <nav style={{ display: 'flex', justifyContent: 'center' }}>
-          <Link to={match.url} onClick={() => changeCompStatus('started')} className="f6 pa3 underline pointer red ba">
-            START COMPETITION
-          </Link>
+        <nav className="flex justify-center">
+          <h1>You are currently working on {competition.name}</h1>
+          <Button
+            styles={'f6 pointer br1 ba bw1 ph3 pv2 ma2 near-black'}
+            text={'START COMPETITION'}
+            params={'started'}
+            onClick={changeCompStatus}
+          />
           <Link to={match.url} className="f6 pa3 underline pointer black-90">
             Pending Registrations
           </Link>

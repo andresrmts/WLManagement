@@ -28,8 +28,13 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
 
   const prevAthlete = usePrevious(athlete); // Stores the previous athlete name so timer rules could be followed
 
-  const nextAttempt = next[0].attempt;
-  const nextName = next[0].name;
+  let nextAttempt;
+  let nextName;
+
+  if (next[0]) {
+    nextAttempt = next[0].attempt;
+    nextName = next[0].name;
+  }
 
   useEffect(() => {
     if (time.minutes === 0 && time.seconds === 0) {

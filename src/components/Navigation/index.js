@@ -3,12 +3,13 @@ import { useAuthContext } from '../../AuthContext';
 import { Link } from 'react-router-dom';
 
 const Navigation = () => {
-  const { userId, setUserId, setUserName, setUserEmail } = useAuthContext();
+  const { userId, setUserId, setUserName, setUserEmail, setRole } = useAuthContext();
 
   const signOut = () => {
     setUserId(null);
     setUserName(null);
     setUserEmail(null);
+    setRole(null);
   };
 
   if (userId) {

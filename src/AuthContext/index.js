@@ -4,9 +4,9 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [userName, setUserName] = useState('Külli');
-  const [userId, setUserId] = useState(73);
+  const [userId, setUserId] = useState(22);
   const [userEmail, setUserEmail] = useState(null);
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState(null);
 
   const contextValue = {
     userName,

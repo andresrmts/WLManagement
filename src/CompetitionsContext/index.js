@@ -350,6 +350,9 @@ const CompsProvider = ({ children }) => {
   const joinComp = (compId, userId, name, role) => {
     const correctCompetition = competitions.find(comp => comp.id === compId);
     correctCompetition.registrations.push({ id: userId, name, role });
+    setCompetitions(pS =>
+      pS.map(comp => (comp.id === compId ? { ...comp, registrations: correctCompetition.registrations } : comp)),
+    );
   };
 
   const deleteRow = (compId, group, rowId) => {

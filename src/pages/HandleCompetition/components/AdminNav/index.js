@@ -2,9 +2,9 @@ import React from 'react';
 import { Link, useParams, useRouteMatch } from 'react-router-dom';
 import { useAuthContext } from '../../../../AuthContext';
 import { useCompsContext } from '../../../../CompetitionsContext';
-import Button from '../../../../components/StartStopButton';
+import Button from '../../../../components/Button';
 
-const AdminNav = ({ status, setStatus, toggleTimer }) => {
+const AdminNav = ({ status, setStatus, toggleTimer, showState }) => {
   const { getCompetition } = useCompsContext();
   const { compId } = useParams();
   const { setRole } = useAuthContext();
@@ -26,7 +26,7 @@ const AdminNav = ({ status, setStatus, toggleTimer }) => {
       {status === 'started' ? (
         <nav className="flex justify-center">
           <Button
-            styles={'f6 pointer br1 ba bw1 ph3 pv2 ma2 near-black'}
+            styles={'f6 pointer outline-0 br1 ba bw1 ph3 pv2 ma2 near-black'}
             text={'PAUSE COMPETITION'}
             params={'paused'}
             onClick={changeCompStatus}
@@ -38,7 +38,7 @@ const AdminNav = ({ status, setStatus, toggleTimer }) => {
       ) : status === 'paused' ? (
         <nav className="flex justify-center">
           <Button
-            styles={'f6 pointer br1 ba bw1 ph3 pv2 ma2 near-black'}
+            styles={'f6 pointer outline-0 br1 ba bw1 ph3 pv2 ma2 near-black'}
             text={'START COMPETITION'}
             params={'started'}
             onClick={changeCompStatus}
@@ -48,27 +48,29 @@ const AdminNav = ({ status, setStatus, toggleTimer }) => {
           </Link>
         </nav>
       ) : (
-        <nav className="flex justify-center">
+        <div>
           <h1>You are currently working on {competition.name}</h1>
-          <Button
-            styles={'f6 pointer br1 ba bw1 ph3 pv2 ma2 near-black'}
-            text={'START COMPETITION'}
-            params={'started'}
-            onClick={changeCompStatus}
-          />
-          <Link to={match.url} className="f6 pa3 underline pointer black-90">
-            Pending Registrations
-          </Link>
-          <Link to={`${match.url}/registeredofficials`} className="f6 pa3 underline pointer black-90">
-            Accepted Registrations
-          </Link>
-          <Link to={`${match.url}/athletelist`} className="f6 pa3 underline pointer black-90">
-            Competitor List
-          </Link>
-          <Link to="/competitions" onClick={() => exitComp()} className="f6 pa3 underline pointer black-90">
-            Exit
-          </Link>
-        </nav>
+          <nav className="flex justify-center">
+            <Button
+              styles={'f7 pointer outline-0 br1 ba bw1 ma2 near-black'}
+              text={'START COMPETITION'}
+              params={'started'}
+              onClick={changeCompStatus}
+            />
+            <Link to={match.url} className="f6 pa3 underline pointer black-90">
+              Pending Registrations
+            </Link>
+            <Link to={`${match.url}/registeredofficials`} className="f6 pa3 underline pointer black-90">
+              Accepted Registrations
+            </Link>
+            <Link to={`${match.url}/athletelist`} className="f6 pa3 underline pointer black-90">
+              Competitor List
+            </Link>
+            <Link to="/competitions" onClick={() => exitComp()} className="f6 pa3 underline pointer black-90">
+              Exit
+            </Link>
+          </nav>
+        </div>
       )}
     </div>
   );

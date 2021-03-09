@@ -1,7 +1,6 @@
 import React from 'react';
 // import { Route } from '../../Router';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import { CompetitionProvider } from '../../pages/HandleCompetition/CompetitionContext';
+import { Switch, Route } from 'react-router-dom';
 import { CompsProvider } from '../../CompetitionsContext';
 import SignIn from '../../pages/SignIn';
 import Competitions from '../../pages/Competitions';

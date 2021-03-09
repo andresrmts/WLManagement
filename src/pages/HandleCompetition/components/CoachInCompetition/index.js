@@ -65,8 +65,8 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, tim
           </div>
         </div>
       </div>
-      <div className="flex justify-center justify-center-l vh-50 fl w-100 pa2">
-        <div className="vh-50-ns vh-50-l w-75-m w-75-l tc outline bg-white pv4 overflow-y-scroll">
+      <div className="flex justify-center justify-center-l vh-50 vh-75-ns fl w-100">
+        <div className="vh-75-ns vh-50 vh-50-l w-75-m w-75-l tc outline bg-white pv4 overflow-y-scroll">
           Next Up
           <Table columns={columns} tableContent={onTheClock} />
         </div>

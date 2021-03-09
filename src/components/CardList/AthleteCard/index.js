@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import ErrorPopup from '../../ErrorPopup';
-// import './style.css';
+import Button from '../../Button';
 
 const AthleteCard = ({
   name,
@@ -54,9 +54,11 @@ const AthleteCard = ({
         >
           +
         </p>
-        <p className="pointer ba pa4 w-50 flex center" onClick={() => changeAttemptWeight()}>
-          Approve
-        </p>
+        <Button
+          styles={'f6 pointer outline-0 br1 ba bw1 ph3 pv2 ma2 near-black'}
+          text={'Approve'}
+          onClick={changeAttemptWeight}
+        />
         <hr className="mw3 bb bw1 b--black-10" />
       </div>
     </article>

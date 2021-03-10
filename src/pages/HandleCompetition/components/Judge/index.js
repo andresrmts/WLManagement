@@ -83,18 +83,20 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
   } else if (status === 'started' && voted === false && attempt !== '') {
     return (
       <div className="w-100">
-        <div className="flex center pa2">
-          <NextAttempt time={time} changeTime={changeTime} timer={timer} lift={lift} />
-        </div>
-        <div className="flex center w-33 pa2">
+        <div className="flex flex-row-ns flex-column center pa2">
           <Button
-            styles={'f6 center white pointer outline-0 br1 ba bw1 ph3 pv2 ma2 bg-green b--green'}
+            styles={
+              'flex items-center h3 vh-50-ns w-75 w-20-ns f6 center white pointer outline-0 br1 ba bw1 ph3 pv2 ma2 bg-green b--green'
+            }
             text={'YES'}
             onClick={castVerdict}
             params={'yes'}
           />
+          <NextAttempt time={time} changeTime={changeTime} timer={timer} lift={lift} />
           <Button
-            styles={'f6 center white pointer outline-0 br1 ba bw1 ph3 pv2 ma2 bg-red b--red'}
+            styles={
+              'flex items-center h3 vh-50-ns w-75 w-20-ns f6 center white pointer outline-0 br1 ba bw1 ph3 pv2 ma2 bg-red b--red'
+            }
             text={'NO'}
             onClick={castVerdict}
             params={'no'}
@@ -104,16 +106,30 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
     );
   } else if (voted) {
     return <h1>You voted already</h1>;
+  } else if (status === 'paused') {
+    return (
+      <div className="w-100">
+        <div className="flex flex-row-ns flex-column center pa2">
+          <Button
+            styles={
+              'flex items-center h3 vh-50-ns w-75 w-20-ns f6 center white pointer outline-0 br1 ba bw1 ph3 pv2 ma2 bg-green b--green'
+            }
+            text={'PAUSED'}
+          />
+          <NextAttempt time={time} changeTime={changeTime} timer={timer} lift={lift} />
+          <Button
+            styles={
+              'flex items-center h3 vh-50-ns w-75 w-20-ns f6 center white pointer outline-0 br1 ba bw1 ph3 pv2 ma2 bg-red b--red'
+            }
+            text={'PAUSED'}
+          />
+        </div>
+      </div>
+    );
   } else {
     return (
       <div>
-        <div>
-          <h1>No more attempts left</h1>
-        </div>
-        <div className="flex center pa2">
-          <p className="pointer flex flex-column center pa2 ma2 vh-50 w-40 ba b--black tc">PAUSE</p>
-          <p className="pointer flex flex-column center pa2 ma2 vh-50 w-40 outline-m tc bg-red ba b--red">PAUSE</p>
-        </div>
+        <h1>No more attempts left</h1>
       </div>
     );
   }

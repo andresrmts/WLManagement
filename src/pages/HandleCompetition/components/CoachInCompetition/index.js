@@ -47,10 +47,10 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, tim
   return (
     <div className="vh-75-ns cf ph2-ns">
       <div className="vh-25">
-        <div className="fl w-60-ns pa2">
+        <div className="fl w-60-ns w-100 pa2">
           <NextAttempt lift={lift} timer={timer} time={time} changeTime={changeTime} />
         </div>
-        <div className="fl w-auto w-40-ns pa2 mv4">
+        <div className="fl w-auto w-40-ns pa2">
           <div className="flex justify-center tc w-auto outline bg-white pv4 vh-50-l vh-75 overflow-y-scroll">
             <CardList
               toggleTimer={toggleTimer}

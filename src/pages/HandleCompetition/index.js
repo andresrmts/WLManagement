@@ -126,7 +126,7 @@ const HandleCompetition = () => {
       case 'coach':
         return <CoachNav status={status} />;
       case 'judge':
-        if (status === 'started') {
+        if (status !== 'notstarted') {
           return <Result verdict={verdict} />;
         }
         return (

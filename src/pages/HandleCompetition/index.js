@@ -17,7 +17,7 @@ import { useCompsContext } from '../../CompetitionsContext';
 import DeleteButton from '../../components/DeleteButton';
 
 const HandleCompetition = () => {
-  const [status, setStatus] = useState('started');
+  const [status, setStatus] = useState('notstarted');
   const [time, setTime] = useState({ minutes: 1, seconds: 0 });
   const [timer, setTimer] = useState(true);
   const [lift, setLift] = useState('snatch');

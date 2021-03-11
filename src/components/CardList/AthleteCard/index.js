@@ -45,7 +45,7 @@ const AthleteCard = ({
 
   return (
     <article className="h-inherit mw-100 tc dib bg-white br3 pa3 ma3 mh4 ba b--black-10 relative">
-      <div className="tc">
+      <div className="flex flex-column tc">
         {showError ? <ErrorPopup closeError={setShowError} message={showError} /> : null}
         <h1 className={`tc center f4 flex flex-wrap ${onTheClock.name === name ? 'red' : ''}`}>{name}</h1>
         <h2 className="tc f5">Attempt: {attempt + 1}</h2>

@@ -1,5 +1,4 @@
 import React from 'react';
-// import { Route } from '../../Router';
 import { Switch, Route } from 'react-router-dom';
 import { CompsProvider } from '../../CompetitionsContext';
 import SignIn from '../../pages/SignIn';

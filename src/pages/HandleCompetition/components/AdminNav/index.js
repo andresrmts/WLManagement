@@ -4,7 +4,7 @@ import { useAuthContext } from '../../../../AuthContext';
 import { useCompsContext } from '../../../../CompetitionsContext';
 import Button from '../../../../components/Button';
 
-const AdminNav = ({ status, setStatus, toggleTimer, showState }) => {
+const AdminNav = ({ status, setStatus, toggleTimer }) => {
   const { getCompetition } = useCompsContext();
   const { compId } = useParams();
   const { setRole } = useAuthContext();

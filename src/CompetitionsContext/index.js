@@ -154,6 +154,78 @@ const CompsProvider = ({ children }) => {
       ],
     },
     {
+      id: '4',
+      authorId: 13,
+      name: 'Comp4',
+      location: 'Eesti',
+      officials: [
+        {
+          id: 12,
+          name: 'Judge3',
+          role: 'judge',
+        },
+        {
+          id: 17,
+          name: 'Coach3',
+          role: 'coach',
+        },
+      ],
+      registrations: [
+        {
+          name: 'Judge4',
+          role: 'judge',
+        },
+        {
+          name: 'Coach4',
+          role: 'coach',
+        },
+      ],
+      athletes: [
+        {
+          name: 'Athletez1',
+          attempt: 0,
+          weight: '-',
+          age: 22,
+          snatch: 30,
+          cnj: 40,
+          coachid: 90,
+          coachname: 'Coach3',
+          result: {
+            snatch: [],
+            cnj: [],
+          },
+        },
+        {
+          name: 'Athletez2',
+          attempt: 0,
+          weight: '-',
+          age: 22,
+          snatch: 30,
+          cnj: 40,
+          coachid: 26,
+          coachname: 'Coach3',
+          result: {
+            snatch: [],
+            cnj: [],
+          },
+        },
+        {
+          name: 'Athletez3',
+          attempt: 0,
+          weight: '-',
+          age: 22,
+          snatch: 30,
+          cnj: 40,
+          coachid: 23,
+          coachname: 'Coach3',
+          result: {
+            snatch: [],
+            cnj: [],
+          },
+        },
+      ],
+    },
+    {
       id: '2',
       authorId: 13,
       name: 'Comp3',

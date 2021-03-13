@@ -8,7 +8,7 @@ import CompetitionCreation from '../../pages/CompetitionCreation';
 import HandleCompetition from '../../pages/HandleCompetition';
 import { useAuthContext } from '../../AuthContext';
 
-const AppRouter = ({ onSearchChange }) => {
+const AppRouter = () => {
   const { userId } = useAuthContext();
 
   const isSignedIn = !!userId;
@@ -30,7 +30,7 @@ const AppRouter = ({ onSearchChange }) => {
           <div>
             <CompsProvider>
               <Route path="/competitions">
-                <Competitions onSearchChange={onSearchChange} />
+                <Competitions />
               </Route>
               <Route path="/competitioncreation">
                 <CompetitionCreation />

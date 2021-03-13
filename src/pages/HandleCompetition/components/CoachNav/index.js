@@ -16,26 +16,26 @@ const CoachNav = ({ status }) => {
       <h1 className="f5">
         You are currently coach {userName} in {competition.name}
       </h1>
-      <nav className="flex justify-center">
+      <nav className="flex justify-center pa0">
         {status === 'started' ? (
           <Link to="/competitions" onClick={() => setRole('')} className="f3-ns f5 pa3 underline pointer black-90">
             Exit
           </Link>
         ) : (
           <nav className="flex justify-center">
-            <Link to={match.url} className="f3-ns f5-m f5 pa3-ns pa2-m underline pointer black-90">
+            <Link to={match.url} className="f4-ns f5-m f5 pa3-ns pa2-m mh1 underline pointer black-90">
               My Athletes
             </Link>
             <Link
               to={`${match.url}/athleteregistration`}
-              className="f3-ns f5-m f5 pa3-ns pa2-m underline pointer black-90"
+              className="f4-ns f5-m f5 pa3-ns pa2-m mh1 underline pointer black-90"
             >
               Register Athlete
             </Link>
             <Link
               to="/competitions"
               onClick={() => setRole('')}
-              className="f3-ns f5-m f5 pa3-ns pa2-m underline pointer black-90"
+              className="f4-ns f5-m f5 pa3-ns pa2-m underline pointer black-90"
             >
               Exit
             </Link>

@@ -421,6 +421,10 @@ const CompsProvider = ({ children }) => {
 
   const joinComp = (compId, userId, name, role) => {
     const correctCompetition = competitions.find(comp => comp.id === compId);
+    const judgeArray = correctCompetition.official.filter(official => official.role === 'judge');
+    if (role === 'judge' && judgeArray.length === 3) {
+      alert('There are 3 judges registered for this competition!');
+    }
     correctCompetition.registrations.push({ id: userId, name, role });
     setCompetitions(pS =>
       pS.map(comp => (comp.id === compId ? { ...comp, registrations: correctCompetition.registrations } : comp)),
@@ -438,6 +442,12 @@ const CompsProvider = ({ children }) => {
 
   const approveRow = (compId, group, row) => {
     const competition = competitions.find(comp => compId === comp.id);
+    const judgeArray = competition.officials.filter(official => official.role === 'judge');
+    if (row.role === 'judge' && judgeArray.length === 3) {
+      alert('There are 3 judges registered for this competition!');
+    } else if (row.role === 'judge') {
+      row.spot = judgeArray.length;
+    }
     competition[group].splice(
       competition[group].findIndex(el => el.id === row.id),
       1,

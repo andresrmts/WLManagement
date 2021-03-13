@@ -7,9 +7,11 @@ import { useCompsContext } from '../../CompetitionsContext';
 const Competitions = () => {
   const { userName, userId } = useAuthContext();
   const { getMyCompetitions, getActiveCompetitions } = useCompsContext();
-  const [yourComps] = useState(getMyCompetitions(userId));
-  const [activeComps] = useState(getActiveCompetitions(userId));
   const [searchBox, setSearchBox] = useState('');
+
+  const yourComps = getMyCompetitions(userId);
+  const activeComps = getActiveCompetitions(userId);
+  const filteredComps = activeComps.filter(comp => comp.name.toLowerCase().includes(searchBox.toLowerCase()));
 
   return (
     <div className="flex flex-column">
@@ -42,9 +44,7 @@ const Competitions = () => {
               />
             </div>
             <div>
-              <CardList
-                competitions={activeComps.filter(comp => comp.name.toLowerCase().includes(searchBox.toLowerCase()))}
-              />
+              <CardList competitions={filteredComps} />
             </div>
           </div>
         </div>

@@ -1,13 +1,14 @@
 import React from 'react';
+import Light from '../../../../components/Light';
 
 const Result = ({ verdict }) => {
-  if (verdict.result < 0 && verdict.votes === 3) {
-    return <div className="flex flex-column center tc bg-red vh-25">NO LIFT</div>;
-  } else if (verdict.result > 0 && verdict.votes === 3) {
-    return <div className="flex flex-column center tc bg-green vh-25">GOOD LIFT</div>;
-  } else {
-    return <div className="flex flex-column center tc bg-black vh-25"></div>;
-  }
+  return (
+    <div className="flex center h4 w-25">
+      <Light decision={verdict} />
+      <Light decision={verdict} />
+      <Light decision={verdict} />
+    </div>
+  );
 };
 
 export default Result;

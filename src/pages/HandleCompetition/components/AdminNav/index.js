@@ -4,7 +4,7 @@ import { useAuthContext } from '../../../../AuthContext';
 import { useCompsContext } from '../../../../CompetitionsContext';
 import Button from '../../../../components/Button';
 
-const AdminNav = ({ status, setStatus, toggleTimer }) => {
+const AdminNav = ({ status, setStatus, toggleTimer, showState }) => {
   const { getCompetition } = useCompsContext();
   const { compId } = useParams();
   const { setRole } = useAuthContext();
@@ -54,7 +54,9 @@ const AdminNav = ({ status, setStatus, toggleTimer }) => {
         </nav>
       ) : (
         <div>
-          <h1 className="f3-ns f5">You are currently working on {competition.name}</h1>
+          <h1 onClick={() => showState()} className="f3-ns f5">
+            You are currently working on {competition.name}
+          </h1>
           <nav className="flex flex-row-ns flex-column items-center justify-center">
             <div className="flex">
               <Button

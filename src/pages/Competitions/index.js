@@ -24,14 +24,14 @@ const Competitions = () => {
             New Competition
           </Link>
         </div>
-        <div className="flex justify-center w-100 vh-50">
-          <div className="fl w-100 w-40-ns pa2 tc outline vh-75-ns vh-50-l vh-50 overflow-y-scroll">
+        <div className="flex flex-row-ns flex-column justify-center w-100 vh-50">
+          <div className="fl w-100 w-40-ns pa2 tc outline vh-50-l vh-50 overflow-y-scroll">
             <h1 className="f4">Your Competitions</h1>
             <div>
               <CardList competitions={yourComps} />
             </div>
           </div>
-          <div className="flex flex-column items-center fl w-100 w-40-ns pa2 tc vh-75-ns vh-50-l vh-50 overflow-y-scroll outline">
+          <div className="flex flex-column items-center fl w-100 w-40-ns pa2 tc vh-50-l vh-50 overflow-y-scroll outline">
             <h1 className="f4">Available Competitions</h1>
             <div className="measure">
               <input

@@ -17,7 +17,6 @@ import { useCompsContext } from '../../CompetitionsContext';
 import DeleteButton from '../../components/DeleteButton';
 
 const HandleCompetition = () => {
-  const [status, setStatus] = useState('notstarted');
   const [time, setTime] = useState({ minutes: 1, seconds: 0 });
   const [timer, setTimer] = useState(true);
   const [lift, setLift] = useState('snatch');
@@ -34,9 +33,11 @@ const HandleCompetition = () => {
     updateTable,
     deleteRow,
     approveRow,
+    setStatus,
   } = useCompsContext();
   const { compId } = useParams();
   const competition = getCompetition(compId);
+  const { status } = competition;
   const match = useRouteMatch();
 
   const isAdmin = userId === competition.authorId;
@@ -140,7 +141,7 @@ const HandleCompetition = () => {
         );
       default:
         return (
-          <Link to="/competitions" className="f6 tc underline pointer center">
+          <Link to="/competitions" onClick={() => setRole('')} className="f6 tc underline pointer center">
             Exit
           </Link>
         );

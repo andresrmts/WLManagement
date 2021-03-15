@@ -9,6 +9,7 @@ const CompsProvider = ({ children }) => {
       authorId: 73,
       name: 'Comp1',
       location: 'Eesti',
+      status: 'started',
       officials: [
         {
           id: 22,
@@ -86,6 +87,7 @@ const CompsProvider = ({ children }) => {
       authorId: 13,
       name: 'Comp2',
       location: 'Eesti',
+      status: 'notstarted',
       officials: [
         {
           id: 17,
@@ -158,6 +160,7 @@ const CompsProvider = ({ children }) => {
       authorId: 13,
       name: 'Comp4',
       location: 'Eesti',
+      status: 'notstarted',
       officials: [
         {
           id: 12,
@@ -230,6 +233,7 @@ const CompsProvider = ({ children }) => {
       authorId: 13,
       name: 'Comp3',
       location: 'Eesti',
+      status: 'notstarted',
       officials: [
         {
           id: 12,
@@ -319,14 +323,24 @@ const CompsProvider = ({ children }) => {
   const getMyCompetitions = userId => {
     const comps = competitions
       .filter(competition => userId === competition.authorId)
-      .concat(competitions.filter(competition => competition.officials.find(official => official.id === userId)));
+      .concat(
+        competitions.filter(
+          competition =>
+            competition.officials.find(official => official.id === userId) ||
+            competition.registrations.find(reg => reg.id === userId),
+        ),
+      );
     return comps;
   };
 
   const getActiveCompetitions = userId => {
     const comps = competitions.filter(
-      competition => userId !== competition.authorId && !competition.officials.some(official => official.id === userId),
+      competition =>
+        userId !== competition.authorId &&
+        !competition.officials.some(official => official.id === userId) &&
+        competition.status === 'notstarted',
     );
+    console.log(competitions);
     return comps;
   };
 
@@ -421,7 +435,7 @@ const CompsProvider = ({ children }) => {
 
   const joinComp = (compId, userId, name, role) => {
     const correctCompetition = competitions.find(comp => comp.id === compId);
-    const judgeArray = correctCompetition.official.filter(official => official.role === 'judge');
+    const judgeArray = correctCompetition.officials.filter(official => official.role === 'judge');
     if (role === 'judge' && judgeArray.length === 3) {
       alert('There are 3 judges registered for this competition!');
     }
@@ -460,6 +474,12 @@ const CompsProvider = ({ children }) => {
     );
   };
 
+  const setStatus = (compid, status) => {
+    // const competition = competitions.find(comp => comp.id === compid);
+
+    setCompetitions(pS => pS.map(comp => (comp.id === compid ? { ...comp, status: status } : comp)));
+  };
+
   const contextValue = {
     getCompetition,
     getMyCompetitions,
@@ -473,6 +493,7 @@ const CompsProvider = ({ children }) => {
     updateTable,
     deleteRow,
     approveRow,
+    setStatus,
   };
 
   return <CompsContext.Provider value={contextValue}>{children}</CompsContext.Provider>;

@@ -4,6 +4,7 @@ import NextAttempt from '../NextAttempt';
 import Table from '../../../../components/Table';
 import { useAuthContext } from '../../../../AuthContext';
 import { useCompsContext } from '../../../../CompetitionsContext';
+import Attempt from '../../../../components/Attempt';
 
 const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, timer }) => {
   const { changeWeight } = useCompsContext();
@@ -35,12 +36,12 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, tim
       columnName: 'Athlete Name',
     },
     {
-      name: 'attempt',
       columnName: 'Attempt',
+      template: Attempt,
     },
     {
       name: lift,
-      columnName: lift,
+      columnName: lift === 'snatch' ? 'Snatch' : 'CNJ',
     },
   ];
 

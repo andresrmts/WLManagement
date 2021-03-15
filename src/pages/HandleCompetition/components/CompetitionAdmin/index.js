@@ -2,6 +2,7 @@ import React from 'react';
 import NextAttempt from '../NextAttempt';
 import Table from '../../../../components/Table';
 import Button from '../../../../components/Button';
+import Attempt from '../../../../components/Attempt';
 
 const CompetitionAdmin = ({ athletes, toggleTimer, timer, lift, time, changeTime, nextLift }) => {
   const onTheClock = athletes
@@ -24,8 +25,8 @@ const CompetitionAdmin = ({ athletes, toggleTimer, timer, lift, time, changeTime
       columnName: 'Athlete Name',
     },
     {
-      name: 'attempt',
       columnName: 'Attempt',
+      template: Attempt,
     },
     {
       name: lift,

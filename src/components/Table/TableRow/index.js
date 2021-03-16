@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-const TableRow = ({ row, columns, updateTable, specificProps, approveRemove }) => {
+const TableRow = ({ row, columns, updateTable }) => {
   const [editCell, setEditCell] = useState(null);
 
   const { compId } = useParams();

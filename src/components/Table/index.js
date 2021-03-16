@@ -4,7 +4,7 @@ import TableRow from './TableRow';
 const Table = ({ tableContent, columns, updateTable }) => {
   return (
     <div className="pa4">
-      <div className="center overflow-auto">
+      <div className="flex justify-center-l overflow-auto">
         <table className="f6 w-100 mw8" cellSpacing="0">
           <thead>
             <tr className="stripe-dark">

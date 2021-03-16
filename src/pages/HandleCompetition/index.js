@@ -17,8 +17,7 @@ import { useCompsContext } from '../../CompetitionsContext';
 import DeleteButton from '../../components/DeleteButton';
 
 const HandleCompetition = () => {
-  const [status, setStatus] = useState('notstarted');
-  const [time, setTime] = useState({ minutes: 1, seconds: 0 + '0' });
+  const [time, setTime] = useState(60);
   const [timer, setTimer] = useState(true);
   const [lift, setLift] = useState('snatch');
   const [verdict, setVerdict] = useState({
@@ -34,16 +33,22 @@ const HandleCompetition = () => {
     updateTable,
     deleteRow,
     approveRow,
+    setStatus,
   } = useCompsContext();
   const { compId } = useParams();
   const competition = getCompetition(compId);
+  const { status } = competition;
   const match = useRouteMatch();
 
   const isAdmin = userId === competition.authorId;
   const filteredUser = competition.officials.filter(reg => reg.id === userId);
 
-  const changeTime = (minutes, seconds) => {
-    setTime({ minutes, seconds });
+  const showState = () => {
+    console.log(competition);
+  };
+
+  const changeTime = seconds => {
+    setTime(seconds);
   };
 
   const toggleTimer = () => {
@@ -53,7 +58,7 @@ const HandleCompetition = () => {
   const nextLift = () => {
     setLift('cnj');
     setNilAttempt(compId);
-    setTime({ minutes: 1, seconds: 0 + '0' });
+    setTime(60);
     setTimer(false);
   };
 
@@ -122,11 +127,11 @@ const HandleCompetition = () => {
   const renderNav = role => {
     switch (role) {
       case 'admin':
-        return <AdminNav status={status} setStatus={setStatus} />;
+        return <AdminNav showState={showState} toggleTimer={toggleTimer} status={status} setStatus={setStatus} />;
       case 'coach':
-        return <CoachNav />;
+        return <CoachNav status={status} />;
       case 'judge':
-        if (status === 'started') {
+        if (status !== 'not_started') {
           return <Result verdict={verdict} />;
         }
         return (
@@ -136,7 +141,7 @@ const HandleCompetition = () => {
         );
       default:
         return (
-          <Link to="/competitions" className="f6 tc underline pointer center">
+          <Link to="/competitions" onClick={() => setRole('')} className="f6 tc underline pointer center">
             Exit
           </Link>
         );
@@ -147,7 +152,7 @@ const HandleCompetition = () => {
     <div>
       {renderNav(role)}
       <Switch>
-        {isAdmin && status === 'notstarted' && (
+        {isAdmin && status === 'not_started' && (
           <div>
             <Route exact path={match.path}>
               <Registrations registrations={competition.registrations} onDelete={deleteRow} onApprove={approveRow} />
@@ -160,7 +165,7 @@ const HandleCompetition = () => {
             </Route>
           </div>
         )}
-        {role === 'coach' && status === 'notstarted' && (
+        {role === 'coach' && status === 'not_started' && (
           <div>
             <Route exact path={match.path}>
               <MyAthletes athletes={competition.athletes} updateTable={updateTable} onDelete={deleteRow} />
@@ -214,7 +219,7 @@ const HandleCompetition = () => {
             <h1>Your application hasn't been accepted yet!</h1>
           </Route>
         )}
-        {status === 'notstarted' && (
+        {status === 'not_started' && (
           <Route path={match.path}>
             <RoleSelection />
           </Route>

@@ -9,6 +9,7 @@ const CompsProvider = ({ children }) => {
       authorId: 73,
       name: 'Comp1',
       location: 'Eesti',
+      status: 'started',
       officials: [
         {
           id: 22,
@@ -86,6 +87,7 @@ const CompsProvider = ({ children }) => {
       authorId: 13,
       name: 'Comp2',
       location: 'Eesti',
+      status: 'not_started',
       officials: [
         {
           id: 17,
@@ -154,10 +156,84 @@ const CompsProvider = ({ children }) => {
       ],
     },
     {
+      id: '4',
+      authorId: 13,
+      name: 'Comp4',
+      location: 'Eesti',
+      status: 'not_started',
+      officials: [
+        {
+          id: 12,
+          name: 'Judge3',
+          role: 'judge',
+        },
+        {
+          id: 17,
+          name: 'Coach3',
+          role: 'coach',
+        },
+      ],
+      registrations: [
+        {
+          name: 'Judge4',
+          role: 'judge',
+        },
+        {
+          name: 'Coach4',
+          role: 'coach',
+        },
+      ],
+      athletes: [
+        {
+          name: 'Athletez1',
+          attempt: 0,
+          weight: '-',
+          age: 22,
+          snatch: 30,
+          cnj: 40,
+          coachid: 90,
+          coachname: 'Coach3',
+          result: {
+            snatch: [],
+            cnj: [],
+          },
+        },
+        {
+          name: 'Athletez2',
+          attempt: 0,
+          weight: '-',
+          age: 22,
+          snatch: 30,
+          cnj: 40,
+          coachid: 26,
+          coachname: 'Coach3',
+          result: {
+            snatch: [],
+            cnj: [],
+          },
+        },
+        {
+          name: 'Athletez3',
+          attempt: 0,
+          weight: '-',
+          age: 22,
+          snatch: 30,
+          cnj: 40,
+          coachid: 23,
+          coachname: 'Coach3',
+          result: {
+            snatch: [],
+            cnj: [],
+          },
+        },
+      ],
+    },
+    {
       id: '2',
       authorId: 13,
       name: 'Comp3',
       location: 'Eesti',
+      status: 'not_started',
       officials: [
         {
           id: 12,
@@ -247,29 +323,40 @@ const CompsProvider = ({ children }) => {
   const getMyCompetitions = userId => {
     const comps = competitions
       .filter(competition => userId === competition.authorId)
-      .concat(competitions.filter(competition => competition.officials.find(official => official.id === userId)));
+      .concat(
+        competitions.filter(
+          competition =>
+            competition.officials.find(official => official.id === userId) ||
+            competition.registrations.find(reg => reg.id === userId),
+        ),
+      );
     return comps;
   };
 
   const getActiveCompetitions = userId => {
     const comps = competitions.filter(
-      competition => userId !== competition.authorId && !competition.officials.some(official => official.id === userId),
+      competition =>
+        userId !== competition.authorId &&
+        !competition.officials.some(official => official.id === userId) &&
+        competition.status === 'not_started',
     );
     return comps;
   };
 
   const createCompetition = competition => {
     const { id, authorId, compName, location, date } = competition;
-    competitions.push({
+    const comps = competitions;
+    comps.push({
       id,
       authorId,
-      compName,
+      name: compName,
       location,
       date,
       officials: [],
       registrations: [],
       athletes: [],
     });
+    setCompetitions(comps);
   };
 
   const setNilAttempt = id => {
@@ -347,7 +434,14 @@ const CompsProvider = ({ children }) => {
 
   const joinComp = (compId, userId, name, role) => {
     const correctCompetition = competitions.find(comp => comp.id === compId);
+    const judgeArray = correctCompetition.officials.filter(official => official.role === 'judge');
+    if (role === 'judge' && judgeArray.length === 3) {
+      alert('There are 3 judges registered for this competition!');
+    }
     correctCompetition.registrations.push({ id: userId, name, role });
+    setCompetitions(pS =>
+      pS.map(comp => (comp.id === compId ? { ...comp, registrations: correctCompetition.registrations } : comp)),
+    );
   };
 
   const deleteRow = (compId, group, rowId) => {
@@ -361,6 +455,12 @@ const CompsProvider = ({ children }) => {
 
   const approveRow = (compId, group, row) => {
     const competition = competitions.find(comp => compId === comp.id);
+    const judgeArray = competition.officials.filter(official => official.role === 'judge');
+    if (row.role === 'judge' && judgeArray.length === 3) {
+      alert('There are 3 judges registered for this competition!');
+    } else if (row.role === 'judge') {
+      row.spot = judgeArray.length;
+    }
     competition[group].splice(
       competition[group].findIndex(el => el.id === row.id),
       1,
@@ -371,6 +471,12 @@ const CompsProvider = ({ children }) => {
         comp.id === compId ? { ...comp, officials: competition.officials, [group]: competition[group] } : comp,
       ),
     );
+  };
+
+  const setStatus = (compid, status) => {
+    // const competition = competitions.find(comp => comp.id === compid);
+
+    setCompetitions(pS => pS.map(comp => (comp.id === compid ? { ...comp, status: status } : comp)));
   };
 
   const contextValue = {
@@ -386,6 +492,7 @@ const CompsProvider = ({ children }) => {
     updateTable,
     deleteRow,
     approveRow,
+    setStatus,
   };
 
   return <CompsContext.Provider value={contextValue}>{children}</CompsContext.Provider>;

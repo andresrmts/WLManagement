@@ -4,7 +4,7 @@ import ApproveButton from '../ApproveButton';
 
 const AddRemove = props => {
   return (
-    <div>
+    <div className="pa0">
       <ApproveButton params={props.params} row={props.row} />
       <DeleteButton params={props.params} row={props.row} />
     </div>

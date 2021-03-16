@@ -2,29 +2,28 @@ import React, { useEffect } from 'react';
 
 const Timer = ({ time, changeTime, timer }) => {
   const updateTime = () => {
-    if (time.minutes === 0 && time.seconds === 0) {
-      changeTime(1, 0 + '0');
-    } else {
-      if (time.seconds === 0 + '0' || time.seconds === 0) {
-        changeTime(time.minutes - 1, 59);
-      } else if (timer === false) {
-        changeTime(time.minutes, time.seconds);
-      } else if (timer) {
-        changeTime(time.minutes, time.seconds - 1);
-      }
+    if (time === 0) {
+      changeTime(60);
+      return;
     }
+    changeTime(time - 1);
   };
 
-  useEffect(() => {
-    const token = setTimeout(updateTime, 1000);
-    const cleanUp = () => clearTimeout(token);
+  const sec = time % 60;
 
-    return cleanUp;
-  }, [time.seconds, timer]);
+  const seconds = sec < 10 ? '0' + sec : sec;
+  const minutes = Math.floor(time / 60);
+
+  useEffect(() => {
+    if (timer) {
+      const token = setTimeout(updateTime, 1000);
+      return () => clearTimeout(token);
+    }
+  }, [time, timer]);
 
   return (
     <h1>
-      {time.minutes}:{time.seconds}
+      {minutes}:{seconds}
     </h1>
   );
 };

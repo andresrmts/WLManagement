@@ -22,7 +22,11 @@ const Registrations = ({ registrations, onDelete, onApprove }) => {
     },
   ];
 
-  return <Table columns={columns} tableContent={registrations} />;
+  return (
+    <div className="w-100">
+      <Table columns={columns} tableContent={registrations} />
+    </div>
+  );
 };
 
 export default Registrations;

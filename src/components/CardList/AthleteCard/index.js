@@ -1,42 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ErrorPopup from '../../ErrorPopup';
 import Button from '../../Button';
 
-const AthleteCard = ({
-  name,
-  onTheClock,
-  attempt,
-  time,
-  lift,
-  snatch,
-  cnj,
-  changeWeight,
-  toggleTimer,
-  setCurrentChangeCounter,
-  currentChangeCounter,
-}) => {
+const AthleteCard = ({ name, onTheClock, attempt, time, lift, snatch, cnj, changeWeight, toggleTimer }) => {
   const { compId } = useParams();
   const [showError, setShowError] = useState(null);
   const [weight, setWeight] = useState(lift === 'snatch' ? snatch : cnj);
+  const [currentChangeCounter, setCurrentChangeCounter] = useState(0);
+
+  useEffect(() => {
+    setCurrentChangeCounter(0);
+  }, []);
 
   const changeAttemptWeight = () => {
-    if (onTheClock.name === name) {
-      if (currentChangeCounter < 2 && (time.minutes >= 1 || time.seconds > 30)) {
-        changeWeight(compId, { name }, weight, lift);
-        toggleTimer();
-        setCurrentChangeCounter(prev => prev + 1);
-        return;
-      }
-      setWeight(lift === 'snatch' ? snatch : cnj);
-      setShowError('You are only allowed 2 changes when athlete is on the clock!');
+    if (onTheClock.name !== name) {
+      changeWeight(compId, { name }, weight, lift);
       return;
     }
-    changeWeight(compId, { name }, weight, lift);
+    if (onTheClock.name === name && currentChangeCounter < 2 && time > 30) {
+      changeWeight(compId, { name }, weight, lift);
+      toggleTimer();
+      setCurrentChangeCounter(prev => prev + 1);
+      return;
+    }
+    setWeight(lift === 'snatch' ? snatch : cnj);
+    setShowError('You are only allowed 2 changes when athlete is on the clock!');
+    return;
   };
 
   const addWeight = () => {
-    if (onTheClock.name === name && time.minutes < 1 && time.seconds < 31) {
+    if (onTheClock.name === name && time < 31) {
       setShowError('No changes allowed when 30sec remaining on clock');
       return;
     }

@@ -37,7 +37,7 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
   }
 
   useEffect(() => {
-    if (time.minutes === 0 && time.seconds === 0) {
+    if (time === 0) {
       setTimedOut(true);
     }
   }, [time]);
@@ -66,10 +66,10 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
   useEffect(() => {
     if (next.length > 0) {
       if (prevAthlete === athlete) {
-        changeTime(2, 0);
+        changeTime(120);
         return;
       }
-      changeTime(1, 0);
+      changeTime(60);
     }
   }, [attempt, athlete]);
 
@@ -78,9 +78,11 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
     setVoted(true);
   };
 
-  if (status === 'notstarted') {
+  if (status === 'not_started') {
     return <h1>The competition hasnt started yet. It will start in TIMER</h1>;
-  } else if (status === 'started' && voted === false && attempt !== '') {
+  }
+
+  if (status === 'started' && !voted && attempt !== '') {
     return (
       <div className="w-100">
         <div className="flex flex-row-ns flex-column center pa2">
@@ -104,9 +106,13 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
         </div>
       </div>
     );
-  } else if (voted) {
-    return <h1>You voted already</h1>;
-  } else if (status === 'paused') {
+  }
+
+  if (voted) {
+    return <h1>You voted already!</h1>;
+  }
+
+  if (status === 'paused') {
     return (
       <div className="w-100">
         <div className="flex flex-row-ns flex-column center pa2">
@@ -126,13 +132,13 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
         </div>
       </div>
     );
-  } else {
-    return (
-      <div>
-        <h1>No more attempts left</h1>
-      </div>
-    );
   }
+
+  return (
+    <div>
+      <h1>No more attempts left</h1>
+    </div>
+  );
 };
 
 export default Judge;

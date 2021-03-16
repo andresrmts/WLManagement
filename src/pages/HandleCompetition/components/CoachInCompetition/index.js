@@ -10,7 +10,6 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, tim
   const { changeWeight } = useCompsContext();
   const { userName } = useAuthContext();
   const myAthletes = athletes.filter(athlete => athlete.coachname === userName);
-  const [currentChangeCounter, setCurrentChangeCounter] = useState(0);
 
   const onTheClock = athletes
     .filter(athlete => athlete.attempt < 3)
@@ -21,10 +20,6 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, tim
         return a[lift] - b[lift];
       }
     });
-
-  useEffect(() => {
-    setCurrentChangeCounter(0);
-  }, []);
 
   const columns = [
     {
@@ -60,8 +55,6 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, tim
               lift={lift}
               changeWeight={changeWeight}
               myAthletes={myAthletes}
-              setCurrentChangeCounter={setCurrentChangeCounter}
-              currentChangeCounter={currentChangeCounter}
             />
           </div>
         </div>

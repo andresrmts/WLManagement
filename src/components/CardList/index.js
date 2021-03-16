@@ -31,30 +31,29 @@ const CardList = ({
         })}
       </div>
     );
-  } else {
-    return (
-      <div>
-        {myAthletes.map(athlete => {
-          return (
-            <AthleteCard
-              key={athlete.id}
-              name={athlete.name}
-              attempt={athlete.attempt}
-              snatch={athlete.snatch}
-              cnj={athlete.cnj}
-              changeWeight={changeWeight}
-              lift={lift}
-              onTheClock={onTheClock}
-              time={time}
-              toggleTimer={toggleTimer}
-              setCurrentChangeCounter={setCurrentChangeCounter}
-              currentChangeCounter={currentChangeCounter}
-            />
-          );
-        })}
-      </div>
-    );
   }
+  return (
+    <div>
+      {myAthletes.map(athlete => {
+        return (
+          <AthleteCard
+            key={athlete.id}
+            name={athlete.name}
+            attempt={athlete.attempt}
+            snatch={athlete.snatch}
+            cnj={athlete.cnj}
+            changeWeight={changeWeight}
+            lift={lift}
+            onTheClock={onTheClock}
+            time={time}
+            toggleTimer={toggleTimer}
+            setCurrentChangeCounter={setCurrentChangeCounter}
+            currentChangeCounter={currentChangeCounter}
+          />
+        );
+      })}
+    </div>
+  );
 };
 
 export default CardList;

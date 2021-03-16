@@ -87,7 +87,7 @@ const CompsProvider = ({ children }) => {
       authorId: 13,
       name: 'Comp2',
       location: 'Eesti',
-      status: 'notstarted',
+      status: 'not_started',
       officials: [
         {
           id: 17,
@@ -160,7 +160,7 @@ const CompsProvider = ({ children }) => {
       authorId: 13,
       name: 'Comp4',
       location: 'Eesti',
-      status: 'notstarted',
+      status: 'not_started',
       officials: [
         {
           id: 12,
@@ -233,7 +233,7 @@ const CompsProvider = ({ children }) => {
       authorId: 13,
       name: 'Comp3',
       location: 'Eesti',
-      status: 'notstarted',
+      status: 'not_started',
       officials: [
         {
           id: 12,
@@ -338,9 +338,8 @@ const CompsProvider = ({ children }) => {
       competition =>
         userId !== competition.authorId &&
         !competition.officials.some(official => official.id === userId) &&
-        competition.status === 'notstarted',
+        competition.status === 'not_started',
     );
-    console.log(competitions);
     return comps;
   };
 

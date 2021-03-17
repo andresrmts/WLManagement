@@ -203,7 +203,7 @@ const HandleCompetition = () => {
           </Route>
         )}
         {role === 'coach' && (
-          <Route path={match.path}>
+          <Route exact path={match.path}>
             <CoachInCompetition
               timer={timer}
               changeTime={changeTime}

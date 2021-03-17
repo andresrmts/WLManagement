@@ -46,7 +46,7 @@ const CompsProvider = ({ children }) => {
           coachid: 72,
           coachname: 'Külli',
           result: {
-            snatch: [],
+            snatch: [null, null, null],
             cnj: [],
           },
         },
@@ -61,7 +61,7 @@ const CompsProvider = ({ children }) => {
           coachid: 222,
           coachname: 'Coach1',
           result: {
-            snatch: [],
+            snatch: [null, null, null],
             cnj: [],
           },
         },
@@ -76,7 +76,7 @@ const CompsProvider = ({ children }) => {
           coachid: 72,
           coachname: 'Külli',
           result: {
-            snatch: [],
+            snatch: [null, null, null],
             cnj: [],
           },
         },
@@ -391,27 +391,28 @@ const CompsProvider = ({ children }) => {
     const competition = competitions.find(comp => compId === comp.id);
     const correctAthlete = competition.athletes.find(ath => ath.name === athlete);
     if (verdict.result > 0 && verdict.votes === 3 && correctAthlete.attempt < 3) {
+      correctAthlete[lift] = weight + 1;
+      correctAthlete.attempt = attempt + 1;
       correctAthlete.result[lift].push(weight);
       setCompetitions(pS =>
         pS.map(comp =>
           compId === comp.id
             ? {
                 ...comp,
-                athletes: comp.athletes.map(ath =>
-                  ath.name === athlete ? { ...ath, [lift]: weight + 1, attempt: attempt + 1 } : ath,
-                ),
+                athletes: comp.athletes.map(ath => (ath.name === athlete ? correctAthlete : ath)),
               }
             : comp,
         ),
       );
     } else if (verdict.result < 0 && verdict.votes === 3 && correctAthlete.attempt < 3) {
+      correctAthlete.attempt = attempt + 1;
       correctAthlete.result[lift].push(weight + 'x');
       setCompetitions(pS =>
         pS.map(comp =>
           compId === comp.id
             ? {
                 ...comp,
-                athletes: comp.athletes.map(ath => (ath.name === athlete ? { ...ath, attempt: attempt + 1 } : ath)),
+                athletes: comp.athletes.map(ath => (ath.name === athlete ? correctAthlete : ath)),
               }
             : comp,
         ),
@@ -474,8 +475,6 @@ const CompsProvider = ({ children }) => {
   };
 
   const setStatus = (compid, status) => {
-    // const competition = competitions.find(comp => comp.id === compid);
-
     setCompetitions(pS => pS.map(comp => (comp.id === compid ? { ...comp, status: status } : comp)));
   };
 

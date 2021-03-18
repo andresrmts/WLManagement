@@ -43,10 +43,6 @@ const HandleCompetition = () => {
   const isAdmin = userId === competition.authorId;
   const filteredUser = competition.officials.filter(reg => reg.id === userId);
 
-  const showState = () => {
-    console.log(competition);
-  };
-
   const changeTime = seconds => {
     setTime(seconds);
   };
@@ -127,7 +123,7 @@ const HandleCompetition = () => {
   const renderNav = role => {
     switch (role) {
       case 'admin':
-        return <AdminNav showState={showState} toggleTimer={toggleTimer} status={status} setStatus={setStatus} />;
+        return <AdminNav toggleTimer={toggleTimer} status={status} setStatus={setStatus} />;
       case 'coach':
         return <CoachNav status={status} />;
       case 'judge':

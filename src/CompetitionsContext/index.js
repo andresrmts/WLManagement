@@ -47,7 +47,7 @@ const CompsProvider = ({ children }) => {
           coachname: 'Külli',
           result: {
             snatch: [null, null, null],
-            cnj: [],
+            cnj: [null, null, null],
           },
         },
         {
@@ -57,12 +57,12 @@ const CompsProvider = ({ children }) => {
           weight: '-',
           age: 22,
           snatch: 30,
-          cnj: 40,
+          cnj: 41,
           coachid: 222,
           coachname: 'Coach1',
           result: {
             snatch: [null, null, null],
-            cnj: [],
+            cnj: [null, null, null],
           },
         },
         {
@@ -72,12 +72,12 @@ const CompsProvider = ({ children }) => {
           weight: '-',
           age: 22,
           snatch: 30,
-          cnj: 40,
+          cnj: 42,
           coachid: 72,
           coachname: 'Külli',
           result: {
             snatch: [null, null, null],
-            cnj: [],
+            cnj: [null, null, null],
           },
         },
       ],
@@ -383,7 +383,7 @@ const CompsProvider = ({ children }) => {
       cnj,
       coachid,
       coachname,
-      result: { snatch: [], cnj: [] },
+      result: { snatch: [null, null, null], cnj: [null, null, null] },
     });
   };
 
@@ -393,7 +393,7 @@ const CompsProvider = ({ children }) => {
     if (verdict.result > 0 && verdict.votes === 3 && correctAthlete.attempt < 3) {
       correctAthlete[lift] = weight + 1;
       correctAthlete.attempt = attempt + 1;
-      correctAthlete.result[lift].push(weight);
+      correctAthlete.result[lift].splice(attempt, 1, weight);
       setCompetitions(pS =>
         pS.map(comp =>
           compId === comp.id
@@ -406,7 +406,7 @@ const CompsProvider = ({ children }) => {
       );
     } else if (verdict.result < 0 && verdict.votes === 3 && correctAthlete.attempt < 3) {
       correctAthlete.attempt = attempt + 1;
-      correctAthlete.result[lift].push(weight + 'x');
+      correctAthlete.result[lift].splice(attempt, 1, weight + 'x');
       setCompetitions(pS =>
         pS.map(comp =>
           compId === comp.id

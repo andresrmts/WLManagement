@@ -54,7 +54,7 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, tim
     }
     return (
       <div className="vh-75-ns vh-50 vh-50-l w-75-m w-75-l tc outline bg-white pv4 overflow-x-scroll overflow-y-scroll">
-        <Leaderboard athletes={athletes} lift={lift} />
+        <Leaderboard onTheClock={onTheClock[0]} athletes={athletes} lift={lift} />
       </div>
     );
   };

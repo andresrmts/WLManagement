@@ -3,7 +3,7 @@ import Table from '../Table';
 import SnatchResult from './SnatchResult';
 import CnJResult from './CnJResult';
 
-const Leaderboard = ({ athletes, lift }) => {
+const Leaderboard = ({ athletes, lift, onTheClock }) => {
   const sortedAthletes = athletes.sort((a, b) => {
     if (lift === 'snatch') {
       return b.result.snatch.sort((a, b) => b - a)[0] - a.result.snatch.sort((a, b) => b - a)[0];
@@ -30,10 +30,12 @@ const Leaderboard = ({ athletes, lift }) => {
     },
     {
       template: SnatchResult,
+      templateParams: { lift: lift, onTheClock: onTheClock },
       columnName: 'Snatch',
     },
     {
       template: CnJResult,
+      templateParams: { lift: lift },
       columnName: 'Clean & Jerk',
     },
   ];

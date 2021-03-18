@@ -44,7 +44,7 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
     }
   }, [time]);
 
-  const noOfVotes = verdict.filter(vote => vote);
+  const noOfVotes = verdict.filter(vote => vote !== null);
 
   useEffect(() => {
     if (status === 'started' && noOfVotes.length === 3) {

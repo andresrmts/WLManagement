@@ -408,7 +408,7 @@ const CompsProvider = ({ children }) => {
   const setLiftResult = (compId, athlete, weight, attempt, lift) => {
     const competition = competitions.find(comp => compId === comp.id);
     const { verdict } = competition;
-    const noOfVotes = verdict.filter(vote => vote);
+    const noOfVotes = verdict.filter(vote => vote !== null);
     const correctAthlete = competition.athletes.find(ath => ath.name === athlete);
     const result = verdict.reduce((a, b) => a + b);
     if (result > 0 && noOfVotes.length === 3 && correctAthlete.attempt < 3) {
@@ -513,7 +513,6 @@ const CompsProvider = ({ children }) => {
 
   const setVerdict = (compId, decision, spot) => {
     const competition = competitions.find(comp => comp.id === compId);
-    console.log(spot);
 
     if (spot !== null) {
       competition.verdict.splice(spot, 1, decision);

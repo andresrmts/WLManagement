@@ -96,6 +96,7 @@ const CompsProvider = ({ children }) => {
       time: 60,
       timer: true,
       lift: 'snatch',
+      verdict: [null, null, null],
       officials: [
         {
           id: 17,
@@ -129,8 +130,8 @@ const CompsProvider = ({ children }) => {
           coachid: 27,
           coachname: 'Coach2',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
         {
@@ -143,8 +144,8 @@ const CompsProvider = ({ children }) => {
           coachid: 21,
           coachname: 'Coach2',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
         {
@@ -157,8 +158,8 @@ const CompsProvider = ({ children }) => {
           coachid: 29,
           coachname: 'Coach2',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
       ],
@@ -172,6 +173,7 @@ const CompsProvider = ({ children }) => {
       time: 60,
       timer: true,
       lift: 'snatch',
+      verdict: [null, null, null],
       officials: [
         {
           id: 12,
@@ -205,8 +207,8 @@ const CompsProvider = ({ children }) => {
           coachid: 90,
           coachname: 'Coach3',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
         {
@@ -219,8 +221,8 @@ const CompsProvider = ({ children }) => {
           coachid: 26,
           coachname: 'Coach3',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
         {
@@ -233,8 +235,8 @@ const CompsProvider = ({ children }) => {
           coachid: 23,
           coachname: 'Coach3',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
       ],
@@ -248,6 +250,7 @@ const CompsProvider = ({ children }) => {
       time: 60,
       timer: true,
       lift: 'snatch',
+      verdict: [null, null, null],
       officials: [
         {
           id: 12,
@@ -281,8 +284,8 @@ const CompsProvider = ({ children }) => {
           coachid: 90,
           coachname: 'Coach3',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
         {
@@ -295,8 +298,8 @@ const CompsProvider = ({ children }) => {
           coachid: 26,
           coachname: 'Coach3',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
         {
@@ -309,8 +312,8 @@ const CompsProvider = ({ children }) => {
           coachid: 23,
           coachname: 'Coach3',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
       ],
@@ -368,6 +371,7 @@ const CompsProvider = ({ children }) => {
       time: 60,
       timer: true,
       lift: 'snatch',
+      verdict: [null, null, null],
       location,
       date,
       officials: [],

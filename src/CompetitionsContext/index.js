@@ -10,6 +10,9 @@ const CompsProvider = ({ children }) => {
       name: 'Comp1',
       location: 'Eesti',
       status: 'started',
+      time: 60,
+      timer: true,
+      lift: 'snatch',
       officials: [
         {
           id: 22,
@@ -88,6 +91,9 @@ const CompsProvider = ({ children }) => {
       name: 'Comp2',
       location: 'Eesti',
       status: 'not_started',
+      time: 60,
+      timer: true,
+      lift: 'snatch',
       officials: [
         {
           id: 17,
@@ -161,6 +167,9 @@ const CompsProvider = ({ children }) => {
       name: 'Comp4',
       location: 'Eesti',
       status: 'not_started',
+      time: 60,
+      timer: true,
+      lift: 'snatch',
       officials: [
         {
           id: 12,
@@ -234,6 +243,9 @@ const CompsProvider = ({ children }) => {
       name: 'Comp3',
       location: 'Eesti',
       status: 'not_started',
+      time: 60,
+      timer: true,
+      lift: 'snatch',
       officials: [
         {
           id: 12,
@@ -350,6 +362,10 @@ const CompsProvider = ({ children }) => {
       id,
       authorId,
       name: compName,
+      status: 'not_started',
+      time: 60,
+      timer: true,
+      lift: 'snatch',
       location,
       date,
       officials: [],
@@ -478,6 +494,18 @@ const CompsProvider = ({ children }) => {
     setCompetitions(pS => pS.map(comp => (comp.id === compid ? { ...comp, status: status } : comp)));
   };
 
+  const setTime = (compId, seconds) => {
+    setCompetitions(pS => pS.map(comp => (compId === comp.id ? { ...comp, time: seconds } : comp)));
+  };
+
+  const setTimer = compId => {
+    setCompetitions(pS => pS.map(comp => (comp.id === compId ? { ...comp, timer: !comp.timer } : comp)));
+  };
+
+  const setLift = (compId, lift) => {
+    setCompetitions(pS => pS.map(comp => (comp.id === compId ? { ...comp, lift: lift } : comp)));
+  };
+
   const contextValue = {
     getCompetition,
     getMyCompetitions,
@@ -492,6 +520,9 @@ const CompsProvider = ({ children }) => {
     deleteRow,
     approveRow,
     setStatus,
+    setTime,
+    setTimer,
+    setLift,
   };
 
   return <CompsContext.Provider value={contextValue}>{children}</CompsContext.Provider>;

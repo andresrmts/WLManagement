@@ -4,8 +4,10 @@ import Table from '../../../../components/Table';
 import Button from '../../../../components/Button';
 import Attempt from '../../../../components/Attempt';
 import Leaderboard from '../../../../components/Leaderboard';
+import { useParams } from 'react-router';
 
 const CompetitionAdmin = ({ athletes, toggleTimer, timer, lift, time, changeTime, nextLift }) => {
+  const { compId } = useParams();
   const [table, setTable] = useState('nextUp');
   const onTheClock = athletes
     .filter(athlete => athlete.attempt < 3)
@@ -47,6 +49,7 @@ const CompetitionAdmin = ({ athletes, toggleTimer, timer, lift, time, changeTime
     }
     return (
       <div className="vh-75-ns vh-50 vh-50-l w-75-m w-75-l tc outline bg-white pv4 overflow-x-scroll overflow-y-scroll">
+        Leaderboard
         <Leaderboard onTheClock={onTheClock[0]} athletes={athletes} lift={lift} />
       </div>
     );
@@ -59,6 +62,7 @@ const CompetitionAdmin = ({ athletes, toggleTimer, timer, lift, time, changeTime
           <Button
             styles={`f6 pointer outline-0 br1 ba bw1 ph3 pv2 ma2 ${timer ? 'red' : 'dark-green'}`}
             onClick={toggleTimer}
+            params={compId}
             text={timer ? 'STOP' : 'START'}
           />
           {lift === 'snatch' ? (

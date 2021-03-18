@@ -17,9 +17,6 @@ import { useCompsContext } from '../../CompetitionsContext';
 import DeleteButton from '../../components/DeleteButton';
 
 const HandleCompetition = () => {
-  const [time, setTime] = useState(60);
-  const [timer, setTimer] = useState(true);
-  const [lift, setLift] = useState('snatch');
   const [verdict, setVerdict] = useState({
     result: 0,
     votes: 0,
@@ -34,28 +31,23 @@ const HandleCompetition = () => {
     deleteRow,
     approveRow,
     setStatus,
+    setTime,
+    setTimer,
+    setLift,
   } = useCompsContext();
   const { compId } = useParams();
   const competition = getCompetition(compId);
-  const { status } = competition;
+  const { status, lift } = competition;
   const match = useRouteMatch();
 
   const isAdmin = userId === competition.authorId;
   const filteredUser = competition.officials.filter(reg => reg.id === userId);
 
-  const changeTime = seconds => {
-    setTime(seconds);
-  };
-
-  const toggleTimer = () => {
-    setTimer(pS => !pS);
-  };
-
   const nextLift = () => {
-    setLift('cnj');
+    setLift(compId, 'cnj');
     setNilAttempt(compId);
-    setTime(60);
-    setTimer(false);
+    setTime(compId, 60);
+    setTimer(compId, false);
   };
 
   useEffect(() => {
@@ -123,7 +115,7 @@ const HandleCompetition = () => {
   const renderNav = role => {
     switch (role) {
       case 'admin':
-        return <AdminNav toggleTimer={toggleTimer} status={status} setStatus={setStatus} />;
+        return <AdminNav toggleTimer={setTimer} status={status} setStatus={setStatus} />;
       case 'coach':
         return <CoachNav status={status} />;
       case 'judge':
@@ -177,9 +169,9 @@ const HandleCompetition = () => {
               athletes={competition.athletes}
               goToNextAttempt={goToNextAttempt}
               castVote={castVote}
-              timer={timer}
-              time={time}
-              changeTime={changeTime}
+              timer={competition.timer}
+              time={competition.time}
+              changeTime={setTime}
               status={status}
               lift={lift}
             />
@@ -190,10 +182,10 @@ const HandleCompetition = () => {
             <CompetitionAdmin
               nextLift={nextLift}
               lift={lift}
-              toggleTimer={toggleTimer}
-              time={time}
-              timer={timer}
-              changeTime={changeTime}
+              toggleTimer={setTimer}
+              time={competition.time}
+              timer={competition.timer}
+              changeTime={setTime}
               athletes={competition.athletes}
             />
           </Route>
@@ -201,11 +193,11 @@ const HandleCompetition = () => {
         {role === 'coach' && (
           <Route exact path={match.path}>
             <CoachInCompetition
-              timer={timer}
-              changeTime={changeTime}
+              timer={competition.timer}
+              changeTime={setTime}
               lift={lift}
-              toggleTimer={toggleTimer}
-              time={time}
+              toggleTimer={setTimer}
+              time={competition.time}
               athletes={competition.athletes}
             />
           </Route>

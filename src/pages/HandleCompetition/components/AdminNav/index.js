@@ -19,7 +19,7 @@ const AdminNav = ({ status, setStatus, toggleTimer, showState }) => {
 
   const changeCompStatus = status => {
     setStatus(compId, status);
-    toggleTimer();
+    toggleTimer(compId);
   };
 
   const toggleMenu = () => {

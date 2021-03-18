@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import NextAttempt from '../NextAttempt';
 import Button from '../../../../components/Button';
+import { useParams } from 'react-router';
 
 const usePrevious = value => {
   const ref = useRef(null);
@@ -11,6 +12,7 @@ const usePrevious = value => {
 };
 
 const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goToNextAttempt }) => {
+  const { compId } = useParams();
   const next = athletes
     .filter(athlete => athlete.attempt < 3)
     .sort((a, b) => {
@@ -66,10 +68,10 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
   useEffect(() => {
     if (next.length > 0) {
       if (prevAthlete === athlete) {
-        changeTime(120);
+        changeTime(compId, 120);
         return;
       }
-      changeTime(60);
+      changeTime(compId, 60);
     }
   }, [attempt, athlete]);
 

@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
+import { useParams } from 'react-router';
 
 const Timer = ({ time, changeTime, timer }) => {
+  const { compId } = useParams();
   const updateTime = () => {
     if (time === 0) {
-      changeTime(60);
+      changeTime(compId, 60);
       return;
     }
-    changeTime(time - 1);
+    changeTime(compId, time - 1);
   };
 
   const sec = time % 60;

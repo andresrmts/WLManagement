@@ -10,9 +10,9 @@ import Button from '../../../../components/Button';
 
 const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, timer }) => {
   const { changeWeight } = useCompsContext();
-  const { userName } = useAuthContext();
+  const { userId } = useAuthContext();
   const [table, setTable] = useState('nextUp');
-  const myAthletes = athletes.filter(athlete => athlete.coachname === userName);
+  const myAthletes = athletes.filter(athlete => athlete.coachid === userId);
 
   const onTheClock = athletes
     .filter(athlete => athlete.attempt < 3)
@@ -54,6 +54,7 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, time, changeTime, tim
     }
     return (
       <div className="vh-75-ns vh-50 vh-50-l w-75-m w-75-l tc outline bg-white pv4 overflow-x-scroll overflow-y-scroll">
+        Leaderboard
         <Leaderboard onTheClock={onTheClock[0]} athletes={athletes} lift={lift} />
       </div>
     );

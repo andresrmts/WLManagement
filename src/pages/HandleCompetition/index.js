@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import AdminNav from './components/AdminNav';
 import Registrations from './components/Registrations';
 import CoachNav from './components/CoachNav';
@@ -17,10 +17,6 @@ import { useCompsContext } from '../../CompetitionsContext';
 import DeleteButton from '../../components/DeleteButton';
 
 const HandleCompetition = () => {
-  const [verdict, setVerdict] = useState({
-    result: 0,
-    votes: 0,
-  });
   const { userName, userId, role, setRole } = useAuthContext();
   const {
     getCompetition,
@@ -34,6 +30,7 @@ const HandleCompetition = () => {
     setTime,
     setTimer,
     setLift,
+    setVerdict,
   } = useCompsContext();
   const { compId } = useParams();
   const competition = getCompetition(compId);
@@ -62,16 +59,13 @@ const HandleCompetition = () => {
   });
 
   const castVote = decision => {
-    if (decision === 'yes') {
-      setVerdict({ result: 1, votes: 3 });
-      return;
-    }
-    setVerdict({ result: -1, votes: 3 });
+    setVerdict(compId, decision, filteredUser[0].spot);
+    return;
   };
 
   const goToNextAttempt = (athlete, weight, attempt) => {
-    setLiftResult(compId, verdict, athlete, weight, attempt, lift);
-    setVerdict({ result: 0, votes: 0 });
+    setLiftResult(compId, athlete, weight, attempt, lift);
+    setVerdict(compId, [null, null, null], null);
   };
 
   const columns = [
@@ -120,7 +114,7 @@ const HandleCompetition = () => {
         return <CoachNav status={status} />;
       case 'judge':
         if (status !== 'not_started') {
-          return <Result verdict={verdict} />;
+          return <Result verdict={competition.verdict} />;
         }
         return (
           <Link to="/competitions" onClick={() => setRole('')} className="f6 tc underline pointer center">
@@ -174,6 +168,8 @@ const HandleCompetition = () => {
               changeTime={setTime}
               status={status}
               lift={lift}
+              spot={filteredUser[0].spot}
+              verdict={competition.verdict}
             />
           </Route>
         )}

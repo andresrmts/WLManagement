@@ -13,11 +13,13 @@ const CompsProvider = ({ children }) => {
       time: 60,
       timer: true,
       lift: 'snatch',
+      verdict: [null, null, null],
       officials: [
         {
           id: 22,
           name: 'Judge1',
           role: 'judge',
+          spot: 0,
         },
         {
           id: 72,
@@ -403,10 +405,13 @@ const CompsProvider = ({ children }) => {
     });
   };
 
-  const setLiftResult = (compId, verdict, athlete, weight, attempt, lift) => {
+  const setLiftResult = (compId, athlete, weight, attempt, lift) => {
     const competition = competitions.find(comp => compId === comp.id);
+    const { verdict } = competition;
+    const noOfVotes = verdict.filter(vote => vote);
     const correctAthlete = competition.athletes.find(ath => ath.name === athlete);
-    if (verdict.result > 0 && verdict.votes === 3 && correctAthlete.attempt < 3) {
+    const result = verdict.reduce((a, b) => a + b);
+    if (result > 0 && noOfVotes.length === 3 && correctAthlete.attempt < 3) {
       correctAthlete[lift] = weight + 1;
       correctAthlete.attempt = attempt + 1;
       correctAthlete.result[lift].splice(attempt, 1, weight);
@@ -420,7 +425,7 @@ const CompsProvider = ({ children }) => {
             : comp,
         ),
       );
-    } else if (verdict.result < 0 && verdict.votes === 3 && correctAthlete.attempt < 3) {
+    } else if (result < 0 && noOfVotes.length === 3 && correctAthlete.attempt < 3) {
       correctAthlete.attempt = attempt + 1;
       correctAthlete.result[lift].splice(attempt, 1, weight + 'x');
       setCompetitions(pS =>
@@ -506,6 +511,19 @@ const CompsProvider = ({ children }) => {
     setCompetitions(pS => pS.map(comp => (comp.id === compId ? { ...comp, lift: lift } : comp)));
   };
 
+  const setVerdict = (compId, decision, spot) => {
+    const competition = competitions.find(comp => comp.id === compId);
+    console.log(spot);
+
+    if (spot !== null) {
+      competition.verdict.splice(spot, 1, decision);
+    } else {
+      competition.verdict = decision;
+    }
+
+    setCompetitions(pS => pS.map(comp => (compId === comp.id ? { ...comp, verdict: competition.verdict } : comp)));
+  };
+
   const contextValue = {
     getCompetition,
     getMyCompetitions,
@@ -523,6 +541,7 @@ const CompsProvider = ({ children }) => {
     setTime,
     setTimer,
     setLift,
+    setVerdict,
   };
 
   return <CompsContext.Provider value={contextValue}>{children}</CompsContext.Provider>;

@@ -1,18 +1,28 @@
 import React from 'react';
 import Table from '../Table';
-import SnatchResult from './SnatchResult';
-import CnJResult from './CnJResult';
+import LiftResult from './LiftResult';
+import TotalResult from './TotalResult';
 
 const Leaderboard = ({ athletes, lift, onTheClock }) => {
   const sortedAthletes = athletes.sort((a, b) => {
+    const bsnatch = b.result.snatch.sort((a, b) => b - a)[0];
+    const bcnj = b.result.cnj.sort((a, b) => b - a)[0];
+    const asnatch = a.result.snatch.sort((a, b) => b - a)[0];
+    const acnj = a.result.cnj.sort((a, b) => b - a)[0];
+
+    const total = (snatch, cnj) => {
+      if (snatch < 0 || !snatch || cnj < 0 || !cnj) {
+        return 0;
+      }
+      return snatch + cnj;
+    };
+
+    const btotal = total(bsnatch, bcnj);
+    const atotal = total(asnatch, acnj);
     if (lift === 'snatch') {
-      return b.result.snatch.sort((a, b) => b - a)[0] - a.result.snatch.sort((a, b) => b - a)[0];
+      return bsnatch - asnatch;
     }
-    return (
-      b.result.snatch.sort((a, b) => b - a)[0] +
-      b.result.cnj.sort((a, b) => b - a)[0] -
-      (a.result.snatch.sort((a, b) => b - a)[0] + a.result.cnj.sort((a, b) => b - a)[0])
-    );
+    return btotal - atotal;
   });
 
   const columns = [
@@ -29,14 +39,18 @@ const Leaderboard = ({ athletes, lift, onTheClock }) => {
       columnName: 'BW',
     },
     {
-      template: SnatchResult,
-      templateParams: { lift: lift, onTheClock: onTheClock },
+      template: LiftResult,
+      templateParams: { currentLift: lift, lift: 'snatch', onTheClock: onTheClock },
       columnName: 'Snatch',
     },
     {
-      template: CnJResult,
-      templateParams: { lift: lift },
+      template: LiftResult,
+      templateParams: { currentLift: lift, lift: 'cnj', onTheClock: onTheClock },
       columnName: 'Clean & Jerk',
+    },
+    {
+      template: TotalResult,
+      columnName: 'Total',
     },
   ];
 

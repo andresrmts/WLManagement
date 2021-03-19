@@ -43,22 +43,22 @@ const CompsProvider = ({ children }) => {
         {
           id: 1,
           name: 'Athlete1',
-          attempt: 0,
+          attempt: 1,
           weight: '-',
           age: 22,
-          snatch: 22,
+          snatch: 23,
           cnj: 40,
           coachid: 72,
           coachname: 'Külli',
           result: {
-            snatch: [null, null, null],
-            cnj: [null, null, null],
+            snatch: [-22, null, null],
+            cnj: [50, null, null],
           },
         },
         {
           id: 2,
           name: 'Athlete2',
-          attempt: 0,
+          attempt: 1,
           weight: '-',
           age: 22,
           snatch: 30,
@@ -66,14 +66,14 @@ const CompsProvider = ({ children }) => {
           coachid: 222,
           coachname: 'Coach1',
           result: {
-            snatch: [null, null, null],
-            cnj: [null, null, null],
+            snatch: [23, null, null],
+            cnj: [50, null, null],
           },
         },
         {
           id: 3,
           name: 'Athlete3',
-          attempt: 0,
+          attempt: 1,
           weight: '-',
           age: 22,
           snatch: 30,
@@ -81,8 +81,8 @@ const CompsProvider = ({ children }) => {
           coachid: 72,
           coachname: 'Külli',
           result: {
-            snatch: [null, null, null],
-            cnj: [null, null, null],
+            snatch: [-23, null, null],
+            cnj: [100, null, null],
           },
         },
       ],
@@ -415,7 +415,7 @@ const CompsProvider = ({ children }) => {
     const noOfVotes = verdict.filter(vote => vote !== null);
     const correctAthlete = competition.athletes.find(ath => ath.name === athlete);
     const result = verdict.reduce((a, b) => a + b);
-    if (result > 0 && noOfVotes.length === 3 && correctAthlete.attempt < 3) {
+    if (result > 1 && noOfVotes.length === 3 && correctAthlete.attempt < 3) {
       correctAthlete[lift] = weight + 1;
       correctAthlete.attempt = attempt + 1;
       correctAthlete.result[lift].splice(attempt, 1, weight);
@@ -429,9 +429,9 @@ const CompsProvider = ({ children }) => {
             : comp,
         ),
       );
-    } else if (result < 0 && noOfVotes.length === 3 && correctAthlete.attempt < 3) {
+    } else if (result < 2 && noOfVotes.length === 3 && correctAthlete.attempt < 3) {
       correctAthlete.attempt = attempt + 1;
-      correctAthlete.result[lift].splice(attempt, 1, weight + 'x');
+      correctAthlete.result[lift].splice(attempt, 1, -weight);
       setCompetitions(pS =>
         pS.map(comp =>
           compId === comp.id

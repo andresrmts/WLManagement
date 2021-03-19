@@ -34,11 +34,11 @@ const HandleCompetition = () => {
   } = useCompsContext();
   const { compId } = useParams();
   const competition = getCompetition(compId);
-  const { status, lift } = competition;
+  const { status, lift, authorId, verdict, registrations, officials, athletes, timer, time } = competition;
   const match = useRouteMatch();
 
-  const isAdmin = userId === competition.authorId;
-  const filteredUser = competition.officials.filter(reg => reg.id === userId);
+  const isAdmin = userId === authorId;
+  const filteredUser = officials.filter(reg => reg.id === userId);
 
   const nextLift = () => {
     setLift(compId, 'cnj');
@@ -114,7 +114,7 @@ const HandleCompetition = () => {
         return <CoachNav status={status} />;
       case 'judge':
         if (status !== 'not_started') {
-          return <Result verdict={competition.verdict} />;
+          return <Result verdict={verdict} />;
         }
         return (
           <Link to="/competitions" onClick={() => setRole('')} className="f6 tc underline pointer center">
@@ -137,20 +137,20 @@ const HandleCompetition = () => {
         {isAdmin && status === 'not_started' && (
           <div>
             <Route exact path={match.path}>
-              <Registrations registrations={competition.registrations} onDelete={deleteRow} onApprove={approveRow} />
+              <Registrations registrations={registrations} onDelete={deleteRow} onApprove={approveRow} />
             </Route>
             <Route path={`${match.path}/registeredofficials`}>
-              <RegisteredOfficials officials={competition.officials} />
+              <RegisteredOfficials officials={officials} />
             </Route>
             <Route path={`${match.path}/athletelist`}>
-              <Table columns={columns} tableContent={competition.athletes} updateTable={updateTable} />
+              <Table columns={columns} tableContent={athletes} updateTable={updateTable} />
             </Route>
           </div>
         )}
         {role === 'coach' && status === 'not_started' && (
           <div>
             <Route exact path={match.path}>
-              <MyAthletes athletes={competition.athletes} updateTable={updateTable} onDelete={deleteRow} />
+              <MyAthletes athletes={athletes} updateTable={updateTable} onDelete={deleteRow} />
             </Route>
             <Route path={`${match.path}/athleteregistration`}>
               <AthleteRegistration onAdd={addAthlete} />
@@ -160,16 +160,16 @@ const HandleCompetition = () => {
         {role === 'judge' && (
           <Route path={match.path}>
             <Judge
-              athletes={competition.athletes}
+              athletes={athletes}
               goToNextAttempt={goToNextAttempt}
               castVote={castVote}
-              timer={competition.timer}
-              time={competition.time}
+              timer={timer}
+              time={time}
               changeTime={setTime}
               status={status}
               lift={lift}
               spot={filteredUser[0].spot}
-              verdict={competition.verdict}
+              verdict={verdict}
             />
           </Route>
         )}
@@ -179,26 +179,26 @@ const HandleCompetition = () => {
               nextLift={nextLift}
               lift={lift}
               toggleTimer={setTimer}
-              time={competition.time}
-              timer={competition.timer}
+              time={time}
+              timer={timer}
               changeTime={setTime}
-              athletes={competition.athletes}
+              athletes={athletes}
             />
           </Route>
         )}
         {role === 'coach' && (
           <Route exact path={match.path}>
             <CoachInCompetition
-              timer={competition.timer}
+              timer={timer}
               changeTime={setTime}
               lift={lift}
               toggleTimer={setTimer}
-              time={competition.time}
-              athletes={competition.athletes}
+              time={time}
+              athletes={athletes}
             />
           </Route>
         )}
-        {competition.registrations.find(reg => reg.name === userName) !== undefined && (
+        {registrations.find(reg => reg.name === userName) !== undefined && (
           <Route path={match.path}>
             <h1>Your application hasn't been accepted yet!</h1>
           </Route>

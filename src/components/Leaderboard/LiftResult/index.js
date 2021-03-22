@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 
 const LiftResult = ({ row, params }) => {
   const { currentLift, lift, onTheClock } = params;
@@ -26,4 +26,4 @@ const LiftResult = ({ row, params }) => {
   );
 };
 
-export default LiftResult;
+export default memo(LiftResult);

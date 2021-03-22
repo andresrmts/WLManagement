@@ -27,14 +27,14 @@ const HandleCompetition = () => {
     deleteRow,
     approveRow,
     setStatus,
-    setTime,
     setTimer,
     setLift,
     setVerdict,
+    setAttemptTime,
   } = useCompsContext();
   const { compId } = useParams();
   const competition = getCompetition(compId);
-  const { status, lift, authorId, verdict, registrations, officials, athletes, timer, time } = competition;
+  const { status, lift, authorId, verdict, registrations, officials, athletes, timer, attemptTime } = competition;
   const match = useRouteMatch();
 
   const isAdmin = userId === authorId;
@@ -43,8 +43,8 @@ const HandleCompetition = () => {
   const nextLift = () => {
     setLift(compId, 'cnj');
     setNilAttempt(compId);
-    setTime(compId, 60);
     setTimer(compId, false);
+    setAttemptTime(compId, Date.now() + 60000);
   };
 
   useEffect(() => {
@@ -164,12 +164,12 @@ const HandleCompetition = () => {
               goToNextAttempt={goToNextAttempt}
               castVote={castVote}
               timer={timer}
-              time={time}
-              changeTime={setTime}
               status={status}
               lift={lift}
               spot={filteredUser[0].spot}
               verdict={verdict}
+              setAttemptTime={setAttemptTime}
+              attemptTime={attemptTime}
             />
           </Route>
         )}
@@ -179,10 +179,10 @@ const HandleCompetition = () => {
               nextLift={nextLift}
               lift={lift}
               toggleTimer={setTimer}
-              time={time}
               timer={timer}
-              changeTime={setTime}
               athletes={athletes}
+              attemptTime={attemptTime}
+              setAttemptTime={setAttemptTime}
             />
           </Route>
         )}
@@ -190,11 +190,11 @@ const HandleCompetition = () => {
           <Route exact path={match.path}>
             <CoachInCompetition
               timer={timer}
-              changeTime={setTime}
               lift={lift}
               toggleTimer={setTimer}
-              time={time}
               athletes={athletes}
+              setAttemptTime={setAttemptTime}
+              attemptTime={attemptTime}
             />
           </Route>
         )}

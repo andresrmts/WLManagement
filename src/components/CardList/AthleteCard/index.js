@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import ErrorPopup from '../../ErrorPopup';
 import Button from '../../Button';
 
-const AthleteCard = ({ name, onTheClock, attempt, time, lift, snatch, cnj, changeWeight, toggleTimer }) => {
+const AthleteCard = ({ name, onTheClock, attempt, attemptTime, lift, snatch, cnj, changeWeight, toggleTimer }) => {
   const { compId } = useParams();
   const [showError, setShowError] = useState(null);
   const [weight, setWeight] = useState(lift === 'snatch' ? snatch : cnj);
@@ -14,6 +14,7 @@ const AthleteCard = ({ name, onTheClock, attempt, time, lift, snatch, cnj, chang
   }, []);
 
   const changeAttemptWeight = () => {
+    const time = (attemptTime - Date.now()) / 1000;
     if (onTheClock.name !== name) {
       changeWeight(compId, { name }, weight, lift);
       return;
@@ -30,6 +31,7 @@ const AthleteCard = ({ name, onTheClock, attempt, time, lift, snatch, cnj, chang
   };
 
   const addWeight = () => {
+    const time = (attemptTime - Date.now()) / 1000;
     if (onTheClock.name === name && time < 31) {
       setShowError('No changes allowed when 30sec remaining on clock');
       return;

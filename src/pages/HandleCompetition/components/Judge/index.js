@@ -11,7 +11,7 @@ const usePrevious = value => {
   return ref.current;
 };
 
-const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goToNextAttempt, verdict }) => {
+const Judge = ({ athletes, status, timer, lift, castVote, goToNextAttempt, verdict, setAttemptTime, attemptTime }) => {
   const { compId } = useParams();
   const next = athletes
     .filter(athlete => athlete.attempt < 3)
@@ -30,6 +30,11 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
 
   const prevAthlete = usePrevious(athlete); // Stores the previous athlete name so timer rules could be followed
 
+  const castVerdict = decision => {
+    castVote(decision);
+    setVoted(true);
+  };
+
   let nextAttempt;
   let nextName;
 
@@ -38,11 +43,11 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
     nextName = next[0].name;
   }
 
-  useEffect(() => {
-    if (time === 0) {
-      setTimedOut(true);
-    }
-  }, [time]);
+  // useEffect(() => {
+  //   if (time === 0) {
+  //     setTimedOut(true);
+  //   }
+  // }, [time]);
 
   const noOfVotes = verdict.filter(vote => vote !== null);
 
@@ -55,9 +60,8 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
 
   useEffect(() => {
     if (timedOut === true) {
-      castVote(0);
+      castVerdict(0);
       setTimedOut(false);
-      setVoted(true);
     }
   }, [timedOut]);
 
@@ -70,17 +74,12 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
   useEffect(() => {
     if (next.length > 0) {
       if (prevAthlete === athlete) {
-        changeTime(compId, 120);
+        setAttemptTime(compId, 121000);
         return;
       }
-      changeTime(compId, 60);
+      setAttemptTime(compId, 61000);
     }
   }, [attempt, athlete]);
-
-  const castVerdict = decision => {
-    castVote(decision);
-    setVoted(true);
-  };
 
   if (status === 'not_started') {
     return <h1>The competition hasnt started yet. It will start in TIMER</h1>;
@@ -98,7 +97,13 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
             onClick={castVerdict}
             params={1}
           />
-          <NextAttempt time={time} changeTime={changeTime} timer={timer} lift={lift} />
+          <NextAttempt
+            attemptTime={attemptTime}
+            setAttemptTime={setAttemptTime}
+            timer={timer}
+            lift={lift}
+            setTimedOut={setTimedOut}
+          />
           <Button
             styles={
               'flex items-center h3 vh-50-ns w-75 w-20-ns f6 center white pointer outline-0 br1 ba bw1 ph3 pv2 ma2 bg-red b--red'
@@ -126,7 +131,7 @@ const Judge = ({ athletes, status, time, changeTime, timer, lift, castVote, goTo
             }
             text={'PAUSED'}
           />
-          <NextAttempt time={time} changeTime={changeTime} timer={timer} lift={lift} />
+          <NextAttempt attemptTime={attemptTime} setAttemptTime={setAttemptTime} timer={timer} lift={lift} />
           <Button
             styles={
               'flex items-center h3 vh-50-ns w-75 w-20-ns f6 center white pointer outline-0 br1 ba bw1 ph3 pv2 ma2 bg-red b--red'

@@ -1,27 +1,38 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
-const Timer = ({ time, changeTime, timer }) => {
+const Timer = ({ timer, attemptTime, setAttemptTime, setTimedOut }) => {
   const { compId } = useParams();
-  const updateTime = () => {
-    if (time === 0) {
-      changeTime(compId, 60);
-      return;
+  const calculateTimeLeft = () => {
+    let now = Date.now();
+    let difference = attemptTime / 1000 - now / 1000;
+    if (difference < 0) {
+      return 0;
     }
-    changeTime(compId, time - 1);
+    return difference;
   };
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
 
-  const sec = time % 60;
+  const sec = Math.floor(timeLeft % 60);
 
   const seconds = sec < 10 ? '0' + sec : sec;
-  const minutes = Math.floor(time / 60);
+  const minutes = Math.floor(timeLeft / 60);
 
   useEffect(() => {
-    if (timer) {
-      const token = setTimeout(updateTime, 1000);
+    if (timer === true) {
+      const token = setTimeout(() => setTimeLeft(calculateTimeLeft()), 1000);
       return () => clearTimeout(token);
     }
-  }, [time, timer]);
+  });
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      if (setTimedOut) {
+        setTimedOut(true);
+      }
+      setAttemptTime(compId, 62000);
+    }
+  }, [timeLeft]);
 
   return (
     <h1>

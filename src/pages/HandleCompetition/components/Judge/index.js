@@ -43,12 +43,6 @@ const Judge = ({ athletes, status, timer, lift, castVote, goToNextAttempt, verdi
     nextName = next[0].name;
   }
 
-  // useEffect(() => {
-  //   if (time === 0) {
-  //     setTimedOut(true);
-  //   }
-  // }, [time]);
-
   const noOfVotes = verdict.filter(vote => vote !== null);
 
   useEffect(() => {

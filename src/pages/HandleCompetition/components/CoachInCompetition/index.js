@@ -7,7 +7,7 @@ import Leaderboard from '../../../../components/Leaderboard';
 import Button from '../../../../components/Button';
 import NextUpTable from '../../../../components/NextUpTable';
 
-const CoachInCompetition = ({ athletes, lift, toggleTimer, changeTime, timer, setAttemptTime, attemptTime }) => {
+const CoachInCompetition = ({ athletes, lift, toggleTimer, timer, setAttemptTime, attemptTime }) => {
   const { changeWeight } = useCompsContext();
   const { userId } = useAuthContext();
   const [table, setTable] = useState('nextUp');
@@ -44,13 +44,7 @@ const CoachInCompetition = ({ athletes, lift, toggleTimer, changeTime, timer, se
     <div className="vh-75-ns cf ph2-ns">
       <div className="vh-25">
         <div className="fl w-60-ns w-100 pa2">
-          <NextAttempt
-            lift={lift}
-            timer={timer}
-            attemptTime={attemptTime}
-            setAttemptTime={setAttemptTime}
-            changeTime={changeTime}
-          />
+          <NextAttempt lift={lift} timer={timer} attemptTime={attemptTime} setAttemptTime={setAttemptTime} />
         </div>
         <div className="fl w-auto w-40-ns pa2">
           <div className="flex justify-center tc w-auto outline bg-white pv4 vh-50-l vh-75 overflow-y-scroll">

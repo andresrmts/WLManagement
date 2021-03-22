@@ -3,7 +3,7 @@ import Timer from '../Timer';
 import { useCompsContext } from '../../../../CompetitionsContext';
 import { useParams } from 'react-router-dom';
 
-const NextAttempt = ({ changeTime, time, timer, lift, setAttemptTime, attemptTime, setTimedOut }) => {
+const NextAttempt = ({ timer, lift, setAttemptTime, attemptTime, setTimedOut }) => {
   const { compId } = useParams();
   const { getCompetition } = useCompsContext();
   const competition = getCompetition(compId);
@@ -44,8 +44,6 @@ const NextAttempt = ({ changeTime, time, timer, lift, setAttemptTime, attemptTim
                 attemptTime={attemptTime}
                 setAttemptTime={setAttemptTime}
                 timer={timer}
-                time={time}
-                changeTime={changeTime}
               />
             </div>
             <div className="flex justify-around">

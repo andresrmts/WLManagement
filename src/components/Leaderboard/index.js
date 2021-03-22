@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Table from '../Table';
 import LiftResult from './LiftResult';
 import TotalResult from './TotalResult';
@@ -57,4 +57,4 @@ const Leaderboard = ({ athletes, lift, onTheClock }) => {
   return <Table tableContent={sortedAthletes} columns={columns} />;
 };
 
-export default Leaderboard;
+export default memo(Leaderboard);

@@ -11,7 +11,7 @@ const CardList = ({
   toggleTimer,
   setCurrentChangeCounter,
   currentChangeCounter,
-  time,
+  attemptTime,
 }) => {
   if (competitions) {
     return (
@@ -45,7 +45,7 @@ const CardList = ({
             changeWeight={changeWeight}
             lift={lift}
             onTheClock={onTheClock}
-            time={time}
+            attemptTime={attemptTime}
             toggleTimer={toggleTimer}
             setCurrentChangeCounter={setCurrentChangeCounter}
             currentChangeCounter={currentChangeCounter}

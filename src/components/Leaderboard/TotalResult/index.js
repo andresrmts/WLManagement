@@ -1,4 +1,5 @@
 import React from 'react';
+import { memo } from 'react';
 
 const TotalResult = ({ row }) => {
   const snatch = row.result.snatch.sort((a, b) => b - a)[0];
@@ -11,4 +12,4 @@ const TotalResult = ({ row }) => {
   return snatch + cnj;
 };
 
-export default TotalResult;
+export default memo(TotalResult);

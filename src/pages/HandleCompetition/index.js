@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import AdminNav from './components/AdminNav';
 import Registrations from './components/Registrations';
 import CoachNav from './components/CoachNav';
@@ -17,13 +17,6 @@ import { useCompsContext } from '../../CompetitionsContext';
 import DeleteButton from '../../components/DeleteButton';
 
 const HandleCompetition = () => {
-  const [time, setTime] = useState(60);
-  const [timer, setTimer] = useState(true);
-  const [lift, setLift] = useState('snatch');
-  const [verdict, setVerdict] = useState({
-    result: 0,
-    votes: 0,
-  });
   const { userName, userId, role, setRole } = useAuthContext();
   const {
     getCompetition,
@@ -34,32 +27,24 @@ const HandleCompetition = () => {
     deleteRow,
     approveRow,
     setStatus,
+    setTime,
+    setTimer,
+    setLift,
+    setVerdict,
   } = useCompsContext();
   const { compId } = useParams();
   const competition = getCompetition(compId);
-  const { status } = competition;
+  const { status, lift, authorId, verdict, registrations, officials, athletes, timer, time } = competition;
   const match = useRouteMatch();
 
-  const isAdmin = userId === competition.authorId;
-  const filteredUser = competition.officials.filter(reg => reg.id === userId);
-
-  const showState = () => {
-    console.log(competition);
-  };
-
-  const changeTime = seconds => {
-    setTime(seconds);
-  };
-
-  const toggleTimer = () => {
-    setTimer(pS => !pS);
-  };
+  const isAdmin = userId === authorId;
+  const filteredUser = officials.filter(reg => reg.id === userId);
 
   const nextLift = () => {
-    setLift('cnj');
+    setLift(compId, 'cnj');
     setNilAttempt(compId);
-    setTime(60);
-    setTimer(false);
+    setTime(compId, 60);
+    setTimer(compId, false);
   };
 
   useEffect(() => {
@@ -74,16 +59,13 @@ const HandleCompetition = () => {
   });
 
   const castVote = decision => {
-    if (decision === 'yes') {
-      setVerdict({ result: 1, votes: 3 });
-      return;
-    }
-    setVerdict({ result: -1, votes: 3 });
+    setVerdict(compId, decision, filteredUser[0].spot);
+    return;
   };
 
   const goToNextAttempt = (athlete, weight, attempt) => {
-    setLiftResult(compId, verdict, athlete, weight, attempt, lift);
-    setVerdict({ result: 0, votes: 0 });
+    setLiftResult(compId, athlete, weight, attempt, lift);
+    setVerdict(compId, [null, null, null], null);
   };
 
   const columns = [
@@ -127,7 +109,7 @@ const HandleCompetition = () => {
   const renderNav = role => {
     switch (role) {
       case 'admin':
-        return <AdminNav showState={showState} toggleTimer={toggleTimer} status={status} setStatus={setStatus} />;
+        return <AdminNav toggleTimer={setTimer} status={status} setStatus={setStatus} />;
       case 'coach':
         return <CoachNav status={status} />;
       case 'judge':
@@ -155,20 +137,20 @@ const HandleCompetition = () => {
         {isAdmin && status === 'not_started' && (
           <div>
             <Route exact path={match.path}>
-              <Registrations registrations={competition.registrations} onDelete={deleteRow} onApprove={approveRow} />
+              <Registrations registrations={registrations} onDelete={deleteRow} onApprove={approveRow} />
             </Route>
             <Route path={`${match.path}/registeredofficials`}>
-              <RegisteredOfficials officials={competition.officials} />
+              <RegisteredOfficials officials={officials} />
             </Route>
             <Route path={`${match.path}/athletelist`}>
-              <Table columns={columns} tableContent={competition.athletes} updateTable={updateTable} />
+              <Table columns={columns} tableContent={athletes} updateTable={updateTable} />
             </Route>
           </div>
         )}
         {role === 'coach' && status === 'not_started' && (
           <div>
             <Route exact path={match.path}>
-              <MyAthletes athletes={competition.athletes} updateTable={updateTable} onDelete={deleteRow} />
+              <MyAthletes athletes={athletes} updateTable={updateTable} onDelete={deleteRow} />
             </Route>
             <Route path={`${match.path}/athleteregistration`}>
               <AthleteRegistration onAdd={addAthlete} />
@@ -178,14 +160,16 @@ const HandleCompetition = () => {
         {role === 'judge' && (
           <Route path={match.path}>
             <Judge
-              athletes={competition.athletes}
+              athletes={athletes}
               goToNextAttempt={goToNextAttempt}
               castVote={castVote}
               timer={timer}
               time={time}
-              changeTime={changeTime}
+              changeTime={setTime}
               status={status}
               lift={lift}
+              spot={filteredUser[0].spot}
+              verdict={verdict}
             />
           </Route>
         )}
@@ -194,27 +178,27 @@ const HandleCompetition = () => {
             <CompetitionAdmin
               nextLift={nextLift}
               lift={lift}
-              toggleTimer={toggleTimer}
+              toggleTimer={setTimer}
               time={time}
               timer={timer}
-              changeTime={changeTime}
-              athletes={competition.athletes}
+              changeTime={setTime}
+              athletes={athletes}
             />
           </Route>
         )}
         {role === 'coach' && (
-          <Route path={match.path}>
+          <Route exact path={match.path}>
             <CoachInCompetition
               timer={timer}
-              changeTime={changeTime}
+              changeTime={setTime}
               lift={lift}
-              toggleTimer={toggleTimer}
+              toggleTimer={setTimer}
               time={time}
-              athletes={competition.athletes}
+              athletes={athletes}
             />
           </Route>
         )}
-        {competition.registrations.find(reg => reg.name === userName) !== undefined && (
+        {registrations.find(reg => reg.name === userName) !== undefined && (
           <Route path={match.path}>
             <h1>Your application hasn't been accepted yet!</h1>
           </Route>

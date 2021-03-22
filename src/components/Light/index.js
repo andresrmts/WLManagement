@@ -1,13 +1,11 @@
 import React from 'react';
 
-const Light = ({ decision }) => {
-  const { result, votes } = decision;
-
+const Light = ({ decision, length }) => {
   const decisionLight = () => {
-    if (votes !== 3) {
+    if (length !== 3) {
       return 'bg-black';
     }
-    if (result > 0) {
+    if (decision > 0) {
       return 'bg-white';
     }
     return 'bg-red';

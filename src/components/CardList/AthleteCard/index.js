@@ -20,7 +20,7 @@ const AthleteCard = ({ name, onTheClock, attempt, time, lift, snatch, cnj, chang
     }
     if (onTheClock.name === name && currentChangeCounter < 2 && time > 30) {
       changeWeight(compId, { name }, weight, lift);
-      toggleTimer();
+      toggleTimer(compId);
       setCurrentChangeCounter(prev => prev + 1);
       return;
     }

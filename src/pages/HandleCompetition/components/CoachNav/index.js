@@ -18,9 +18,11 @@ const CoachNav = ({ status }) => {
       </h1>
       <nav className="flex justify-center pa0">
         {status === 'started' ? (
-          <Link to="/competitions" onClick={() => setRole('')} className="f3-ns f5 pa3 underline pointer black-90">
-            Exit
-          </Link>
+          <div>
+            <Link to="/competitions" onClick={() => setRole('')} className="f3-ns f5 pa3 underline pointer black-90">
+              Exit
+            </Link>
+          </div>
         ) : (
           <nav className="flex justify-center">
             <Link to={match.url} className="f4-ns f5-m f5 pa3-ns pa2-m mh1 underline pointer black-90">

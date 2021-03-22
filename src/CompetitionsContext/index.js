@@ -10,11 +10,16 @@ const CompsProvider = ({ children }) => {
       name: 'Comp1',
       location: 'Eesti',
       status: 'started',
+      time: 60,
+      timer: true,
+      lift: 'snatch',
+      verdict: [null, null, null],
       officials: [
         {
           id: 22,
           name: 'Judge1',
           role: 'judge',
+          spot: 0,
         },
         {
           id: 72,
@@ -38,46 +43,46 @@ const CompsProvider = ({ children }) => {
         {
           id: 1,
           name: 'Athlete1',
-          attempt: 0,
+          attempt: 1,
           weight: '-',
           age: 22,
-          snatch: 22,
+          snatch: 23,
           cnj: 40,
           coachid: 72,
           coachname: 'Külli',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [-22, null, null],
+            cnj: [50, null, null],
           },
         },
         {
           id: 2,
           name: 'Athlete2',
-          attempt: 0,
+          attempt: 1,
           weight: '-',
           age: 22,
           snatch: 30,
-          cnj: 40,
+          cnj: 41,
           coachid: 222,
           coachname: 'Coach1',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [23, null, null],
+            cnj: [50, null, null],
           },
         },
         {
           id: 3,
           name: 'Athlete3',
-          attempt: 0,
+          attempt: 1,
           weight: '-',
           age: 22,
           snatch: 30,
-          cnj: 40,
+          cnj: 42,
           coachid: 72,
           coachname: 'Külli',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [-23, null, null],
+            cnj: [100, null, null],
           },
         },
       ],
@@ -88,6 +93,10 @@ const CompsProvider = ({ children }) => {
       name: 'Comp2',
       location: 'Eesti',
       status: 'not_started',
+      time: 60,
+      timer: true,
+      lift: 'snatch',
+      verdict: [null, null, null],
       officials: [
         {
           id: 17,
@@ -121,8 +130,8 @@ const CompsProvider = ({ children }) => {
           coachid: 27,
           coachname: 'Coach2',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
         {
@@ -135,8 +144,8 @@ const CompsProvider = ({ children }) => {
           coachid: 21,
           coachname: 'Coach2',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
         {
@@ -149,8 +158,8 @@ const CompsProvider = ({ children }) => {
           coachid: 29,
           coachname: 'Coach2',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
       ],
@@ -161,6 +170,10 @@ const CompsProvider = ({ children }) => {
       name: 'Comp4',
       location: 'Eesti',
       status: 'not_started',
+      time: 60,
+      timer: true,
+      lift: 'snatch',
+      verdict: [null, null, null],
       officials: [
         {
           id: 12,
@@ -194,8 +207,8 @@ const CompsProvider = ({ children }) => {
           coachid: 90,
           coachname: 'Coach3',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
         {
@@ -208,8 +221,8 @@ const CompsProvider = ({ children }) => {
           coachid: 26,
           coachname: 'Coach3',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
         {
@@ -222,8 +235,8 @@ const CompsProvider = ({ children }) => {
           coachid: 23,
           coachname: 'Coach3',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
       ],
@@ -234,6 +247,10 @@ const CompsProvider = ({ children }) => {
       name: 'Comp3',
       location: 'Eesti',
       status: 'not_started',
+      time: 60,
+      timer: true,
+      lift: 'snatch',
+      verdict: [null, null, null],
       officials: [
         {
           id: 12,
@@ -267,8 +284,8 @@ const CompsProvider = ({ children }) => {
           coachid: 90,
           coachname: 'Coach3',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
         {
@@ -281,8 +298,8 @@ const CompsProvider = ({ children }) => {
           coachid: 26,
           coachname: 'Coach3',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
         {
@@ -295,8 +312,8 @@ const CompsProvider = ({ children }) => {
           coachid: 23,
           coachname: 'Coach3',
           result: {
-            snatch: [],
-            cnj: [],
+            snatch: [null, null, null],
+            cnj: [null, null, null],
           },
         },
       ],
@@ -350,6 +367,11 @@ const CompsProvider = ({ children }) => {
       id,
       authorId,
       name: compName,
+      status: 'not_started',
+      time: 60,
+      timer: true,
+      lift: 'snatch',
+      verdict: [null, null, null],
       location,
       date,
       officials: [],
@@ -383,35 +405,39 @@ const CompsProvider = ({ children }) => {
       cnj,
       coachid,
       coachname,
-      result: { snatch: [], cnj: [] },
+      result: { snatch: [null, null, null], cnj: [null, null, null] },
     });
   };
 
-  const setLiftResult = (compId, verdict, athlete, weight, attempt, lift) => {
+  const setLiftResult = (compId, athlete, weight, attempt, lift) => {
     const competition = competitions.find(comp => compId === comp.id);
+    const { verdict } = competition;
+    const noOfVotes = verdict.filter(vote => vote !== null);
     const correctAthlete = competition.athletes.find(ath => ath.name === athlete);
-    if (verdict.result > 0 && verdict.votes === 3 && correctAthlete.attempt < 3) {
-      correctAthlete.result[lift].push(weight);
+    const result = verdict.reduce((a, b) => a + b);
+    if (result > 1 && noOfVotes.length === 3 && correctAthlete.attempt < 3) {
+      correctAthlete[lift] = weight + 1;
+      correctAthlete.attempt = attempt + 1;
+      correctAthlete.result[lift].splice(attempt, 1, weight);
       setCompetitions(pS =>
         pS.map(comp =>
           compId === comp.id
             ? {
                 ...comp,
-                athletes: comp.athletes.map(ath =>
-                  ath.name === athlete ? { ...ath, [lift]: weight + 1, attempt: attempt + 1 } : ath,
-                ),
+                athletes: comp.athletes.map(ath => (ath.name === athlete ? correctAthlete : ath)),
               }
             : comp,
         ),
       );
-    } else if (verdict.result < 0 && verdict.votes === 3 && correctAthlete.attempt < 3) {
-      correctAthlete.result[lift].push(weight + 'x');
+    } else if (result < 2 && noOfVotes.length === 3 && correctAthlete.attempt < 3) {
+      correctAthlete.attempt = attempt + 1;
+      correctAthlete.result[lift].splice(attempt, 1, -weight);
       setCompetitions(pS =>
         pS.map(comp =>
           compId === comp.id
             ? {
                 ...comp,
-                athletes: comp.athletes.map(ath => (ath.name === athlete ? { ...ath, attempt: attempt + 1 } : ath)),
+                athletes: comp.athletes.map(ath => (ath.name === athlete ? correctAthlete : ath)),
               }
             : comp,
         ),
@@ -474,9 +500,31 @@ const CompsProvider = ({ children }) => {
   };
 
   const setStatus = (compid, status) => {
-    // const competition = competitions.find(comp => comp.id === compid);
-
     setCompetitions(pS => pS.map(comp => (comp.id === compid ? { ...comp, status: status } : comp)));
+  };
+
+  const setTime = (compId, seconds) => {
+    setCompetitions(pS => pS.map(comp => (compId === comp.id ? { ...comp, time: seconds } : comp)));
+  };
+
+  const setTimer = compId => {
+    setCompetitions(pS => pS.map(comp => (comp.id === compId ? { ...comp, timer: !comp.timer } : comp)));
+  };
+
+  const setLift = (compId, lift) => {
+    setCompetitions(pS => pS.map(comp => (comp.id === compId ? { ...comp, lift: lift } : comp)));
+  };
+
+  const setVerdict = (compId, decision, spot) => {
+    const competition = competitions.find(comp => comp.id === compId);
+
+    if (spot !== null) {
+      competition.verdict.splice(spot, 1, decision);
+    } else {
+      competition.verdict = decision;
+    }
+
+    setCompetitions(pS => pS.map(comp => (compId === comp.id ? { ...comp, verdict: competition.verdict } : comp)));
   };
 
   const contextValue = {
@@ -493,6 +541,10 @@ const CompsProvider = ({ children }) => {
     deleteRow,
     approveRow,
     setStatus,
+    setTime,
+    setTimer,
+    setLift,
+    setVerdict,
   };
 
   return <CompsContext.Provider value={contextValue}>{children}</CompsContext.Provider>;

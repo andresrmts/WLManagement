@@ -10,7 +10,7 @@ const Table = ({ tableContent, columns, updateTable }) => {
             <tr className="stripe-dark">
               {columns.map((column, i) =>
                 !column.hidden ? (
-                  <th key={i} id={`${column.columnName}`} className="fw6 pa3 bg-white">
+                  <th key={column.columnName} id={`${column.columnName}`} className="fw6 pa3 bg-white">
                     {column.columnName}
                   </th>
                 ) : null,

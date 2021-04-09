@@ -3,8 +3,8 @@ import React, { useState, useContext, createContext } from 'react';
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [userName, setUserName] = useState('Külli');
-  const [userId, setUserId] = useState(73);
+  const [userName, setUserName] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [userEmail, setUserEmail] = useState(null);
   const [role, setRole] = useState(null);
 

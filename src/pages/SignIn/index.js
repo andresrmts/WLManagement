@@ -1,10 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuthContext } from '../../AuthContext';
-import { Link } from 'react-router-dom';
-// import { routes } from '../../Router/routes';
+import { Link, Redirect } from 'react-router-dom';
 
 const SignIn = () => {
-  const { setUserId } = useAuthContext();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { userId, setUserId, setUserName, setUserEmail } = useAuthContext();
+
+  if (userId) {
+    return <Redirect to={'/competitions' || '/'} />;
+  }
+
+  const onSubmitSignIn = () => {
+    fetch('http://localhost:3002/signin', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    })
+      .then(res => res.json())
+      .then(user => {
+        console.log(user);
+        if (user.id) {
+          setUserId(user.id);
+          setUserName(user.name);
+          setUserEmail(user.email);
+        }
+      })
+      .catch(e => console.log(e));
+  };
+
   return (
     <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
       <main className="pa4 black-80">
@@ -16,6 +43,7 @@ const SignIn = () => {
                 Email
               </label>
               <input
+                onChange={e => setEmail(e.target.value)}
                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                 type="email"
                 name="email-address"
@@ -27,6 +55,7 @@ const SignIn = () => {
                 Password
               </label>
               <input
+                onChange={e => setPassword(e.target.value)}
                 className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                 type="password"
                 name="password"
@@ -38,7 +67,7 @@ const SignIn = () => {
         <div className="measure center">
           <Link
             to="/competitions"
-            onClick={() => setUserId(Math.random() * 10)}
+            onClick={() => onSubmitSignIn()}
             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib no-underline black-90"
           >
             Sign In

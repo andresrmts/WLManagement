@@ -6,41 +6,29 @@ import Competitions from '../../pages/Competitions';
 import Register from '../../pages/Register';
 import CompetitionCreation from '../../pages/CompetitionCreation';
 import HandleCompetition from '../../pages/HandleCompetition';
-import { useAuthContext } from '../../AuthContext';
+import PrivateRoute from '../../PrivateRoute/';
 
 const AppRouter = () => {
-  const { userId } = useAuthContext();
-
-  const isSignedIn = !!userId;
-
   return (
     <Switch>
       <div>
-        {!isSignedIn && (
-          <div>
-            <Route exact path="/">
-              <SignIn />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-          </div>
-        )}
-        {isSignedIn && (
-          <div>
-            <CompsProvider>
-              <Route path="/competitions">
-                <Competitions />
-              </Route>
-              <Route path="/competitioncreation">
-                <CompetitionCreation />
-              </Route>
-              <Route path="/competition/:compId">
-                <HandleCompetition />
-              </Route>
-            </CompsProvider>
-          </div>
-        )}
+        <Route exact path="/">
+          <SignIn />
+        </Route>
+        <Route path="/register">
+          <Register />
+        </Route>
+        <CompsProvider>
+          <PrivateRoute path="/competitions">
+            <Competitions />
+          </PrivateRoute>
+          <PrivateRoute path="/competitioncreation">
+            <CompetitionCreation />
+          </PrivateRoute>
+          <PrivateRoute path="/competition/:compId">
+            <HandleCompetition />
+          </PrivateRoute>
+        </CompsProvider>
       </div>
     </Switch>
   );

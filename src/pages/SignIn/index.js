@@ -22,7 +22,6 @@ const SignIn = () => {
     })
       .then(res => res.json())
       .then(user => {
-        console.log(user);
         if (user.id) {
           setUserId(user.id);
           setUserName(user.name);

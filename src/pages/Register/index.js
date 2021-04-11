@@ -4,12 +4,26 @@ import { Link } from 'react-router-dom';
 
 const Register = () => {
   const { setUserName, setUserId, setUserEmail } = useAuthContext();
-  const [username, setUsername] = useState('');
+  const [userName, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const registeruser = (user, useremail) => {
-    setUserName(user);
-    setUserEmail(useremail);
-    setUserId(Math.random() * 10);
+  const [password, setPassword] = useState('');
+  const registeruser = () => {
+    fetch('http://localhost:3002/register', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email,
+        name: userName,
+        password,
+      }),
+    })
+      .then(res => res.json())
+      .then(user => {
+        setUserId(user.id);
+        setUserName(user.name);
+        setUserEmail(user.email);
+      })
+      .catch(e => console.log(e));
   };
   return (
     <article className="br3 ba dark-gray b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center">
@@ -46,6 +60,7 @@ const Register = () => {
                 Password
               </label>
               <input
+                onChange={e => setPassword(e.target.value)}
                 className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100"
                 type="password"
                 name="password"
@@ -57,7 +72,7 @@ const Register = () => {
         <div className="measure center">
           <Link
             to="/competitions"
-            onClick={() => registeruser(username, email)}
+            onClick={() => registeruser()}
             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib no-underline black-90"
           >
             Register

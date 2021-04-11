@@ -9,7 +9,7 @@ const CompsProvider = ({ children }) => {
       authorId: 73,
       name: 'Comp1',
       location: 'Eesti',
-      status: 'started',
+      status: 'not_started',
       attemptTime: Date.now() + 61000,
       timer: true,
       lift: 'snatch',

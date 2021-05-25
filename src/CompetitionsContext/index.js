@@ -258,7 +258,7 @@ const CompsProvider = ({ children }) => {
           role: 'judge',
         },
         {
-          id: 17,
+          id: 14,
           name: 'Coach3',
           role: 'coach',
         },
@@ -390,8 +390,8 @@ const CompsProvider = ({ children }) => {
   };
 
   const addAthlete = data => {
-    const { compId, name, age, snatch, cnj, coachname, coachid } = data;
-    const index = competitions.findIndex(comp => comp.id === compId);
+    const { compid, name, age, snatch, cnj, coachname, coachid } = data;
+    const index = competitions.findIndex(comp => comp.id === compid);
     if (age < 1 || age > 99 || snatch < 10 || snatch > 230 || cnj < 10 || cnj > 300) {
       alert('Please enter valid info!');
       return;
@@ -403,7 +403,7 @@ const CompsProvider = ({ children }) => {
       age,
       snatch,
       cnj,
-      coachid,
+      coachid: Number(coachid),
       coachname,
       result: { snatch: [null, null, null], cnj: [null, null, null] },
     });

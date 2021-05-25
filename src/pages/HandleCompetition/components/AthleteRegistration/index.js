@@ -10,7 +10,7 @@ const AthleteRegistration = ({ onAdd }) => {
   const [snatch, setSnatch] = useState('');
   const [cnj, setCnj] = useState('');
   const athlete = {
-    compId,
+    compid: compId,
     name,
     age,
     snatch,
@@ -19,12 +19,22 @@ const AthleteRegistration = ({ onAdd }) => {
     coachid: userId,
   };
 
+  // const addAthlete = () => {
+  //   onAdd(athlete);
+  //   document.getElementById('name').value = '';
+  //   document.getElementById('age').value = '';
+  //   document.getElementById('snatch').value = '';
+  //   document.getElementById('cnj').value = '';
+  // };
+
   const addAthlete = () => {
-    onAdd(athlete);
-    document.getElementById('name').value = '';
-    document.getElementById('age').value = '';
-    document.getElementById('snatch').value = '';
-    document.getElementById('cnj').value = '';
+    fetch(`http://localhost:3002/competition/${compId}/createathlete`, {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(athlete),
+    })
+      .then(res => res.json())
+      .then(regAth => onAdd(regAth));
   };
 
   return (

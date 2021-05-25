@@ -361,19 +361,18 @@ const CompsProvider = ({ children }) => {
   };
 
   const createCompetition = competition => {
-    const { id, authorId, compName, location, date } = competition;
+    const { id, authorid, name, location } = competition;
     const comps = competitions;
     comps.push({
       id,
-      authorId,
-      name: compName,
+      authorId: authorid,
+      name,
       status: 'not_started',
       time: 60,
-      timer: true,
+      timer: false,
       lift: 'snatch',
       verdict: [null, null, null],
       location,
-      date,
       officials: [],
       registrations: [],
       athletes: [],
@@ -390,13 +389,14 @@ const CompsProvider = ({ children }) => {
   };
 
   const addAthlete = data => {
-    const { compid, name, age, snatch, cnj, coachname, coachid } = data;
+    const { id, compid, name, age, snatch, cnj, coachname, coachid } = data;
     const index = competitions.findIndex(comp => comp.id === compid);
     if (age < 1 || age > 99 || snatch < 10 || snatch > 230 || cnj < 10 || cnj > 300) {
       alert('Please enter valid info!');
       return;
     }
     competitions[index].athletes.push({
+      id,
       name,
       attempt: 0,
       weight: '',

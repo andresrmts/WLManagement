@@ -19,14 +19,6 @@ const AthleteRegistration = ({ onAdd }) => {
     coachid: userId,
   };
 
-  // const addAthlete = () => {
-  //   onAdd(athlete);
-  //   document.getElementById('name').value = '';
-  //   document.getElementById('age').value = '';
-  //   document.getElementById('snatch').value = '';
-  //   document.getElementById('cnj').value = '';
-  // };
-
   const addAthlete = () => {
     fetch(`http://localhost:3002/competition/${compId}/createathlete`, {
       method: 'post',
@@ -34,7 +26,14 @@ const AthleteRegistration = ({ onAdd }) => {
       body: JSON.stringify(athlete),
     })
       .then(res => res.json())
-      .then(regAth => onAdd(regAth));
+      .then(regAth => {
+        console.log(regAth);
+        onAdd(regAth);
+        document.getElementById('name').value = '';
+        document.getElementById('age').value = '';
+        document.getElementById('snatch').value = '';
+        document.getElementById('cnj').value = '';
+      });
   };
 
   return (

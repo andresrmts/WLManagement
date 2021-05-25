@@ -10,13 +10,25 @@ const CompetitionCreation = () => {
   const [competitionName, setCompetitionname] = useState('');
   const [location, setLocation] = useState('');
   const [date, setDate] = useState('');
-  const id = uuidv4();
+  let id;
   const competition = {
-    id,
     authorId: userId,
-    compName: competitionName,
+    name: competitionName,
     location,
-    date,
+  };
+
+  const newCompetition = () => {
+    fetch('http://localhost:3002/createcompetition', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(competition),
+    })
+      .then(res => res.json())
+      .then(comp => {
+        console.log(comp);
+        createCompetition(comp);
+        id = comp.id;
+      });
   };
 
   return (
@@ -63,8 +75,8 @@ const CompetitionCreation = () => {
         </div>
         <div className="measure center">
           <Link
+            onClick={() => newCompetition()}
             to={`/competition/${id}`}
-            onClick={() => createCompetition(competition)}
             className="b ph3 pv2 input-reset ba b--black black-90 bg-transparent grow pointer f6 m14 dib no-underline"
           >
             Create

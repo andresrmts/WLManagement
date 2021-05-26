@@ -10,8 +10,9 @@ const CompetitionCreation = () => {
   const [competitionName, setCompetitionname] = useState('');
   const [location, setLocation] = useState('');
   const [date, setDate] = useState('');
-  let id;
+  const id = uuidv4();
   const competition = {
+    id,
     authorId: userId,
     name: competitionName,
     location,
@@ -25,9 +26,7 @@ const CompetitionCreation = () => {
     })
       .then(res => res.json())
       .then(comp => {
-        console.log(comp);
         createCompetition(comp);
-        id = comp.id;
       });
   };
 
@@ -74,13 +73,13 @@ const CompetitionCreation = () => {
           </fieldset>
         </div>
         <div className="measure center">
-          <Link
+          <button
             onClick={() => newCompetition()}
-            to={`/competition/${id}`}
+            // to={`/competition/${id}`}
             className="b ph3 pv2 input-reset ba b--black black-90 bg-transparent grow pointer f6 m14 dib no-underline"
           >
             Create
-          </Link>
+          </button>
           <Link
             to="/competitions"
             className="b ph3 pv2 input-reset ba b--black black-90 bg-transparent grow pointer f6 m14 dib no-underline"
